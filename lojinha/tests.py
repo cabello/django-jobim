@@ -1,23 +1,126 @@
-"""
-This file demonstrates two different styles of tests (one doctest and one
-unittest). These will both pass when you run "manage.py test".
-
-Replace these with more appropriate tests for your application.
-"""
-
 from django.test import TestCase
 
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.failUnlessEqual(1 + 1, 2)
+def add_test_product():
+    from lojinha.models import Product, Category
 
-__test__ = {"doctest": """
-Another way to test that 1 + 1 is equal to 2.
+    c = Category.objects.get(slug='livros')
+    p = Product(
+        name='The Pragmatic Programmer',
+        slug='pragmatic-programmer',
+        description='from jouneryman to master',
+        category=c,
+        sold=False
+    )
+    p.save()
 
->>> 1 + 1 == 2
-True
-"""}
+    return p
+
+
+class LojinhaModelsTest(TestCase):
+    def test_product_status(self):
+        from lojinha.models import Bid
+
+        p = add_test_product()
+        self.assertEquals('Esperando oferta', p.status())
+
+        b = Bid(product=p, value=100, mail='john@buyer.com', accepted=False)
+        b.save()
+        self.assertEquals('Esperando oferta', p.status())
+
+        b.accepted = True
+        b.save()
+        self.assertEquals('Maior oferta: R$ 100', p.status())
+
+        p.sold = True
+        p.save()
+        self.assertEquals('Vendido', p.status())
+
+
+class LojinhaViewsTest(TestCase):
+    def test_index(self):
+        response = self.client.get('/')
+        self.assertEqual(302, response.status_code)
+        self.assertRedirects(response, 'sobre')
+
+    def test_about(self):
+        response = self.client.get('/sobre')
+        self.assertEqual(200, response.status_code)
+        self.assertTemplateUsed(response, 'about.txt')
+        self.assertTemplateUsed(response, 'about.html')
+
+    def test_contact(self):
+        from lojinha.models import Contact
+
+        response = self.client.get('/contato')
+        self.assertEqual(200, response.status_code)
+        self.assertTemplateUsed(response, 'contact.html')
+
+        response = self.client.post('/contato')
+        self.assertEqual(200, response.status_code)
+        self.assertTemplateUsed(response, 'contact.html')
+        self.assertFalse(response.context['contact_form'].is_valid())
+
+        response = self.client.post(
+            '/contato',
+            {'email': 'john@buyer.com'}
+        )
+        self.assertEqual(200, response.status_code)
+        self.assertTemplateUsed(response, 'contact_success.html')
+        self.assertEqual(1, Contact.objects.count())
+
+    def test_products_by_category(self):
+        response = self.client.get('/carros')
+        self.assertEqual(404, response.status_code)
+
+        response = self.client.get('/livros')
+        self.assertEqual(200, response.status_code)
+        self.assertTemplateUsed(response, 'lojinha/products_by_category.html')
+        self.assertEqual(0, len(response.context['products']))
+
+        p = add_test_product()
+        response = self.client.get('/livros')
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(1, len(response.context['products']))
+        self.assertTrue(p in response.context['products'])
+
+        p.sold = True
+        p.save()
+        response = self.client.get('/livros')
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(0, len(response.context['products']))
+        self.assertFalse(p in response.context['products'])
+
+    def test_product_view(self):
+        response = self.client.get('/livros/pragmatic-programmer')
+        self.assertEqual(404, response.status_code)
+
+        p = add_test_product()
+        response = self.client.get('/livros/pragmatic-programmer')
+        self.assertEqual(200, response.status_code)
+        self.assertTemplateUsed(response, 'lojinha/product_view.html')
+
+        p.sold = True
+        p.save()
+        response = self.client.get('/livros/pragmatic-programmer')
+        self.assertEqual(404, response.status_code)
+
+    def test_bid(self):
+        from lojinha.models import Bid
+
+        p = add_test_product()
+        response = self.client.post(
+            '/livros/pragmatic-programmer/lance',
+            {'amount': 350, 'email': 'john@buyer.com'}
+        )
+        self.assertEqual(302, response.status_code)
+        self.assertRedirects(response, '/livros/pragmatic-programmer')
+        self.assertEquals(1, Bid.objects.count())
+
+        response = self.client.post('/livros/pragmatic-programmer/lance')
+        self.assertTemplateUsed(response, 'lojinha/product_view.html')
+        self.assertContains(response, 'corrija os erros')
+
+        response = self.client.get('/livros/pragmatic-programmer/lance')
+        self.assertEqual(302, response.status_code)
+        self.assertRedirects(response, '/livros/pragmatic-programmer')
