@@ -1,0 +1,207 @@
+<!doctype html>
+
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+{% block head %}
+<head>
+  <meta charset="utf-8">
+
+  <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+       Remove this if you use the .htaccess -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>{% block title %}Manoel Cowboy{% endblock title %}</title>
+  {% block metadata %}
+    <meta name="description" content="">
+    <meta name="author" content="">
+  {% endblock metadata %}
+
+  <!--  Mobile viewport optimized: j.mp/bplateviewport -->
+  {% block mobile-viewport-optimization %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% endblock mobile-viewport-optimization %}
+
+  <!-- Place favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+  {% block favicons %}
+    <link rel="shortcut icon" href="{{ MEDIA_URL }}favicon.png">
+    <link rel="apple-touch-icon" href="{{ MEDIA_URL }}favicon.png">
+  {% endblock %}
+
+
+  <!-- CSS : implied media="all" -->
+  {% block base-styles %}
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/style.css?v=2">
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/base.css">
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/screen.css">
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/all.css">
+
+    <!-- Uncomment if you are specifically targeting less enabled mobile browsers
+    <link rel="stylesheet" media="handheld" href="css/handheld.css?v=2">  -->
+  {% endblock base-styles %}
+
+  <!-- All JavaScript at the bottom, except for Modernizr which enables HTML5 elements & feature detects -->
+  <script src="{{ MEDIA_URL }}js/libs/modernizr-1.6.min.js"></script>
+
+</head>
+{% endblock head %}
+
+{% block body %}
+{% load base_extras %}
+<body>
+
+  <div id="container">
+    {% block header %}
+        <header id="banner" class="body">
+            <img src="{{ MEDIA_URL}}logo.jpg" />
+            <aside id="featured" class="body"><article>
+                <hgroup>
+                    <h1><a href="/">Manoel tá vendendo tudo. Aproveite!</a></h1>
+                </hgroup>
+            </article></aside><!-- /#featured -->
+            <hr class="invisible" />
+            <h2 class="invisible">Menu</h2>
+            {% block top-menu %}
+            <nav><ul>
+                <li class="{% navactive request 'leilao_sobre' %}"><a href="{% url leilao_index %}">Sobre</a></li>
+                <li class="{% navactive request 'leilao_eletrodomesticos' %}"><a href="{% url leilao_eletrodomesticos %}">Eletrodomésticos</a></li>
+                <li class="{% navactive request 'leilao_moveis' %}"><a href="{% url leilao_moveis %}">Móveis</a></li>
+                <li class="{% navactive request 'leilao_contato' %}"><a href="{% url leilao_contato %}">Contato</a></li>
+            </ul></nav>
+            {% endblock top-menu %}
+        </header><!-- /#banner -->
+    {% endblock header %}
+
+    <hr class="invisible" />
+    {% block main-content %}
+        <section id="content" class="body">
+
+            <ol id="posts-list" class="hfeed">
+                <li><article class="hentry">
+                    <header>
+                        <h2 class="entry-title"><a href="#" rel="bookmark" title="Permalink to this POST TITLE">This be the title</a></h2>
+                    </header>
+
+                    <footer class="post-info">
+                        <abbr class="published" title="2005-10-10T14:07:00-07:00"><!-- YYYYMMDDThh:mm:ss+ZZZZ -->
+
+                            10th October 2005
+                        </abbr>
+
+                        <address class="vcard author">
+                            By <a class="url fn" href="#">Enrique Ramírez</a>
+                        </address>
+                    </footer><!-- /.post-info -->
+
+                    <div class="entry-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque venenatis nunc vitae libero iaculis elementum. Nullam et justo <a href="#">non sapien</a> dapibus blandit nec et leo. Ut ut malesuada tellus.</p>
+
+                    </div><!-- /.entry-content -->
+                </article></li>
+
+                <li><article class="hentry">
+                    <header>
+                        <h2 class="entry-title"><a href="#" rel="bookmark" title="Permalink to this POST TITLE">This be the title</a></h2>
+                    </header>
+
+                    <footer class="post-info">
+                        <abbr class="published" title="2005-10-10T14:07:00-07:00"><!-- YYYYMMDDThh:mm:ss+ZZZZ -->
+                            10th October 2005
+                        </abbr>
+
+                        <address class="vcard author">
+                            By <a class="url fn" href="#">Enrique Ramírez</a>
+                        </address>
+                    </footer><!-- /.post-info -->
+
+                    <div class="entry-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque venenatis nunc vitae libero iaculis elementum. Nullam et justo <a href="#">non sapien</a> dapibus blandit nec et leo. Ut ut malesuada tellus.</p>
+
+                    </div><!-- /.entry-content -->
+                </article></li>
+
+                <li><article class="hentry">
+                    <header>
+                        <h2 class="entry-title"><a href="#" rel="bookmark" title="Permalink to this POST TITLE">This be the title</a></h2>
+                    </header>
+
+                    <footer class="post-info">
+                        <abbr class="published" title="2005-10-10T14:07:00-07:00"><!-- YYYYMMDDThh:mm:ss+ZZZZ -->
+                            10th October 2005
+                        </abbr>
+
+                        <address class="vcard author">
+                            By <a class="url fn" href="#">Enrique Ramírez</a>
+                        </address>
+                    </footer><!-- /.post-info -->
+
+                    <div class="entry-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque venenatis nunc vitae libero iaculis elementum. Nullam et justo <a href="#">non sapien</a> dapibus blandit nec et leo. Ut ut malesuada tellus.</p>
+
+                    </div><!-- /.entry-content -->
+                </article></li>
+            </ol><!-- /#posts-list -->
+
+        </section><!-- /#content -->
+    {% endblock main-content %}
+
+    <hr class="invisible" />
+    {% block footer %}
+        <footer id="contentinfo" class="body">
+            <p>Por <a href="http://danilocabello.com">Danilo Cabello</a> inspirado em <a href="http://viniciusteles.com.br">Vinícius Teles</a></p>
+        </footer><!-- /#contentinfo -->
+    {% endblock footer %}
+  </div> <!--! end of #container -->
+
+
+  <!-- Javascript at the bottom for fast page loading -->
+
+  {% block js-libs %}
+    <!-- Grab Google CDN's jQuery. fall back to local if necessary -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
+    <script>!window.jQuery && document.write(unescape('%3Cscript src="{{ MEDIA_URL }}js/libs/jquery-1.4.2.js"%3E%3C/script%3E'))</script>
+  {% endblock js-libs %}
+
+
+  {% block my-js %}
+    <!-- scripts concatenated and minified via ant build script-->
+    <script src="{{ MEDIA_URL }}js/plugins.js"></script>
+    <script src="{{ MEDIA_URL }}js/script.js"></script>
+    <!-- end concatenated and minified scripts-->
+  {% endblock my-js %}
+
+
+  <!--[if lt IE 7 ]>
+    <script src="js/libs/dd_belatedpng.js"></script>
+    <script> DD_belatedPNG.fix('img, .png_bg'); //fix any <img> or .png_bg background-images </script>
+  <![endif]-->
+
+  {% block yui-profiler %}
+    <!-- yui profiler and profileviewer - remove for production -->
+    <script src="{{ MEDIA_URL }}js/profiling/yahoo-profiling.min.js"></script>
+    <script src="{{ MEDIA_URL }}js/profiling/config.js"></script>
+    <!-- end profiling code -->
+  {% endblock yui-profiler %}
+
+
+  {% block google-analytics %}
+    <!-- asynchronous google analytics: mathiasbynens.be/notes/async-analytics-snippet
+         change the UA-XXXXX-X to be your site's ID -->
+    <script>
+     var _gaq = [['_setAccount', 'UA-20737054-1'], ['_trackPageview']];
+     (function(d, t) {
+      var g = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      g.async = true;
+      g.src = ('https:' == location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      s.parentNode.insertBefore(g, s);
+     })(document, 'script');
+    </script>
+  {% endblock google-analytics %}
+
+</body>
+{% endblock body %}
+</html>

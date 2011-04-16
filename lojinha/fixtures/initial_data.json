@@ -1,0 +1,42 @@
+[
+  {
+    "model": "lojinha.category",
+    "pk": 1,
+    "fields": {
+      "name": "Móveis",
+      "slug": "moveis"
+    }
+  },
+  {
+    "model": "lojinha.category",
+    "pk": 2,
+    "fields": {
+      "name": "Livros",
+      "slug": "livros"
+    }
+  },
+  {
+    "model": "lojinha.category",
+    "pk": 3,
+    "fields": {
+      "name": "Escritório",
+      "slug": "escritorio"
+    }
+  },
+  {
+    "model": "lojinha.category",
+    "pk": 4,
+    "fields": {
+      "name": "Eletrônicos",
+      "slug": "eletronicos"
+    }
+  },
+  {
+    "model": "lojinha.category",
+    "pk": 5,
+    "fields": {
+      "name": "Eletrodomésticos",
+      "slug": "eletrodomesticos"
+    }
+  }
+]

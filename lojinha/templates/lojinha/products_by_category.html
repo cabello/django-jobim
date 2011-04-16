@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ category }} - {{ block.super }}{% endblock title %}
+
+{% block main-content %}
+
+<section id="content" class="body">
+<div id="main_content">
+<h1>{{ category }}</h1>
+{% if products %}
+    <ul id="thumbnails">
+    {% for product in products %}
+        <li>
+        <a href="{% url leilao_product_view category.slug product.slug %}">
+            <h2>{{ product }}</h2>
+            <h3><em>{{ product.status }}</em></h3>
+            <div>
+                <img src="{% if product.cover %}{{ product.cover.url }}{% endif %}" />
+            </div>
+        </a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+<h2>Todos os {{ category|lower }} foram vendidos. :D<br />
+(Ou o preguiçoso não cadastrou os que faltam pra vender. =/)</h2>
+{% endif %}
+</div>
+</section>
+
+{% endblock main-content %}

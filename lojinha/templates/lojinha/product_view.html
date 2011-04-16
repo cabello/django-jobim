@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% load markup %}
+
+{% block title %}{{ product.category }} - {{ product.name }} - {{ block.super }}{% endblock title %}
+
+{% block main-content %}
+
+<section id="content" class="body">
+<div id="main_content">
+    <h1>{{ product.name }}</h1>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div id="bidding">
+        <p id="cover">
+            {% if product.cover %}
+            <a href="#big_pictures">Veja todas as imagens</a>
+            <br>
+            <a href="#big_pictures">
+                <img alt="{{ product.name }}" src="{{ product.cover.url }}" title="Veja todas as imagens deste produto.">
+            </a>
+            {% endif %}
+        </p>
+        <h3>Maior oferta: <em>{{ product.status }}</em> <a href="/sobre"> Como funciona?  </a></h3>
+        <form accept-charset="UTF-8" action="{% url leilao_product_bid product.category.slug product.slug %}" class="simple_form item" method="post">
+        <fieldset>
+            {% if bid_form.amount.errors %}{{ bid_form.amount.errors}}{% endif %}<br />
+            <label class="string optional" for="item_bid_amount"> Oferta: R$</label>{{ bid_form.amount }}
+            <br>
+            {% if bid_form.email.errors %}{{ bid_form.email.errors}}{% endif %}<br />
+            <label class="email optional" for="item_bid_email"> Email:</label>{{ bid_form.email }}           <br>
+            <button type="submit">Confirmar a oferta</button>
+        </fieldset>
+        </form>
+</div>
+
+<div id="summary">
+{{ product.description|markdown }}
+</div>
+
+<div id="big_pictures">
+<h2>Todas as imagens deste produto:</h2>
+{% for photo in photos %}
+    <img src="{{ photo.file.url }}" />
+{% endfor %}
+</div>
+
+</div>
+</section>
+
+{% endblock main-content %}

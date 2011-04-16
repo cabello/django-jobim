@@ -1,0 +1,8 @@
+*.pyc
+*~
+*.swp
+.DS_Store
+media/photos
+media/thumbnails
+*.sqlite
+*.db

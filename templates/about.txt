@@ -1,0 +1,28 @@
+Sobre este site
+===============
+
+Esse site funciona como uma espécie de **leilão**. Ele serve para sabermos quanto as pessoas estão dispostas a pagar pelos produtos que estão expostos.
+
+Se você tiver interesse em algo, faça uma oferta! Se gostarmos de sua oferta, entraremos em contato para fechar negócio.
+
+Quando você faz uma oferta, **você não tem nenhuma obrigação de efetivar a compra**. Assim como nós não temos obrigação de vender o que está exposto se as ofertas ficarem abaixo do mínimo que desejamos obter com a venda de cada produto.
+
+Quem sou?
+---------
+
+Sou o [Manoel Cowboy][4], CEO da *GoHorse Software House*.
+
+Nós vamos nos mudar para Cidade Nova no dia **DD/MM/AAAA**. Mas, vamos carregar pouca mudança conosco.
+
+Talvez tenhamos algo que possa ser útil para você. Por isso criamos este site inspirado/copiado/clonado do [Vinícius Teles][3].
+
+Para saber rapidamente sobre as atualizações que ocorrem aqui, siga-me no Twitter: [@manoel_cowboy][2].
+
+Se você precisar de maiores informações sobre algum item, basta entrar em [contato][1]. Terei satisfação em responder.
+
+O frete é por conta de quem compra. Então, para ter uma idea de custo do frete, leve em conta que estamos localizados em Cidade Velha, SP, mais precisamente no Bairro Velho, no CEP 00000-000.
+
+[1]: {% url leilao_contato %}
+[2]: http://www.twitter.com/manoel_cowboy
+[3]: http://www.viniciusteles.com.br
+[4]: http://www.gohorse.com

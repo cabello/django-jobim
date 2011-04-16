@@ -1,0 +1,169 @@
+/* Global */
+html * {
+  font-family:        Helvetica, Trebuchet, "Trebuchet MS", Arial, sans-serif;
+}
+
+h2 {
+  font-size:          150%;
+}
+
+h3 {
+  font-size:          100%;
+}
+h3 em {
+  font-style:         normal;
+}
+
+input {
+  font-size:          120%;
+}
+
+#header ul, #thumbnails, #big_pictures {
+  text-align:         center;
+}
+/* /Global */
+
+
+/* Header */
+#logo_screen a {
+  font-size:          210%;
+  font-variant:       small-caps;
+  line-height:        .85em;
+  text-decoration:    none;
+}
+#logo_screen a:hover, #logo_screen a:focus {
+  text-decoration:    underline;
+}
+
+#header li a {
+  text-decoration:    none;
+}
+
+#header input {
+  font-size:          80%;
+  line-height:        25px;
+}
+/* /Header */
+
+
+/* Main content */
+#main_content a:hover {
+  text-decoration:    none;
+}
+/* /Main content */
+
+
+/* Thumbnails */
+#thumbnails * {
+  text-decoration:    none;
+}
+/* /Thumbnails */
+
+
+/* Product */
+#bidding p {
+  text-align:         center;
+}
+#bidding p a {
+  font-size:          90%;
+}
+
+#bidding h3 {
+  font-size:          125%;
+}
+#bidding h3 em {
+  white-space:        nowrap;
+}
+#bidding h3 a {
+  font-size:          70%;
+  line-height:        2em;
+  text-decoration:    none;
+  text-align:         left;
+  text-indent:        5px;
+}
+
+#main_content p {
+  font-size:          110%;
+  line-height:        1.25em;
+}
+/* /Product */
+
+
+/* Forms */
+#main_content label {
+  font-size:          120%;
+  text-align:         right;
+}
+label#bid, label[for=item_bid_amount] {
+  font-size:          140% !important;
+}
+
+#item_bid_amount {
+  font-size:          165%;
+  line-height:        51px;
+}
+#main_content form input {
+  line-height:        23px;
+}
+
+#main_content form textarea {
+  font-size:          120%;
+  line-height:        1.25em;
+}
+
+#main_content button {
+  font-weight:        bold;
+  text-transform:     uppercase;
+}
+/* /Forms */
+
+
+/* Form feedback */
+.submit_result h2 {
+  font-size:          85%;
+  text-align:         center;
+}
+
+.submit_result li {
+  font-size:          80%;
+}
+/* /Form feedback */
+
+
+/* Listings */
+table {
+  text-align:         left;
+}
+
+th {
+  font-size:          85%;
+}
+.bid {
+  text-align:         right;
+}
+
+td {
+  font-size:          75%;
+}
+td em {
+  font-style:         normal;
+  font-size:          115%;
+}
+td strong, td a {
+  font-size:          110%;
+}
+td strong a {
+  font-size:          105%;
+}
+
+#main_content td a:hover {
+  text-decoration:    underline;
+}
+#main_content td strong a:hover {
+  text-decoration:    none;
+}
+
+td strong {
+  font-weight:        normal;
+}
+/* /Listings */

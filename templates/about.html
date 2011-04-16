@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Sobre - {{ block.super }}{% endblock title %}
+
+{% load markup %}
+{% block main-content %}
+<section id="content" class="body">
+    <div id="main_content">
+    {{ about_content|markdown }}
+    </div>
+</section>
+{% endblock main-content %}
