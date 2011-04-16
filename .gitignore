@@ -6,3 +6,4 @@ media/photos
 media/thumbnails
 *.sqlite
 *.db
+.coverage
