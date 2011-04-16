@@ -13,7 +13,7 @@ Requisitos
 Instalação
 ==========
 
-Instalar o Leilão é bem fácil, uma vez satisfeito os requisitos.
+Instalar o Leilão é bem fácil, uma vez satisfeitos os requisitos.
 
 Clone o repositório, crie o banco de dados e inicie o servidor:
 
@@ -25,3 +25,8 @@ Clone o repositório, crie o banco de dados e inicie o servidor:
 Feito isso, você terá disponível a loja em http://localhost:8000 e a seção
 administrativa fica em http://localhost:8000/admin, você já pode navegar pelo
 site e adicionar seus produtos.
+
+Licença
+=======
+
+O projeto Leilão segue a licença BSD igual ao Django.
