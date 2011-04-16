@@ -40,7 +40,6 @@ class LojinhaModelsTest(TestCase):
 class LojinhaViewsTest(TestCase):
     def test_index(self):
         response = self.client.get('/')
-        self.assertEqual(302, response.status_code)
         self.assertRedirects(response, 'sobre')
 
     def test_about(self):
@@ -60,6 +59,12 @@ class LojinhaViewsTest(TestCase):
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'contact.html')
         self.assertFalse(response.context['contact_form'].is_valid())
+        self.assertFormError(
+            response,
+            'contact_form',
+            'email',
+            'This field is required.'
+        )
 
         response = self.client.post(
             '/contato',
@@ -107,20 +112,22 @@ class LojinhaViewsTest(TestCase):
 
     def test_bid(self):
         from lojinha.models import Bid
+        from lojinha.views import BID_SUCCESS, BID_ERROR
 
         p = add_test_product()
         response = self.client.post(
             '/livros/pragmatic-programmer/lance',
-            {'amount': 350, 'email': 'john@buyer.com'}
+            {'amount': 350, 'email': 'john@buyer.com'},
+            follow=True
         )
-        self.assertEqual(302, response.status_code)
         self.assertRedirects(response, '/livros/pragmatic-programmer')
+        self.assertContains(response, BID_SUCCESS)
         self.assertEquals(1, Bid.objects.count())
 
         response = self.client.post('/livros/pragmatic-programmer/lance')
         self.assertTemplateUsed(response, 'lojinha/product_view.html')
-        self.assertContains(response, 'corrija os erros')
+        self.assertFalse(response.context['bid_form'].is_valid())
+        self.assertContains(response, BID_ERROR)
 
         response = self.client.get('/livros/pragmatic-programmer/lance')
-        self.assertEqual(302, response.status_code)
         self.assertRedirects(response, '/livros/pragmatic-programmer')
