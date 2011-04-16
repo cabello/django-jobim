@@ -17,10 +17,10 @@ Instalar o Leilão é bem fácil, uma vez satisfeitos os requisitos.
 
 Clone o repositório, crie o banco de dados e inicie o servidor:
 
-        git clone git://github.com/cabello/leilao.git
-        cd leilao
-        python manage.py syncdb
-        python manage.py runserver
+    git clone git://github.com/cabello/leilao.git
+    cd leilao
+    python manage.py syncdb
+    python manage.py runserver
 
 Feito isso, você terá disponível a loja em http://localhost:8000 e a seção
 administrativa fica em http://localhost:8000/admin, você já pode navegar pelo
