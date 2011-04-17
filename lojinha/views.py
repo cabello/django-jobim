@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib import messages
+from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, render_to_response, \
                              redirect
 from django.template import RequestContext, Context
@@ -28,6 +29,12 @@ def contact(request):
         contact_form = ContactForm(request.POST)
         if contact_form.is_valid():
             contact_form.save()
+            send_mail(
+                get_template('contact_subject.txt').render(Context()),
+                get_template('contact_message.txt').render(Context()),
+                contact_form.cleaned_data['email'],
+                [settings.CONTACT_EMAIL]
+            )
             return direct_to_template(request, 'contact_success.html')
     else:
         contact_form = ContactForm()

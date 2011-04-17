@@ -100,3 +100,7 @@ INSTALLED_APPS = (
 TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
 
 CONTACT_EMAIL = 'manoelcowboy@mail.com'
+
+# Change the email backend to smtp when in production and
+# set the needed settings acording to Django documentation
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'

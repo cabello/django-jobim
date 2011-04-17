@@ -49,6 +49,9 @@ class LojinhaViewsTest(TestCase):
         self.assertTemplateUsed(response, 'about.html')
 
     def test_contact(self):
+        from django.conf import settings
+        from django.core import mail
+
         from lojinha.models import Contact
 
         response = self.client.get('/contato')
@@ -73,6 +76,12 @@ class LojinhaViewsTest(TestCase):
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'contact_success.html')
         self.assertEqual(1, Contact.objects.count())
+        self.assertEqual(1, len(mail.outbox))
+        message = mail.outbox[0]
+        self.assertEqual(settings.CONTACT_EMAIL, message.to[0])
+        self.assertEqual('john@buyer.com', message.from_email)
+        self.assertTemplateUsed(response, 'contact_subject.txt')
+        self.assertTemplateUsed(response, 'contact_message.txt')
 
     def test_products_by_category(self):
         response = self.client.get('/carros')
