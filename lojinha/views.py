@@ -29,9 +29,10 @@ def contact(request):
         contact_form = ContactForm(request.POST)
         if contact_form.is_valid():
             contact_form.save()
+            mail_context = Context(contact_form.cleaned_data)
             send_mail(
-                get_template('contact_subject.txt').render(Context()),
-                get_template('contact_message.txt').render(Context()),
+                get_template('contact_subject.txt').render(mail_context),
+                get_template('contact_message.txt').render(mail_context),
                 contact_form.cleaned_data['email'],
                 [settings.CONTACT_EMAIL]
             )

@@ -69,6 +69,7 @@ class LojinhaViewsTest(TestCase):
             'This field is required.'
         )
 
+        self.assertEqual(0, Contact.objects.count())
         response = self.client.post(
             '/contato',
             {'email': 'john@buyer.com'}
@@ -76,6 +77,20 @@ class LojinhaViewsTest(TestCase):
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'contact_success.html')
         self.assertEqual(1, Contact.objects.count())
+
+        mail.outbox = []
+        contact_form = {
+            'name': 'John',
+            'email': 'john@buyer.com',
+            'phone': '555-1234',
+            'subject': 'How much for the box?',
+            'message': 'I saw prrety box in your store...',
+        }
+        response = self.client.post(
+            '/contato',
+            contact_form
+        )
+        self.assertEqual(200, response.status_code)
         self.assertEqual(1, len(mail.outbox))
         message = mail.outbox[0]
         self.assertEqual(settings.CONTACT_EMAIL, message.to[0])
