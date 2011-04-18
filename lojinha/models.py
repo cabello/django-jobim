@@ -41,9 +41,9 @@ class Product(models.Model):
         if self.sold:
             return 'Vendido'
         else:
-            qs = self.bid_set.filter(accepted=True).order_by('-value')
-            if qs.count():
-                return 'Maior oferta: R$ %s' % qs[0].value
+            bidset = self.bid_set.filter(accepted=True).order_by('-value')
+            if bidset.count():
+                return 'Maior oferta: R$ %s' % bidset[0].value
             else:
                 return 'Esperando oferta'
 

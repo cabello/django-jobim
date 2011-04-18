@@ -4,17 +4,17 @@ from django.test import TestCase
 def add_test_product():
     from lojinha.models import Product, Category
 
-    c = Category.objects.get(slug='livros')
-    p = Product(
+    category = Category.objects.get(slug='livros')
+    product = Product(
         name='The Pragmatic Programmer',
         slug='pragmatic-programmer',
         description='from jouneryman to master',
-        category=c,
+        category=category,
         sold=False
     )
-    p.save()
+    product.save()
 
-    return p
+    return product
 
 
 class LojinhaAdminTest(TestCase):
@@ -22,35 +22,40 @@ class LojinhaAdminTest(TestCase):
         from lojinha.admin import BidAdmin
         from lojinha.models import Bid
 
-        p = add_test_product()
-        b = Bid(product=p, value=30)
-        b.save()
-        self.assertFalse(b.accepted)
-        qs = Bid.objects.all()
+        product = add_test_product()
+        bid = Bid(product=product, value=30)
+        bid.save()
+        self.assertFalse(bid.accepted)
+        queryset = Bid.objects.all()
         bid_admin = BidAdmin(Bid, None)
-        bid_admin.accept_bid(None, qs)
-        b = Bid.objects.get(pk=b.pk)
-        self.assertTrue(b.accepted)
+        bid_admin.accept_bid(None, queryset)
+        bid = Bid.objects.get(pk=bid.pk)
+        self.assertTrue(bid.accepted)
 
 
 class LojinhaModelsTest(TestCase):
     def test_product_status(self):
         from lojinha.models import Bid
 
-        p = add_test_product()
-        self.assertEquals('Esperando oferta', p.status())
+        product = add_test_product()
+        self.assertEquals('Esperando oferta', product.status())
 
-        b = Bid(product=p, value=100, mail='john@buyer.com', accepted=False)
-        b.save()
-        self.assertEquals('Esperando oferta', p.status())
+        bid = Bid(
+            product=product,
+            value=100,
+            mail='john@buyer.com',
+            accepted=False
+        )
+        bid.save()
+        self.assertEquals('Esperando oferta', product.status())
 
-        b.accepted = True
-        b.save()
-        self.assertEquals('Maior oferta: R$ 100', p.status())
+        bid.accepted = True
+        bid.save()
+        self.assertEquals('Maior oferta: R$ 100', product.status())
 
-        p.sold = True
-        p.save()
-        self.assertEquals('Vendido', p.status())
+        product.sold = True
+        product.save()
+        self.assertEquals('Vendido', product.status())
 
 
 class LojinhaViewsTest(TestCase):
@@ -123,30 +128,30 @@ class LojinhaViewsTest(TestCase):
         self.assertTemplateUsed(response, 'lojinha/products_by_category.html')
         self.assertEqual(0, len(response.context['products']))
 
-        p = add_test_product()
+        product = add_test_product()
         response = self.client.get('/livros')
         self.assertEqual(200, response.status_code)
         self.assertEqual(1, len(response.context['products']))
-        self.assertTrue(p in response.context['products'])
+        self.assertTrue(product in response.context['products'])
 
-        p.sold = True
-        p.save()
+        product.sold = True
+        product.save()
         response = self.client.get('/livros')
         self.assertEqual(200, response.status_code)
         self.assertEqual(0, len(response.context['products']))
-        self.assertFalse(p in response.context['products'])
+        self.assertFalse(product in response.context['products'])
 
     def test_product_view(self):
         response = self.client.get('/livros/pragmatic-programmer')
         self.assertEqual(404, response.status_code)
 
-        p = add_test_product()
+        product = add_test_product()
         response = self.client.get('/livros/pragmatic-programmer')
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'lojinha/product_view.html')
 
-        p.sold = True
-        p.save()
+        product.sold = True
+        product.save()
         response = self.client.get('/livros/pragmatic-programmer')
         self.assertEqual(404, response.status_code)
 
@@ -154,7 +159,7 @@ class LojinhaViewsTest(TestCase):
         from lojinha.models import Bid
         from lojinha.views import BID_SUCCESS, BID_ERROR
 
-        p = add_test_product()
+        add_test_product()
         response = self.client.post(
             '/livros/pragmatic-programmer/lance',
             {'amount': 350, 'email': 'john@buyer.com'},
