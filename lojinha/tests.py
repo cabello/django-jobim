@@ -17,6 +17,22 @@ def add_test_product():
     return p
 
 
+class LojinhaAdminTest(TestCase):
+    def test_accept_bid(self):
+        from lojinha.admin import BidAdmin
+        from lojinha.models import Bid
+
+        p = add_test_product()
+        b = Bid(product=p, value=30)
+        b.save()
+        self.assertFalse(b.accepted)
+        qs = Bid.objects.all()
+        bid_admin = BidAdmin(Bid, None)
+        bid_admin.accept_bid(None, qs)
+        b = Bid.objects.get(pk=b.pk)
+        self.assertTrue(b.accepted)
+
+
 class LojinhaModelsTest(TestCase):
     def test_product_status(self):
         from lojinha.models import Bid
