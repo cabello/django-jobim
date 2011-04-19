@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 
@@ -10,8 +11,7 @@ def add_test_product():
         slug='pragmatic-programmer',
         description='from jouneryman to master',
         category=category,
-        sold=False
-    )
+        sold=False)
     product.save()
 
     return product
@@ -44,8 +44,7 @@ class LojinhaModelsTest(TestCase):
             product=product,
             value=100,
             mail='john@buyer.com',
-            accepted=False
-        )
+            accepted=False)
         bid.save()
         self.assertEquals('Esperando oferta', product.status())
 
@@ -60,11 +59,11 @@ class LojinhaModelsTest(TestCase):
 
 class LojinhaViewsTest(TestCase):
     def test_index(self):
-        response = self.client.get('/')
-        self.assertRedirects(response, 'sobre')
+        response = self.client.get(reverse('leilao_index'))
+        self.assertRedirects(response, reverse('leilao_sobre'))
 
     def test_about(self):
-        response = self.client.get('/sobre')
+        response = self.client.get(reverse('leilao_sobre'))
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'about.txt')
         self.assertTemplateUsed(response, 'about.html')
@@ -75,11 +74,11 @@ class LojinhaViewsTest(TestCase):
 
         from lojinha.models import Contact
 
-        response = self.client.get('/contato')
+        response = self.client.get(reverse('leilao_contato'))
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'contact.html')
 
-        response = self.client.post('/contato')
+        response = self.client.post(reverse('leilao_contato'))
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'contact.html')
         self.assertFalse(response.context['contact_form'].is_valid())
@@ -87,14 +86,12 @@ class LojinhaViewsTest(TestCase):
             response,
             'contact_form',
             'email',
-            'This field is required.'
-        )
+            'This field is required.')
 
         self.assertEqual(0, Contact.objects.count())
         response = self.client.post(
             '/contato',
-            {'email': 'john@buyer.com'}
-        )
+            {'email': 'john@buyer.com'})
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'contact_success.html')
         self.assertEqual(1, Contact.objects.count())
@@ -105,12 +102,10 @@ class LojinhaViewsTest(TestCase):
             'email': 'john@buyer.com',
             'phone': '555-1234',
             'subject': 'How much for the box?',
-            'message': 'I saw prrety box in your store...',
-        }
+            'message': 'I saw prrety box in your store...'}
         response = self.client.post(
-            '/contato',
-            contact_form
-        )
+            reverse('leilao_contato'),
+            contact_form)
         self.assertEqual(200, response.status_code)
         self.assertEqual(1, len(mail.outbox))
         message = mail.outbox[0]
@@ -123,56 +118,67 @@ class LojinhaViewsTest(TestCase):
         response = self.client.get('/carros')
         self.assertEqual(404, response.status_code)
 
-        response = self.client.get('/livros')
+        response = self.client.get(reverse('leilao_livros'))
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'lojinha/products_by_category.html')
         self.assertEqual(0, len(response.context['products']))
 
         product = add_test_product()
-        response = self.client.get('/livros')
+        response = self.client.get(reverse('leilao_livros'))
         self.assertEqual(200, response.status_code)
         self.assertEqual(1, len(response.context['products']))
         self.assertTrue(product in response.context['products'])
 
         product.sold = True
         product.save()
-        response = self.client.get('/livros')
+        response = self.client.get(reverse('leilao_livros'))
         self.assertEqual(200, response.status_code)
         self.assertEqual(0, len(response.context['products']))
         self.assertFalse(product in response.context['products'])
 
     def test_product_view(self):
-        response = self.client.get('/livros/pragmatic-programmer')
+        product_view_url = reverse(
+            'leilao_product_view',
+            kwargs={
+                'category_slug': 'livros',
+                'product_slug': 'pragmatic-programmer'})
+
+        response = self.client.get(product_view_url)
         self.assertEqual(404, response.status_code)
 
         product = add_test_product()
-        response = self.client.get('/livros/pragmatic-programmer')
+        response = self.client.get(product_view_url)
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'lojinha/product_view.html')
 
         product.sold = True
         product.save()
-        response = self.client.get('/livros/pragmatic-programmer')
+        response = self.client.get(product_view_url)
         self.assertEqual(404, response.status_code)
 
     def test_bid(self):
         from lojinha.models import Bid
         from lojinha.views import BID_SUCCESS, BID_ERROR
 
+        url_args = {
+            'category_slug': 'livros',
+            'product_slug': 'pragmatic-programmer'}
+        product_view_url = reverse('leilao_product_view', kwargs=url_args)
+        bid_url = reverse('leilao_product_bid', kwargs=url_args)
         add_test_product()
+
         response = self.client.post(
-            '/livros/pragmatic-programmer/lance',
+            bid_url,
             {'value': 350, 'mail': 'john@buyer.com'},
-            follow=True
-        )
-        self.assertRedirects(response, '/livros/pragmatic-programmer')
+            follow=True)
+        self.assertRedirects(response, product_view_url)
         self.assertContains(response, BID_SUCCESS)
         self.assertEquals(1, Bid.objects.count())
 
-        response = self.client.post('/livros/pragmatic-programmer/lance')
+        response = self.client.post(bid_url)
         self.assertTemplateUsed(response, 'lojinha/product_view.html')
         self.assertFalse(response.context['bid_form'].is_valid())
         self.assertContains(response, BID_ERROR)
 
-        response = self.client.get('/livros/pragmatic-programmer/lance')
-        self.assertRedirects(response, '/livros/pragmatic-programmer')
+        response = self.client.get(bid_url)
+        self.assertRedirects(response, product_view_url)
