@@ -29,11 +29,11 @@
         <h3>Maior oferta: <em>{{ product.status }}</em> <a href="/sobre"> Como funciona?  </a></h3>
         <form accept-charset="UTF-8" action="{% url leilao_product_bid product.category.slug product.slug %}" class="simple_form item" method="post">
         <fieldset>
-            {% if bid_form.amount.errors %}{{ bid_form.amount.errors}}{% endif %}<br />
-            <label class="string optional" for="item_bid_amount"> Oferta: R$</label>{{ bid_form.amount }}
+            {% if bid_form.value.errors %}{{ bid_form.value.errors}}{% endif %}<br />
+            <label class="string optional" for="item_bid_value"> Oferta: R$</label>{{ bid_form.value }}
             <br>
-            {% if bid_form.email.errors %}{{ bid_form.email.errors}}{% endif %}<br />
-            <label class="email optional" for="item_bid_email"> Email:</label>{{ bid_form.email }}           <br>
+            {% if bid_form.mail.errors %}{{ bid_form.mail.errors}}{% endif %}<br />
+            <label class="email optional" for="item_bid_mail"> Email:</label>{{ bid_form.mail }}<br />
             <button type="submit">Confirmar a oferta</button>
         </fieldset>
         </form>

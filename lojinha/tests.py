@@ -162,7 +162,7 @@ class LojinhaViewsTest(TestCase):
         add_test_product()
         response = self.client.post(
             '/livros/pragmatic-programmer/lance',
-            {'amount': 350, 'email': 'john@buyer.com'},
+            {'value': 350, 'mail': 'john@buyer.com'},
             follow=True
         )
         self.assertRedirects(response, '/livros/pragmatic-programmer')

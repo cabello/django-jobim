@@ -175,7 +175,7 @@ form br {
 #main_content label {
   display:            inline-block;
   vertical-align:     middle;
-  width:              101px;  
+  width:              101px;
   margin-right:       5px;
 }
 #bidding form label {
@@ -191,7 +191,7 @@ form br {
 #main_content form input {
   height:             23px;
 }
-#main_content form #item_bid_amount {
+#main_content form #item_bid_value {
   height:             51px;
 }
 #main_content form textarea {
@@ -237,7 +237,7 @@ form br {
   font-size:          80%;
   line-height:        1.2em;
   text-align:         center;
-  
+
   display:            block;
   padding:            4px 5px 6px;
   margin:             -2px 7px 10px 105px;
@@ -315,7 +315,7 @@ Cinza escuro:               #333
 
 h1 {
   color:              #333;
-  text-shadow:        0 2px 1px #FFF;  
+  text-shadow:        0 2px 1px #FFF;
 }
 
 
@@ -381,7 +381,7 @@ h3 em, h3 strong {
   text-shadow:        0 1px 0 #C5550E;
 }
 
-#main_content h2 a:hover, #main_content h3 a:hover {  
+#main_content h2 a:hover, #main_content h3 a:hover {
   -webkit-box-shadow: none;
   -moz-box-shadow:    none;
   box-shadow:         none;
@@ -410,8 +410,8 @@ h3 em, h3 strong {
   box-shadow:         0px -1px 0px #CCC, 0px 1px 0px #FFF;
 }*/
 
-#thumbnails img, 
-#bidding img, #big_pictures img, 
+#thumbnails img,
+#bidding img, #big_pictures img,
 .submit_result {
   -webkit-box-shadow: 0px 4px 6px #B1BFC4;
   -moz-box-shadow:    0px 4px 6px #B1BFC4;
@@ -434,7 +434,7 @@ h3 em, h3 strong {
 #main_content form input, #main_content form textarea {
   background:         #FFF;
 }
-#main_content #item_bid_amount {
+#main_content #item_bid_value {
   color:              #1D7592;
 }
 #main_content form textarea {

@@ -94,11 +94,11 @@ input {
   font-size:          120%;
   text-align:         right;
 }
-label#bid, label[for=item_bid_amount] {
+label#bid, label[for=item_bid_value] {
   font-size:          140% !important;
 }
 
-#item_bid_amount {
+#item_bid_value {
   font-size:          165%;
   line-height:        51px;
 }
