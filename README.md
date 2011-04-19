@@ -9,6 +9,16 @@ Requisitos
 ----------
 
 - Django 1.3
+- Markdown
+
+Requisitos para rodar os testes
+-------------------------------
+
+- coverage
+- django_coverage
+
+Note que todos esses pacotes estão disponíveis para instalação via
+`easy_install` ou `pip`.
 
 Instalação
 ==========
