@@ -22,8 +22,7 @@ class Product(models.Model):
     cover = models.ImageField(
         upload_to='thumbnails',
         max_length=250,
-        verbose_name='capa'
-    )
+        verbose_name='capa')
     sold = models.BooleanField(verbose_name='vendido')
 
     class Meta:
@@ -53,8 +52,7 @@ class Photo(models.Model):
     file = models.ImageField(
         upload_to='photos',
         max_length=250,
-        verbose_name='imagem'
-    )
+        verbose_name='imagem')
 
     class Meta:
         verbose_name = 'foto'
@@ -73,18 +71,13 @@ class Bid(models.Model):
         verbose_name = 'lance'
 
     def __unicode__(self):
-        return u'%s R$%s %s' % (
-            self.product.name,
-            str(self.value),
-            self.mail
-        )
+        return u'%s R$%s %s' % (self.product.name, str(self.value), self.mail)
 
     @models.permalink
     def get_absolute_url(self):
         return (
             'leilao_product_view',
-            [self.product.category.slug, self.product.slug]
-        )
+            [self.product.category.slug, self.product.slug])
 
 
 class Contact(models.Model):
@@ -93,13 +86,11 @@ class Contact(models.Model):
     phone = models.CharField(
         max_length=32,
         verbose_name='telefone',
-        blank=True
-    )
+        blank=True)
     subject = models.CharField(
         max_length=128,
         verbose_name='assunto',
-        blank=True
-    )
+        blank=True)
     message = models.TextField(verbose_name='mensagem', blank=True)
     read = models.BooleanField(verbose_name='lido')
 

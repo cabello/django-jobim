@@ -15,8 +15,7 @@ class ContactForm(forms.ModelForm):
             get_template('contact_subject.txt').render(mail_context),
             get_template('contact_message.txt').render(mail_context),
             self.cleaned_data['email'],
-            [settings.CONTACT_EMAIL]
-        )
+            [settings.CONTACT_EMAIL])
 
     class Meta:
         model = Contact
