@@ -84,21 +84,12 @@ class Bid(models.Model):
 
 
 class Contact(models.Model):
-    name = models.CharField(max_length=64, verbose_name='nome', blank=True)
-    email = models.CharField(max_length=128, verbose_name='e-mail')
-    phone = models.CharField(
-        max_length=32,
-        verbose_name='telefone',
-        blank=True)
-    subject = models.CharField(
-        max_length=128,
-        verbose_name='assunto',
-        blank=True)
-    message = models.TextField(verbose_name='mensagem', blank=True)
-    read = models.BooleanField(verbose_name='lido')
-
-    class Meta:
-        verbose_name = 'contato'
+    name = models.CharField(max_length=64, blank=True)
+    email = models.CharField(max_length=128)
+    phone_number = models.CharField(max_length=32, blank=True)
+    subject = models.CharField(max_length=128, blank=True)
+    message = models.TextField(blank=True)
+    read = models.BooleanField()
 
     def __unicode__(self):
         return u'%s <%s> - %s' % (self.name, self.email, self.subject)

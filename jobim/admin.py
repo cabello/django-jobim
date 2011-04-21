@@ -35,7 +35,7 @@ class BidAdmin(admin.ModelAdmin):
 
 
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ('read', 'name', 'email', 'phone', 'subject')
+    list_display = ('read', 'name', 'email', 'phone_number', 'subject')
     list_filter = ('read',)
 
 admin.site.register(Category, CategoryAdmin)
