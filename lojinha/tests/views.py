@@ -1,60 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-
-def add_test_product():
-    from lojinha.models import Product, Category
-
-    category = Category.objects.get(slug='livros')
-    product = Product(
-        name='The Pragmatic Programmer',
-        slug='pragmatic-programmer',
-        description='from jouneryman to master',
-        category=category,
-        sold=False)
-    product.save()
-
-    return product
-
-
-class LojinhaAdminTest(TestCase):
-    def test_accept_bid(self):
-        from lojinha.admin import BidAdmin
-        from lojinha.models import Bid
-
-        product = add_test_product()
-        bid = Bid(product=product, value=30)
-        bid.save()
-        self.assertFalse(bid.accepted)
-        queryset = Bid.objects.all()
-        bid_admin = BidAdmin(Bid, None)
-        bid_admin.accept_bid(None, queryset)
-        bid = Bid.objects.get(pk=bid.pk)
-        self.assertTrue(bid.accepted)
-
-
-class LojinhaModelsTest(TestCase):
-    def test_product_status(self):
-        from lojinha.models import Bid
-
-        product = add_test_product()
-        self.assertEquals('Esperando oferta', product.status())
-
-        bid = Bid(
-            product=product,
-            value=100,
-            mail='john@buyer.com',
-            accepted=False)
-        bid.save()
-        self.assertEquals('Esperando oferta', product.status())
-
-        bid.accepted = True
-        bid.save()
-        self.assertEquals('Maior oferta: R$ 100', product.status())
-
-        product.sold = True
-        product.save()
-        self.assertEquals('Vendido', product.status())
+from lojinha.tests.helpers import add_test_product
 
 
 class LojinhaViewsTest(TestCase):

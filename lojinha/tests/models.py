@@ -1,0 +1,27 @@
+from django.test import TestCase
+
+from lojinha.tests.helpers import add_test_product
+
+
+class LojinhaModelsTest(TestCase):
+    def test_product_status(self):
+        from lojinha.models import Bid
+
+        product = add_test_product()
+        self.assertEquals('Esperando oferta', product.status())
+
+        bid = Bid(
+            product=product,
+            value=100,
+            mail='john@buyer.com',
+            accepted=False)
+        bid.save()
+        self.assertEquals('Esperando oferta', product.status())
+
+        bid.accepted = True
+        bid.save()
+        self.assertEquals('Maior oferta: R$ 100', product.status())
+
+        product.sold = True
+        product.save()
+        self.assertEquals('Vendido', product.status())
