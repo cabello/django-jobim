@@ -398,7 +398,6 @@ li:last-child .hentry, #content > .hentry {border: 0; margin: 0;}
     #add-comment label {clear: left; float: left; text-align: left; width: 150px;}
     #add-comment input[type='text'],
     #add-comment input[type='email'],
-    #add-comment input[type='mail'],
     #add-comment input[type='url'] {float: left; width: 200px;}
 
     #add-comment textarea {float: left; height: 150px; width: 495px;}

@@ -44,9 +44,9 @@ class Product(models.Model):
         if self.sold:
             return 'Vendido'
         else:
-            bidset = self.bid_set.filter(accepted=True).order_by('-value')
+            bidset = self.bid_set.filter(accepted=True).order_by('-amount')
             if bidset.count():
-                return 'Maior oferta: R$ %s' % bidset[0].value
+                return 'Maior oferta: R$ %s' % bidset[0].amount
             else:
                 return 'Esperando oferta'
 
@@ -66,16 +66,14 @@ class Photo(models.Model):
 
 
 class Bid(models.Model):
-    product = models.ForeignKey(Product, verbose_name='produto')
-    value = models.IntegerField(verbose_name='valor')
-    mail = models.CharField(max_length=128, verbose_name='e-mail')
-    accepted = models.BooleanField(verbose_name='aceita')
-
-    class Meta:
-        verbose_name = 'lance'
+    product = models.ForeignKey(Product)
+    amount = models.IntegerField()
+    email = models.CharField(max_length=128)
+    accepted = models.BooleanField()
 
     def __unicode__(self):
-        return u'%s R$%s %s' % (self.product.name, str(self.value), self.mail)
+        amount = str(self.amount)
+        return u'%s R$%s %s' % (self.product.name, amount, self.email)
 
     @models.permalink
     def get_absolute_url(self):

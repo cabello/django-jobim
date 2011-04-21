@@ -24,14 +24,14 @@ class PhotoAdmin(admin.ModelAdmin):
 
 
 class BidAdmin(admin.ModelAdmin):
-    list_display = ('product', 'value', 'mail', 'accepted')
+    list_display = ('product', 'amount', 'email', 'accepted')
     list_filter = ('product', 'accepted')
 
     actions = ['accept_bid']
 
     def accept_bid(self, request, queryset):
         queryset.update(accepted=True)
-    accept_bid.short_description = u'Aceitar lances selecionados'
+    accept_bid.short_description = 'Accept selected bids'
 
 
 class ContactAdmin(admin.ModelAdmin):

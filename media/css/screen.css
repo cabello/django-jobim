@@ -191,7 +191,7 @@ form br {
 #main_content form input {
   height:             23px;
 }
-#main_content form #item_bid_value {
+#main_content form #item_bid_amount {
   height:             51px;
 }
 #main_content form textarea {
@@ -434,7 +434,7 @@ h3 em, h3 strong {
 #main_content form input, #main_content form textarea {
   background:         #FFF;
 }
-#main_content #item_bid_value {
+#main_content #item_bid_amount {
   color:              #1D7592;
 }
 #main_content form textarea {

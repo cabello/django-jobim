@@ -12,8 +12,8 @@ class JobimModelsTest(TestCase):
 
         bid = Bid(
             product=product,
-            value=100,
-            mail='john@buyer.com',
+            amount=100,
+            email='john@buyer.com',
             accepted=False)
         bid.save()
         self.assertEquals('Esperando oferta', product.status())

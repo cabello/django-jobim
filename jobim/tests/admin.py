@@ -9,7 +9,7 @@ class JobimAdminTest(TestCase):
         from jobim.models import Bid
 
         product = add_test_product()
-        bid = Bid(product=product, value=30)
+        bid = Bid(product=product, amount=30)
         bid.save()
         self.assertFalse(bid.accepted)
         queryset = Bid.objects.all()

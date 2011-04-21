@@ -120,7 +120,7 @@ class JobimViewsTest(TestCase):
 
         response = self.client.post(
             bid_url,
-            {'value': 350, 'mail': 'john@buyer.com'},
+            {'amount': 350, 'email': 'john@buyer.com'},
             follow=True)
         self.assertRedirects(response, product_view_url)
         self.assertContains(response, BID_SUCCESS)
