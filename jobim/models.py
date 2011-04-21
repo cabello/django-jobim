@@ -13,6 +13,10 @@ class Category(models.Model):
     def __unicode__(self):
         return self.name
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('jobim_category_view', [self.slug])
+
 
 class Product(models.Model):
     name = models.CharField(max_length=250, verbose_name='nome')
