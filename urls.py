@@ -10,35 +10,14 @@ urlpatterns = patterns('',
 
     url(r'^$', 'jobim.views.index', name='jobim_index'),
 
-    url(
-        r'^eletrodomesticos$',
-        'jobim.views.products_by_category',
-        name='jobim_eletrodomesticos',
-        kwargs={'category_slug': 'eletrodomesticos'}),
+    url(r'^about$', 'jobim.views.about', name='jobim_about'),
+
+    url(r'^contact$', 'jobim.views.contact', name='jobim_contact'),
 
     url(
-        r'^eletronicos$',
+        r'^(?P<category_slug>[-\w]+)$',
         'jobim.views.products_by_category',
-        name='jobim_eletronicos',
-        kwargs={'category_slug': 'eletronicos'}),
-
-    url(
-        r'^escritorio$',
-        'jobim.views.products_by_category',
-        name='jobim_escritorio',
-        kwargs={'category_slug': 'escritorio'}),
-
-    url(
-        r'^livros$',
-        'jobim.views.products_by_category',
-        name='jobim_livros',
-        kwargs={'category_slug': 'livros'}),
-
-    url(
-        r'^moveis$',
-        'jobim.views.products_by_category',
-        name='jobim_moveis',
-        kwargs={'category_slug': 'moveis'}),
+        name='jobim_category_view',),
 
     url(
         r'^(?P<category_slug>[-\w]+)/(?P<product_slug>[-\w]+)$',
@@ -48,11 +27,7 @@ urlpatterns = patterns('',
     url(
         r'^(?P<category_slug>[-\w]+)/(?P<product_slug>[-\w]+)/bid$',
         'jobim.views.bid',
-        name='jobim_product_bid'),
-
-    url(r'^about$', 'jobim.views.about', name='jobim_about'),
-
-    url(r'^contact$', 'jobim.views.contact', name='jobim_contact'))
+        name='jobim_product_bid'), )
 
 if settings.DEBUG:
     urlpatterns += patterns('',

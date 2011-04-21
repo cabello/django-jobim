@@ -62,23 +62,27 @@ class JobimViewsTest(TestCase):
         self.assertTemplateUsed(response, 'contact_message.txt')
 
     def test_products_by_category(self):
-        response = self.client.get('/carros')
+        cars_url = reverse('jobim_category_view', kwargs={
+            'category_slug': 'cars'})
+        response = self.client.get(cars_url)
         self.assertEqual(404, response.status_code)
 
-        response = self.client.get(reverse('jobim_livros'))
+        books_url = reverse('jobim_category_view', kwargs={
+            'category_slug': 'books'})
+        response = self.client.get(books_url)
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'jobim/products_by_category.html')
         self.assertEqual(0, len(response.context['products']))
 
         product = add_test_product()
-        response = self.client.get(reverse('jobim_livros'))
+        response = self.client.get(books_url)
         self.assertEqual(200, response.status_code)
         self.assertEqual(1, len(response.context['products']))
         self.assertTrue(product in response.context['products'])
 
         product.sold = True
         product.save()
-        response = self.client.get(reverse('jobim_livros'))
+        response = self.client.get(books_url)
         self.assertEqual(200, response.status_code)
         self.assertEqual(0, len(response.context['products']))
         self.assertFalse(product in response.context['products'])
@@ -87,7 +91,7 @@ class JobimViewsTest(TestCase):
         product_view_url = reverse(
             'jobim_product_view',
             kwargs={
-                'category_slug': 'livros',
+                'category_slug': 'books',
                 'product_slug': 'pragmatic-programmer'})
 
         response = self.client.get(product_view_url)
@@ -108,7 +112,7 @@ class JobimViewsTest(TestCase):
         from jobim.views import BID_SUCCESS, BID_ERROR
 
         url_args = {
-            'category_slug': 'livros',
+            'category_slug': 'books',
             'product_slug': 'pragmatic-programmer'}
         product_view_url = reverse('jobim_product_view', kwargs=url_args)
         bid_url = reverse('jobim_product_bid', kwargs=url_args)

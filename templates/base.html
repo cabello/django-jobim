@@ -67,8 +67,6 @@
             {% block top-menu %}
             <nav><ul>
                 <li class="{% navactive request 'jobim_about' %}"><a href="{% url jobim_index %}">Sobre</a></li>
-                <li class="{% navactive request 'jobim_eletrodomesticos' %}"><a href="{% url jobim_eletrodomesticos %}">Eletrodomésticos</a></li>
-                <li class="{% navactive request 'jobim_moveis' %}"><a href="{% url jobim_moveis %}">Móveis</a></li>
                 <li class="{% navactive request 'jobim_contact' %}"><a href="{% url jobim_contact %}">Contato</a></li>
             </ul></nav>
             {% endblock top-menu %}
