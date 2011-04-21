@@ -1,10 +1,10 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from lojinha.tests.helpers import add_test_product
+from jobim.tests.helpers import add_test_product
 
 
-class LojinhaViewsTest(TestCase):
+class JobimViewsTest(TestCase):
     def test_index(self):
         response = self.client.get(reverse('leilao_index'))
         self.assertRedirects(response, reverse('leilao_sobre'))
@@ -19,7 +19,7 @@ class LojinhaViewsTest(TestCase):
         from django.conf import settings
         from django.core import mail
 
-        from lojinha.models import Contact
+        from jobim.models import Contact
 
         response = self.client.get(reverse('leilao_contato'))
         self.assertEqual(200, response.status_code)
@@ -67,7 +67,7 @@ class LojinhaViewsTest(TestCase):
 
         response = self.client.get(reverse('leilao_livros'))
         self.assertEqual(200, response.status_code)
-        self.assertTemplateUsed(response, 'lojinha/products_by_category.html')
+        self.assertTemplateUsed(response, 'jobim/products_by_category.html')
         self.assertEqual(0, len(response.context['products']))
 
         product = add_test_product()
@@ -96,7 +96,7 @@ class LojinhaViewsTest(TestCase):
         product = add_test_product()
         response = self.client.get(product_view_url)
         self.assertEqual(200, response.status_code)
-        self.assertTemplateUsed(response, 'lojinha/product_view.html')
+        self.assertTemplateUsed(response, 'jobim/product_view.html')
 
         product.sold = True
         product.save()
@@ -104,8 +104,8 @@ class LojinhaViewsTest(TestCase):
         self.assertEqual(404, response.status_code)
 
     def test_bid(self):
-        from lojinha.models import Bid
-        from lojinha.views import BID_SUCCESS, BID_ERROR
+        from jobim.models import Bid
+        from jobim.views import BID_SUCCESS, BID_ERROR
 
         url_args = {
             'category_slug': 'livros',
@@ -123,7 +123,7 @@ class LojinhaViewsTest(TestCase):
         self.assertEquals(1, Bid.objects.count())
 
         response = self.client.post(bid_url)
-        self.assertTemplateUsed(response, 'lojinha/product_view.html')
+        self.assertTemplateUsed(response, 'jobim/product_view.html')
         self.assertFalse(response.context['bid_form'].is_valid())
         self.assertContains(response, BID_ERROR)
 

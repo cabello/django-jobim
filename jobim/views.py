@@ -5,8 +5,8 @@ from django.template import RequestContext, Context
 from django.template.loader import get_template
 from django.views.generic.simple import direct_to_template
 
-from lojinha.forms import BidForm, ContactForm
-from lojinha.models import Bid, Category, Product
+from jobim.forms import BidForm, ContactForm
+from jobim.models import Bid, Category, Product
 
 
 BID_SUCCESS = 'Recebemos sua oferta, se ela for interessante entraremos em \
@@ -47,7 +47,7 @@ def products_by_category(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
     products = Product.objects.filter(category=category, sold=False)
     return render_to_response(
-        'lojinha/products_by_category.html',
+        'jobim/products_by_category.html',
         {'category': category, 'products': products},
         context_instance=RequestContext(request))
 
@@ -57,7 +57,7 @@ def product_view(request, category_slug, product_slug):
     photos = product.photo_set.all()
     bid_form = BidForm(auto_id='item_bid_%s')
     return render_to_response(
-        'lojinha/product_view.html',
+        'jobim/product_view.html',
         {'product': product, 'photos': photos, 'bid_form': bid_form},
         context_instance=RequestContext(request))
 
@@ -75,7 +75,7 @@ def bid(request, category_slug, product_slug):
             photos = product.photo_set.all()
             messages.warning(request, BID_ERROR)
             return render_to_response(
-                'lojinha/product_view.html',
+                'jobim/product_view.html',
                 {'product': product, 'photos': photos, 'bid_form': bid_form},
                 context_instance=RequestContext(request))
     else:

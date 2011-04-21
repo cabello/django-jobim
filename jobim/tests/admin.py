@@ -1,12 +1,12 @@
 from django.test import TestCase
 
-from lojinha.tests.helpers import add_test_product
+from jobim.tests.helpers import add_test_product
 
 
-class LojinhaAdminTest(TestCase):
+class JobimAdminTest(TestCase):
     def test_accept_bid(self):
-        from lojinha.admin import BidAdmin
-        from lojinha.models import Bid
+        from jobim.admin import BidAdmin
+        from jobim.models import Bid
 
         product = add_test_product()
         bid = Bid(product=product, value=30)

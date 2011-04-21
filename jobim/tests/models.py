@@ -1,11 +1,11 @@
 from django.test import TestCase
 
-from lojinha.tests.helpers import add_test_product
+from jobim.tests.helpers import add_test_product
 
 
-class LojinhaModelsTest(TestCase):
+class JobimModelsTest(TestCase):
     def test_product_status(self):
-        from lojinha.models import Bid
+        from jobim.models import Bid
 
         product = add_test_product()
         self.assertEquals('Esperando oferta', product.status())

@@ -1,5 +1,5 @@
 def add_test_product():
-    from lojinha.models import Product, Category
+    from jobim.models import Product, Category
 
     category = Category.objects.get(slug='livros')
     product = Product(

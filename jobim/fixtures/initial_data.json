@@ -1,6 +1,6 @@
 [
   {
-    "model": "lojinha.category",
+    "model": "jobim.category",
     "pk": 1,
     "fields": {
       "name": "Móveis",
@@ -8,7 +8,7 @@
     }
   },
   {
-    "model": "lojinha.category",
+    "model": "jobim.category",
     "pk": 2,
     "fields": {
       "name": "Livros",
@@ -16,7 +16,7 @@
     }
   },
   {
-    "model": "lojinha.category",
+    "model": "jobim.category",
     "pk": 3,
     "fields": {
       "name": "Escritório",
@@ -24,7 +24,7 @@
     }
   },
   {
-    "model": "lojinha.category",
+    "model": "jobim.category",
     "pk": 4,
     "fields": {
       "name": "Eletrônicos",
@@ -32,7 +32,7 @@
     }
   },
   {
-    "model": "lojinha.category",
+    "model": "jobim.category",
     "pk": 5,
     "fields": {
       "name": "Eletrodomésticos",

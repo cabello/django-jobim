@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from lojinha.models import Category, Product, Photo, Bid, Contact
+from jobim.models import Category, Product, Photo, Bid, Contact
 
 
 class CategoryAdmin(admin.ModelAdmin):

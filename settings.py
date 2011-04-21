@@ -94,7 +94,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'lojinha',
+    'jobim',
 )
 
 TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'

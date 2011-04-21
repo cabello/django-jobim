@@ -1,3 +1,3 @@
-from lojinha.tests.admin import *
-from lojinha.tests.models import *
-from lojinha.tests.views import *
+from jobim.tests.admin import *
+from jobim.tests.models import *
+from jobim.tests.views import *

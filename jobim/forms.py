@@ -4,7 +4,7 @@ from django.core.mail import send_mail
 from django.template import Context
 from django.template.loader import get_template
 
-from lojinha.models import Bid, Contact
+from jobim.models import Bid, Contact
 
 
 class ContactForm(forms.ModelForm):
