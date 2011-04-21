@@ -6,11 +6,11 @@ from jobim.tests.helpers import add_test_product
 
 class JobimViewsTest(TestCase):
     def test_index(self):
-        response = self.client.get(reverse('leilao_index'))
-        self.assertRedirects(response, reverse('leilao_sobre'))
+        response = self.client.get(reverse('jobim_index'))
+        self.assertRedirects(response, reverse('jobim_about'))
 
     def test_about(self):
-        response = self.client.get(reverse('leilao_sobre'))
+        response = self.client.get(reverse('jobim_about'))
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'about.txt')
         self.assertTemplateUsed(response, 'about.html')
@@ -21,11 +21,11 @@ class JobimViewsTest(TestCase):
 
         from jobim.models import Contact
 
-        response = self.client.get(reverse('leilao_contato'))
+        response = self.client.get(reverse('jobim_contact'))
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'contact.html')
 
-        response = self.client.post(reverse('leilao_contato'))
+        response = self.client.post(reverse('jobim_contact'))
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'contact.html')
         self.assertFalse(response.context['contact_form'].is_valid())
@@ -37,7 +37,7 @@ class JobimViewsTest(TestCase):
 
         self.assertEqual(0, Contact.objects.count())
         response = self.client.post(
-            '/contato',
+            reverse('jobim_contact'),
             {'email': 'john@buyer.com'})
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'contact_success.html')
@@ -51,7 +51,7 @@ class JobimViewsTest(TestCase):
             'subject': 'How much for the box?',
             'message': 'I saw prrety box in your store...'}
         response = self.client.post(
-            reverse('leilao_contato'),
+            reverse('jobim_contact'),
             contact_form)
         self.assertEqual(200, response.status_code)
         self.assertEqual(1, len(mail.outbox))
@@ -65,27 +65,27 @@ class JobimViewsTest(TestCase):
         response = self.client.get('/carros')
         self.assertEqual(404, response.status_code)
 
-        response = self.client.get(reverse('leilao_livros'))
+        response = self.client.get(reverse('jobim_livros'))
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'jobim/products_by_category.html')
         self.assertEqual(0, len(response.context['products']))
 
         product = add_test_product()
-        response = self.client.get(reverse('leilao_livros'))
+        response = self.client.get(reverse('jobim_livros'))
         self.assertEqual(200, response.status_code)
         self.assertEqual(1, len(response.context['products']))
         self.assertTrue(product in response.context['products'])
 
         product.sold = True
         product.save()
-        response = self.client.get(reverse('leilao_livros'))
+        response = self.client.get(reverse('jobim_livros'))
         self.assertEqual(200, response.status_code)
         self.assertEqual(0, len(response.context['products']))
         self.assertFalse(product in response.context['products'])
 
     def test_product_view(self):
         product_view_url = reverse(
-            'leilao_product_view',
+            'jobim_product_view',
             kwargs={
                 'category_slug': 'livros',
                 'product_slug': 'pragmatic-programmer'})
@@ -110,8 +110,8 @@ class JobimViewsTest(TestCase):
         url_args = {
             'category_slug': 'livros',
             'product_slug': 'pragmatic-programmer'}
-        product_view_url = reverse('leilao_product_view', kwargs=url_args)
-        bid_url = reverse('leilao_product_bid', kwargs=url_args)
+        product_view_url = reverse('jobim_product_view', kwargs=url_args)
+        bid_url = reverse('jobim_product_bid', kwargs=url_args)
         add_test_product()
 
         response = self.client.post(

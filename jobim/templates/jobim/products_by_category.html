@@ -11,7 +11,7 @@
     <ul id="thumbnails">
     {% for product in products %}
         <li>
-        <a href="{% url leilao_product_view category.slug product.slug %}">
+        <a href="{% url jobim_product_view category.slug product.slug %}">
             <h2>{{ product }}</h2>
             <h3><em>{{ product.status }}</em></h3>
             <div>

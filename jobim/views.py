@@ -16,7 +16,7 @@ BID_ERROR = 'Ocorreram problemas com o preenchimento da oferta, \
 
 
 def index(request):
-    return redirect('leilao_sobre')
+    return redirect('jobim_about')
 
 
 def about(request):
@@ -70,7 +70,7 @@ def bid(request, category_slug, product_slug):
         if bid_form.is_valid():
             bid_form.save(product)
             messages.success(request, BID_SUCCESS)
-            return redirect('leilao_product_view', category_slug, product_slug)
+            return redirect('jobim_product_view', category_slug, product_slug)
         else:
             photos = product.photo_set.all()
             messages.warning(request, BID_ERROR)
@@ -79,4 +79,4 @@ def bid(request, category_slug, product_slug):
                 {'product': product, 'photos': photos, 'bid_form': bid_form},
                 context_instance=RequestContext(request))
     else:
-        return redirect('leilao_product_view', category_slug, product_slug)
+        return redirect('jobim_product_view', category_slug, product_slug)

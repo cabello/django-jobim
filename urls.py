@@ -8,51 +8,51 @@ admin.autodiscover()
 urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
 
-    url(r'^$', 'jobim.views.index', name='leilao_index'),
+    url(r'^$', 'jobim.views.index', name='jobim_index'),
 
     url(
         r'^eletrodomesticos$',
         'jobim.views.products_by_category',
-        name='leilao_eletrodomesticos',
+        name='jobim_eletrodomesticos',
         kwargs={'category_slug': 'eletrodomesticos'}),
 
     url(
         r'^eletronicos$',
         'jobim.views.products_by_category',
-        name='leilao_eletronicos',
+        name='jobim_eletronicos',
         kwargs={'category_slug': 'eletronicos'}),
 
     url(
         r'^escritorio$',
         'jobim.views.products_by_category',
-        name='leilao_escritorio',
+        name='jobim_escritorio',
         kwargs={'category_slug': 'escritorio'}),
 
     url(
         r'^livros$',
         'jobim.views.products_by_category',
-        name='leilao_livros',
+        name='jobim_livros',
         kwargs={'category_slug': 'livros'}),
 
     url(
         r'^moveis$',
         'jobim.views.products_by_category',
-        name='leilao_moveis',
+        name='jobim_moveis',
         kwargs={'category_slug': 'moveis'}),
 
     url(
         r'^(?P<category_slug>[-\w]+)/(?P<product_slug>[-\w]+)$',
         'jobim.views.product_view',
-        name='leilao_product_view'),
+        name='jobim_product_view'),
 
     url(
-        r'^(?P<category_slug>[-\w]+)/(?P<product_slug>[-\w]+)/lance$',
+        r'^(?P<category_slug>[-\w]+)/(?P<product_slug>[-\w]+)/bid$',
         'jobim.views.bid',
-        name='leilao_product_bid'),
+        name='jobim_product_bid'),
 
-    url(r'^sobre$', 'jobim.views.about', name='leilao_sobre'),
+    url(r'^about$', 'jobim.views.about', name='jobim_about'),
 
-    url(r'^contato$', 'jobim.views.contact', name='leilao_contato'))
+    url(r'^contact$', 'jobim.views.contact', name='jobim_contact'))
 
 if settings.DEBUG:
     urlpatterns += patterns('',
