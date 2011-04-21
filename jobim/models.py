@@ -52,14 +52,8 @@ class Product(models.Model):
 
 
 class Photo(models.Model):
-    product = models.ForeignKey(Product, verbose_name='produto')
-    file = models.ImageField(
-        upload_to='photos',
-        max_length=250,
-        verbose_name='imagem')
-
-    class Meta:
-        verbose_name = 'foto'
+    product = models.ForeignKey(Product)
+    image_file = models.ImageField(upload_to='photos', max_length=250)
 
     def __unicode__(self):
         return u'%s #%s' % (self.product.name, self.pk)
