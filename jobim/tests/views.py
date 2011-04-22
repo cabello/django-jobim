@@ -12,8 +12,8 @@ class JobimViewsTest(TestCase):
     def test_about(self):
         response = self.client.get(reverse('jobim_about'))
         self.assertEqual(200, response.status_code)
-        self.assertTemplateUsed(response, 'about.txt')
-        self.assertTemplateUsed(response, 'about.html')
+        self.assertTemplateUsed(response, 'jobim/about.txt')
+        self.assertTemplateUsed(response, 'jobim/about.html')
 
     def test_contact(self):
         from django.conf import settings

@@ -20,9 +20,9 @@ def index(request):
 
 
 def about(request):
-    about_content = get_template('about.txt').render(Context())
+    about_content = get_template('jobim/about.txt').render(Context())
     return render_to_response(
-        'about.html',
+        'jobim/about.html',
         {'about_content': about_content},
         context_instance=RequestContext(request))
 
