@@ -1,42 +1,46 @@
-Leilão
-======
+django-jobim
+============
 
-Leilão é um loja virtual feita com Django que tem por objetivo possibilitar as
-pessoas de vender seus pertences sem intermediários e taxas extras. É informal,
-simples e objetivo.
+A virtual store that wants to make your life easier when you to think about
+selling some personal stuff. You don't need intermediate people or to pay
+fees. It's informal, simple and focus in the main goal: to sell.
 
-Requisitos
-----------
+Requirements
+------------
 
 - Django 1.3
 - Markdown
+- PIL (Python Imaging Library)
 
-Requisitos para rodar os testes
--------------------------------
+Note: Mac OS X doesn't have libjpeg installed by default and your PIL won't
+recognize JPEG images if you don't install the libjpeg library.
+
+Requirements to run the tests
+-----------------------------
 
 - coverage
 - django_coverage
 
-Note que todos esses pacotes estão disponíveis para instalação via
-`easy_install` ou `pip`.
+Note: this packages are available via `easy_install` or `pip`.
 
-Instalação
-==========
+Installation
+============
 
-Instalar o Leilão é bem fácil, uma vez satisfeitos os requisitos.
+It's very easy to install django-jobim, once you have all requirements
+satisfied.
 
-Clone o repositório, crie o banco de dados e inicie o servidor:
+Clone the repository, synchronize the database and fire up the server:
 
-    git clone git://github.com/cabello/leilao.git
-    cd leilao
+    git clone git://github.com/cabello/django-jobim.git
+    cd django-jobim
     python manage.py syncdb
     python manage.py runserver
 
-Feito isso, você terá disponível a loja em http://localhost:8000 e a seção
-administrativa fica em http://localhost:8000/admin, você já pode navegar pelo
-site e adicionar seus produtos.
+When you are done, you will have your store available at http://localhost:8000
+and the administrative section on http://localhost:8000/admin, you are ready
+to add new products and to visit the site.
 
-Licença
+License
 =======
 
-O projeto Leilão segue a licença BSD igual ao Django.
+The django-jobim project follows the BSD license, equal to Django.
