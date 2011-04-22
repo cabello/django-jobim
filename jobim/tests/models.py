@@ -25,3 +25,14 @@ class JobimModelsTest(TestCase):
         product.sold = True
         product.save()
         self.assertEquals('Vendido', product.status())
+
+    def test_product_avaiable(self):
+        from jobim.models import Product
+
+        product = add_test_product()
+        self.assertTrue(product in Product.available.all())
+
+        product.sold = True
+        product.save()
+
+        self.assertFalse(product in Product.available.all())

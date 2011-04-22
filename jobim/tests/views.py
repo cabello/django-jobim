@@ -116,7 +116,7 @@ class JobimViewsTest(TestCase):
             'product_slug': 'pragmatic-programmer'}
         product_view_url = reverse('jobim_product_view', kwargs=url_args)
         bid_url = reverse('jobim_product_bid', kwargs=url_args)
-        add_test_product()
+        product = add_test_product()
 
         response = self.client.post(
             bid_url,
@@ -133,3 +133,10 @@ class JobimViewsTest(TestCase):
 
         response = self.client.get(bid_url)
         self.assertRedirects(response, product_view_url)
+
+        product.sold = True
+        product.save()
+        response = self.client.post(
+            bid_url,
+            {'amount': 370, 'email': 'doe@buyer.com'})
+        self.assertEqual(404, response.status_code)

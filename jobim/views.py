@@ -45,7 +45,7 @@ def contact(request):
 
 def products_by_category(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
-    products = Product.objects.filter(category=category, sold=False)
+    products = Product.available.filter(category=category)
     return render_to_response(
         'jobim/products_by_category.html',
         {'category': category, 'products': products},
@@ -53,7 +53,7 @@ def products_by_category(request, category_slug):
 
 
 def product_view(request, category_slug, product_slug):
-    product = get_object_or_404(Product, slug=product_slug, sold=False)
+    product = get_object_or_404(Product.available, slug=product_slug)
     photos = product.photo_set.all()
     bid_form = BidForm(auto_id='item_bid_%s')
     return render_to_response(
@@ -64,7 +64,7 @@ def product_view(request, category_slug, product_slug):
 
 def bid(request, category_slug, product_slug):
     if request.method == 'POST':
-        product = get_object_or_404(Product, slug=product_slug, sold=False)
+        product = get_object_or_404(Product.available, slug=product_slug)
         bid = Bid(product=product)
         bid_form = BidForm(request.POST, auto_id='item_bid_%s', instance=bid)
         if bid_form.is_valid():

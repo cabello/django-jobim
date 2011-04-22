@@ -18,6 +18,12 @@ class Category(models.Model):
         return ('jobim_category_view', [self.slug])
 
 
+class ProductsAvailableManager(models.Manager):
+    def get_query_set(self):
+        queryset = super(ProductsAvailableManager, self).get_query_set()
+        return queryset.filter(sold=False)
+
+
 class Product(models.Model):
     name = models.CharField(max_length=250, verbose_name='nome')
     slug = models.CharField(max_length=250)
@@ -28,6 +34,9 @@ class Product(models.Model):
         max_length=250,
         verbose_name='capa')
     sold = models.BooleanField(verbose_name='vendido')
+
+    objects = models.Manager()
+    available = ProductsAvailableManager()
 
     class Meta:
         verbose_name = 'produto'
