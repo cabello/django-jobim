@@ -8,7 +8,7 @@ class JobimModelsTest(TestCase):
         from jobim.models import Bid
 
         product = add_test_product()
-        self.assertEquals('Esperando oferta', product.status())
+        self.assertEquals('Waiting bid', product.status())
 
         bid = Bid(
             product=product,
@@ -16,15 +16,15 @@ class JobimModelsTest(TestCase):
             email='john@buyer.com',
             accepted=False)
         bid.save()
-        self.assertEquals('Esperando oferta', product.status())
+        self.assertEquals('Waiting bid', product.status())
 
         bid.accepted = True
         bid.save()
-        self.assertEquals('Maior oferta: R$ 100', product.status())
+        self.assertEquals('Current bid: U$ 100', product.status())
 
         product.sold = True
         product.save()
-        self.assertEquals('Vendido', product.status())
+        self.assertEquals('Sold', product.status())
 
     def test_product_avaiable(self):
         from jobim.models import Product

@@ -25,21 +25,20 @@ class ProductsAvailableManager(models.Manager):
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=250, verbose_name='nome')
+    name = models.CharField(max_length=250)
     slug = models.CharField(max_length=250)
-    description = models.TextField(verbose_name=u'descrição')
-    category = models.ForeignKey(Category, verbose_name='categoria')
+    description = models.TextField()
+    category = models.ForeignKey(Category)
     cover = models.ImageField(
         upload_to='thumbnails',
         max_length=250,
-        verbose_name='capa')
-    sold = models.BooleanField(verbose_name='vendido')
+        blank=True)
+    sold = models.BooleanField()
 
     objects = models.Manager()
     available = ProductsAvailableManager()
 
     class Meta:
-        verbose_name = 'produto'
         ordering = ('-id',)
 
     def __unicode__(self):
@@ -51,13 +50,13 @@ class Product(models.Model):
 
     def status(self):
         if self.sold:
-            return 'Vendido'
+            return 'Sold'
         else:
             bidset = self.bid_set.filter(accepted=True).order_by('-amount')
             if bidset.count():
-                return 'Maior oferta: R$ %s' % bidset[0].amount
+                return 'Current bid: U$ %s' % bidset[0].amount
             else:
-                return 'Esperando oferta'
+                return 'Waiting bid'
 
 
 class Photo(models.Model):
