@@ -1,4 +1,4 @@
-# Django settings for leilao project.
+# Django settings for django-jobim project.
 import os
 
 
@@ -76,7 +76,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'leilao.urls'
+ROOT_URLCONF = 'django-jobim.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates"
