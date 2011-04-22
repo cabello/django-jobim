@@ -23,11 +23,11 @@ class JobimViewsTest(TestCase):
 
         response = self.client.get(reverse('jobim_contact'))
         self.assertEqual(200, response.status_code)
-        self.assertTemplateUsed(response, 'contact.html')
+        self.assertTemplateUsed(response, 'jobim/contact.html')
 
         response = self.client.post(reverse('jobim_contact'))
         self.assertEqual(200, response.status_code)
-        self.assertTemplateUsed(response, 'contact.html')
+        self.assertTemplateUsed(response, 'jobim/contact.html')
         self.assertFalse(response.context['contact_form'].is_valid())
         self.assertFormError(
             response,
@@ -40,7 +40,7 @@ class JobimViewsTest(TestCase):
             reverse('jobim_contact'),
             {'email': 'john@buyer.com'})
         self.assertEqual(200, response.status_code)
-        self.assertTemplateUsed(response, 'contact_success.html')
+        self.assertTemplateUsed(response, 'jobim/contact_success.html')
         self.assertEqual(1, Contact.objects.count())
 
         mail.outbox = []
@@ -58,8 +58,8 @@ class JobimViewsTest(TestCase):
         message = mail.outbox[0]
         self.assertEqual(settings.CONTACT_EMAIL, message.to[0])
         self.assertEqual('john@buyer.com', message.from_email)
-        self.assertTemplateUsed(response, 'contact_subject.txt')
-        self.assertTemplateUsed(response, 'contact_message.txt')
+        self.assertTemplateUsed(response, 'jobim/contact_subject.txt')
+        self.assertTemplateUsed(response, 'jobim/contact_message.txt')
 
     def test_products_by_category(self):
         cars_url = reverse('jobim_category_view', kwargs={

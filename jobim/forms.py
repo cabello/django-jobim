@@ -12,8 +12,8 @@ class ContactForm(forms.ModelForm):
         super(ContactForm, self).save(commit)
         mail_context = Context(self.cleaned_data)
         send_mail(
-            get_template('contact_subject.txt').render(mail_context),
-            get_template('contact_message.txt').render(mail_context),
+            get_template('jobim/contact_subject.txt').render(mail_context),
+            get_template('jobim/contact_message.txt').render(mail_context),
             self.cleaned_data['email'],
             [settings.CONTACT_EMAIL])
 

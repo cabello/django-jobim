@@ -32,13 +32,13 @@ def contact(request):
         contact_form = ContactForm(request.POST)
         if contact_form.is_valid():
             contact_form.save()
-            return direct_to_template(request, 'contact_success.html')
+            return direct_to_template(request, 'jobim/contact_success.html')
     else:
         contact_form = ContactForm()
 
     contact_email = settings.CONTACT_EMAIL
     return render_to_response(
-        'contact.html',
+        'jobim/contact.html',
         {'contact_form': contact_form, 'contact_email': contact_email},
         context_instance=RequestContext(request))
 
