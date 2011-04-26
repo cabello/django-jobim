@@ -55,7 +55,7 @@ def products_by_category(request, category_slug):
 def product_view(request, category_slug, product_slug):
     product = get_object_or_404(Product.available, slug=product_slug)
     photos = product.photo_set.all()
-    bid_form = BidForm(auto_id='item_bid_%s')
+    bid_form = BidForm()
     return render_to_response(
         'jobim/product_view.html',
         {'product': product, 'photos': photos, 'bid_form': bid_form},
@@ -66,7 +66,7 @@ def bid(request, category_slug, product_slug):
     if request.method == 'POST':
         product = get_object_or_404(Product.available, slug=product_slug)
         bid = Bid(product=product)
-        bid_form = BidForm(request.POST, auto_id='item_bid_%s', instance=bid)
+        bid_form = BidForm(request.POST, instance=bid)
         if bid_form.is_valid():
             bid_form.save(product)
             messages.success(request, BID_SUCCESS)
