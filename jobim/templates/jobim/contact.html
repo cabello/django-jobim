@@ -1,25 +1,19 @@
 {% extends "base.html" %}
 
-{% block title %}Contato - {{ block.super }}{% endblock title %}
+{% block title %}Contact - {{ block.super }}{% endblock %}
 
-{% block main-content %}
-<section id="content" class="body">
-<div id="main_content">
-    <h1>Contato</h1>
-    <div id="summary">
-        <p>
-            <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>
-        </p>
-    </div>
-
-    <form method="POST" action="">
-    <table id="contact">
-    {{ contact_form }}
-    <tr>
-        <td colspan="2" id="send"><input type="submit" value="Enviar" /></td>
-    </tr>
-    </table>
+{% block article-content %}
+    <h1>Contact</h1>
+    <p><a href="mailto:{{ contact_email }}">{{ contact_email }}</a></p>
+    <hr />
+    <form method="POST" action="{% url jobim_contact %}">
+        <table id="contact">
+            {{ contact_form }}
+            <tr>
+                <td colspan="2" id="send">
+                    <input type="submit" value="Enviar" />
+                </td>
+            </tr>
+        </table>
     </form>
-</div>
-</section>
-{% endblock main-content %}
+{% endblock %}

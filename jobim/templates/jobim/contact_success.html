@@ -1,16 +1,8 @@
 {% extends "base.html" %}
 
-{% block title %}Contato - {{ block.super }}{% endblock title %}
+{% block title %}Contact - {{ block.super }}{% endblock %}
 
-{% block main-content %}
-<section id="content" class="body">
-<div id="main_content">
-    <h1>Contato enviado com sucesso!</h1>
-    <div id="summary">
-        <p>
-            Em breve retornaremos seu contato. :D
-        </p>
-    </div>
-</div>
-</section>
-{% endblock main-content %}
+{% block article-content %}
+    <h1>Contact successfully sent</h1>
+    <p>I will return your contact soon.</p>
+{% endblock %}

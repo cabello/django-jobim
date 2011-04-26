@@ -1,14 +1,12 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% load markup %}
 
-{% block title %}{{ product.category }} - {{ product.name }} - {{ block.super }}{% endblock title %}
+{% block title %}{{ product.category }} - {{ product.name }} - {{ block.super }}{% endblock %}
 
-{% block main-content %}
-
-<section id="content" class="body">
-<div id="main_content">
+{% block article-content %}
     <h1>{{ product.name }}</h1>
+
     {% if messages %}
     <ul class="messages">
         {% for message in messages %}
@@ -16,6 +14,7 @@
         {% endfor %}
     </ul>
     {% endif %}
+
     <div id="bidding">
         <p id="cover">
             {% if product.cover %}
@@ -37,20 +36,16 @@
             <button type="submit">Confirmar a oferta</button>
         </fieldset>
         </form>
-</div>
+    </div>
 
-<div id="summary">
+<hr />
+<div id="product_description">
 {{ product.description|markdown }}
 </div>
 
+<hr />
 <div id="big_pictures">
-<h2>Todas as imagens deste produto:</h2>
-{% for photo in photos %}
-    <img src="{{ photo.file.url }}" />
-{% endfor %}
+    <h2>Todas as imagens deste produto:</h2>
+    {% for photo in photos %}<img src="{{ photo.image_file.url }}" />{% endfor %}
 </div>
-
-</div>
-</section>
-
-{% endblock main-content %}
+{% endblock %}
