@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Contact - {{ block.super }}{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans 'Contact' %} - {{ block.super }}{% endblock %}
 
 {% block article-content %}
-    <h1>Contact</h1>
+    <h1>{% trans 'Contact'%}</h1>
     <p><a href="mailto:{{ contact_email }}">{{ contact_email }}</a></p>
     <hr />
     <form method="POST" action="{% url jobim_contact %}">

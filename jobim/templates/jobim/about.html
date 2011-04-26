@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 
+{% load i18n %}
 {% load markup %}
 
-{% block title %}About - {{ block.super }}{% endblock %}
+{% block title %}{% trans 'About' %} - {{ block.super }}{% endblock %}
 
 {% block article-content %}
     {{ about_content|markdown }}

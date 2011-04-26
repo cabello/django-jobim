@@ -1,3 +1,4 @@
+{% load i18n %}
 <!doctype html>
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
@@ -25,8 +26,8 @@
             <h1 id="title">Manoel is selling everything. Enjoy!</h1>
             <nav>
                 <ul>
-                    <li><a href="{% url jobim_about %}">About</a></li>
-                    <li><a href="{% url jobim_contact %}">Contact</a></li>
+                    <li><a href="{% url jobim_about %}">{% trans "About" %}</a></li>
+                    <li><a href="{% url jobim_contact %}">{% trans "Contact" %}</a></li>
                 </ul>
             </nav>
         </header>
@@ -47,7 +48,7 @@
     </div>
     <div id="footer-container">
         <footer class="wrapper">
-            <h3>Proudly powered by <a href="https://github.com/cabello/django-jobim">django-jobim</a></h3>
+            <h3>{% trans 'Proudly powered by <a href="https://github.com/cabello/django-jobim">django-jobim</a>' %}</h3>
         </footer>
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
