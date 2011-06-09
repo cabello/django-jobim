@@ -1,5 +1,7 @@
 from django.conf.urls.defaults import *
 
+import views
+
 urlpatterns = patterns('',
     url(r'^$', 'jobim.views.index', name='jobim_index'),
 
@@ -9,7 +11,7 @@ urlpatterns = patterns('',
 
     url(
         r'^(?P<category_slug>[-\w]+)$',
-        'jobim.views.products_by_category',
+        views.ProductListByCategory.as_view(),
         name='jobim_category_view',),
 
     url(

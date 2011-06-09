@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.template import RequestContext, Context
 from django.template.loader import get_template
+from django.views.generic import ListView
 from django.views.generic.simple import direct_to_template
 
 from jobim.forms import BidForm, ContactForm
@@ -43,14 +44,20 @@ def contact(request):
         context_instance=RequestContext(request))
 
 
-def products_by_category(request, category_slug):
-    category = get_object_or_404(Category, slug=category_slug)
-    products = Product.available.filter(category=category)
-    return render_to_response(
-        'jobim/products_by_category.html',
-        {'category': category, 'products': products},
-        context_instance=RequestContext(request))
+class ProductListByCategory(ListView):
+    template_name_suffix = '_list_by_category'
+    context_object_name = 'products'
+    category = None
 
+    def get_queryset(self):
+        category_slug = self.kwargs.get('category_slug')
+        self.category = get_object_or_404(Category, slug=category_slug)
+        self.queryset = Product.available.filter(category=self.category)
+        return super(ProductListByCategory, self).get_queryset()
+
+    def get_context_data(self, **kwargs):
+        return super(ProductListByCategory, self).get_context_data(
+            category=self.category, **kwargs)
 
 def product_view(request, category_slug, product_slug):
     product = get_object_or_404(Product.available, slug=product_slug)
