@@ -10,6 +10,11 @@ urlpatterns = patterns('',
     url(r'^contact$', views.Contact.as_view(), name='jobim_contact'),
 
     url(
+        r'^contact/success$',
+        views.ContactSuccess.as_view(),
+        name='jobim_contact_success'),
+
+    url(
         r'^(?P<category_slug>[-\w]+)$',
         views.ProductListByCategory.as_view(),
         name='jobim_category_view',),

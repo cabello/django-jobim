@@ -45,7 +45,15 @@ class Contact(FormView):
 
     def form_valid(self, form):
         form.save()
-        return direct_to_template(self.request, 'jobim/contact_success.html')
+        return super(Contact, self).form_valid(form)
+
+    def get_success_url(self):
+        self.success_url = reverse('jobim_contact_success')
+        return super(Contact, self).get_success_url()
+
+
+class ContactSuccess(TemplateView):
+    template_name = 'jobim/contact_success.html'
 
 
 class ProductListByCategory(ListView):
