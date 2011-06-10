@@ -8,7 +8,7 @@
     <h1>{% trans 'Contact'%}</h1>
     <p><a href="mailto:{{ contact_email }}">{{ contact_email }}</a></p>
     <hr />
-    <form method="POST" action="{% url jobim_contact %}">
+    <form method="POST" action="{% url jobim:contact %}">
         <table id="contact">
             {{ contact_form }}
             <tr>

@@ -36,7 +36,7 @@ class Contact(FormView):
             'contact_email': contact_email}
 
     def get_success_url(self):
-        self.success_url = reverse('jobim_contact_success')
+        self.success_url = reverse('jobim:contact_success')
         return super(Contact, self).get_success_url()
 
     def form_valid(self, form):
@@ -52,7 +52,7 @@ class Index(RedirectView):
     permanent = False
 
     def get_redirect_url(self, **kwargs):
-        self.url = reverse('jobim_about')
+        self.url = reverse('jobim:about')
         return super(Index, self).get_redirect_url(**kwargs)
 
 
@@ -90,7 +90,7 @@ def bid(request, category_slug, product_slug):
         if bid_form.is_valid():
             bid_form.save(product)
             messages.success(request, BID_SUCCESS)
-            return redirect('jobim_product_view', category_slug, product_slug)
+            return redirect('jobim:product_view', category_slug, product_slug)
         else:
             photos = product.photo_set.all()
             messages.warning(request, BID_ERROR)
@@ -99,4 +99,4 @@ def bid(request, category_slug, product_slug):
                 {'product': product, 'photos': photos, 'bid_form': bid_form},
                 context_instance=RequestContext(request))
     else:
-        return redirect('jobim_product_view', category_slug, product_slug)
+        return redirect('jobim:product_view', category_slug, product_slug)
