@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.template import RequestContext, Context
 from django.template.loader import get_template
-from django.views.generic import ListView, RedirectView, TemplateView
+from django.views.generic import FormView, ListView, RedirectView, TemplateView
 from django.views.generic.simple import direct_to_template
 
 from jobim.forms import BidForm, ContactForm
@@ -33,20 +33,19 @@ class About(TemplateView):
         return {'about_content': about_content}
 
 
-def contact(request):
-    if request.method == 'POST':
-        contact_form = ContactForm(request.POST)
-        if contact_form.is_valid():
-            contact_form.save()
-            return direct_to_template(request, 'jobim/contact_success.html')
-    else:
-        contact_form = ContactForm()
+class Contact(FormView):
+    form_class = ContactForm
+    template_name = 'jobim/contact.html'
 
-    contact_email = settings.CONTACT_EMAIL
-    return render_to_response(
-        'jobim/contact.html',
-        {'contact_form': contact_form, 'contact_email': contact_email},
-        context_instance=RequestContext(request))
+    def get_context_data(self, **kwargs):
+        contact_email = settings.CONTACT_EMAIL
+        return {
+            'contact_form': kwargs['form'],
+            'contact_email': contact_email}
+
+    def form_valid(self, form):
+        form.save()
+        return direct_to_template(self.request, 'jobim/contact_success.html')
 
 
 class ProductListByCategory(ListView):

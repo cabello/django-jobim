@@ -7,7 +7,7 @@ urlpatterns = patterns('',
 
     url(r'^about$', views.About.as_view(), name='jobim_about'),
 
-    url(r'^contact$', 'jobim.views.contact', name='jobim_contact'),
+    url(r'^contact$', views.Contact.as_view(), name='jobim_contact'),
 
     url(
         r'^(?P<category_slug>[-\w]+)$',
