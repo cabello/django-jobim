@@ -3,7 +3,7 @@ from django.conf.urls.defaults import *
 import views
 
 urlpatterns = patterns('',
-    url(r'^$', 'jobim.views.index', name='jobim_index'),
+    url(r'^$', views.Index.as_view(), name='jobim_index'),
 
     url(r'^about$', 'jobim.views.about', name='jobim_about'),
 

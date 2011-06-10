@@ -1,9 +1,10 @@
 from django.conf import settings
 from django.contrib import messages
+from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.template import RequestContext, Context
 from django.template.loader import get_template
-from django.views.generic import ListView
+from django.views.generic import ListView, RedirectView
 from django.views.generic.simple import direct_to_template
 
 from jobim.forms import BidForm, ContactForm
@@ -16,9 +17,12 @@ BID_ERROR = 'Ocorreram problemas com o preenchimento da oferta, \
              corrija os erros abaixo.'
 
 
-def index(request):
-    return redirect('jobim_about')
+class Index(RedirectView):
+    permanent = False
 
+    def get_redirect_url(self, **kwargs):
+        self.url = reverse('jobim_about')
+        return super(Index, self).get_redirect_url(**kwargs)
 
 def about(request):
     about_content = get_template('jobim/about.txt').render(Context())
