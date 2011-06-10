@@ -4,7 +4,8 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.template import RequestContext, Context
 from django.template.loader import get_template
-from django.views.generic import FormView, ListView, RedirectView, TemplateView
+from django.views.generic import (
+    DetailView, FormView, ListView, RedirectView, TemplateView)
 from django.views.generic.simple import direct_to_template
 
 from jobim.forms import BidForm, ContactForm
@@ -56,6 +57,24 @@ class Index(RedirectView):
         return super(Index, self).get_redirect_url(**kwargs)
 
 
+class ProductDetail(DetailView):
+    model = Product
+    queryset = Product.available
+
+    def get_context_data(self, **kwargs):
+        product = kwargs.get('object', None)
+        kwargs['photos'] = product.photo_set.all()
+        kwargs['bid_form'] = BidForm()
+        return super(ProductDetail, self).get_context_data(**kwargs)
+
+    def get_object(self, queryset=None):
+        self.kwargs['slug'] = self.kwargs.get('product_slug', None)
+        return super(ProductDetail, self).get_object(queryset)
+
+    def get_queryset(self):
+        return self.queryset
+
+
 class ProductListByCategory(ListView):
     category = None
     context_object_name = 'products'
@@ -72,16 +91,6 @@ class ProductListByCategory(ListView):
         return super(ProductListByCategory, self).get_queryset()
 
 
-def product_view(request, category_slug, product_slug):
-    product = get_object_or_404(Product.available, slug=product_slug)
-    photos = product.photo_set.all()
-    bid_form = BidForm()
-    return render_to_response(
-        'jobim/product_view.html',
-        {'product': product, 'photos': photos, 'bid_form': bid_form},
-        context_instance=RequestContext(request))
-
-
 def bid(request, category_slug, product_slug):
     if request.method == 'POST':
         product = get_object_or_404(Product.available, slug=product_slug)
@@ -90,13 +99,14 @@ def bid(request, category_slug, product_slug):
         if bid_form.is_valid():
             bid_form.save(product)
             messages.success(request, BID_SUCCESS)
-            return redirect('jobim:product_view', category_slug, product_slug)
+            return redirect(
+                'jobim:product_detail', category_slug, product_slug)
         else:
             photos = product.photo_set.all()
             messages.warning(request, BID_ERROR)
             return render_to_response(
-                'jobim/product_view.html',
+                'jobim/product_detail.html',
                 {'product': product, 'photos': photos, 'bid_form': bid_form},
                 context_instance=RequestContext(request))
     else:
-        return redirect('jobim:product_view', category_slug, product_slug)
+        return redirect('jobim:product_detail', category_slug, product_slug)

@@ -47,7 +47,7 @@ class Product(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('jobim:product_view', [self.category.slug, self.slug])
+        return ('jobim:product_detail', [self.category.slug, self.slug])
 
     def status(self):
         if self.sold:
@@ -81,7 +81,7 @@ class Bid(models.Model):
     @models.permalink
     def get_absolute_url(self):
         product = self.product
-        return ('jobim:product_view', [product.category.slug, product.slug])
+        return ('jobim:product_detail', [product.category.slug, product.slug])
 
 
 class Contact(models.Model):

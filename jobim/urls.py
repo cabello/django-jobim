@@ -21,8 +21,8 @@ urlpatterns = patterns('',
 
     url(
         r'^(?P<category_slug>[-\w]+)/(?P<product_slug>[-\w]+)$',
-        'jobim.views.product_view',
-        name='product_view'),
+        views.ProductDetail.as_view(),
+        name='product_detail'),
 
     url(
         r'^(?P<category_slug>[-\w]+)/(?P<product_slug>[-\w]+)/bid$',

@@ -92,24 +92,24 @@ class JobimViewsTest(TestCase):
         self.assertEqual(0, len(response.context['products']))
         self.assertFalse(product in response.context['products'])
 
-    def test_product_view(self):
-        product_view_url = reverse(
-            'jobim:product_view',
+    def test_product_detail(self):
+        product_detail_url = reverse(
+            'jobim:product_detail',
             kwargs={
                 'category_slug': 'books',
                 'product_slug': 'pragmatic-programmer'})
 
-        response = self.client.get(product_view_url)
+        response = self.client.get(product_detail_url)
         self.assertEqual(404, response.status_code)
 
         product = add_test_product()
-        response = self.client.get(product_view_url)
+        response = self.client.get(product_detail_url)
         self.assertEqual(200, response.status_code)
-        self.assertTemplateUsed(response, 'jobim/product_view.html')
+        self.assertTemplateUsed(response, 'jobim/product_detail.html')
 
         product.sold = True
         product.save()
-        response = self.client.get(product_view_url)
+        response = self.client.get(product_detail_url)
         self.assertEqual(404, response.status_code)
 
     def test_bid(self):
@@ -119,7 +119,7 @@ class JobimViewsTest(TestCase):
         url_args = {
             'category_slug': 'books',
             'product_slug': 'pragmatic-programmer'}
-        product_view_url = reverse('jobim:product_view', kwargs=url_args)
+        product_detail_url = reverse('jobim:product_detail', kwargs=url_args)
         bid_url = reverse('jobim:product_bid', kwargs=url_args)
         product = add_test_product()
 
@@ -127,17 +127,17 @@ class JobimViewsTest(TestCase):
             bid_url,
             {'amount': 350, 'email': 'john@buyer.com'},
             follow=True)
-        self.assertRedirects(response, product_view_url)
+        self.assertRedirects(response, product_detail_url)
         self.assertContains(response, BID_SUCCESS)
         self.assertEquals(1, Bid.objects.count())
 
         response = self.client.post(bid_url)
-        self.assertTemplateUsed(response, 'jobim/product_view.html')
+        self.assertTemplateUsed(response, 'jobim/product_detail.html')
         self.assertFalse(response.context['bid_form'].is_valid())
         self.assertContains(response, BID_ERROR)
 
         response = self.client.get(bid_url)
-        self.assertRedirects(response, product_view_url)
+        self.assertRedirects(response, product_detail_url)
 
         product.sold = True
         product.save()
