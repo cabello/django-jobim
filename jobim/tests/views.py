@@ -71,7 +71,8 @@ class JobimViewsTest(TestCase):
             'category_slug': 'books'})
         response = self.client.get(books_url)
         self.assertEqual(200, response.status_code)
-        self.assertTemplateUsed(response, 'jobim/product_list_by_category.html')
+        self.assertTemplateUsed(
+            response, 'jobim/product_list_by_category.html')
         self.assertEqual(0, len(response.context['products']))
 
         product = add_test_product()

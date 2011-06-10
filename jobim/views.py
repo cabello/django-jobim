@@ -32,6 +32,7 @@ class About(TemplateView):
         about_content = get_template('jobim/about.txt').render(Context())
         return {'about_content': about_content}
 
+
 def contact(request):
     if request.method == 'POST':
         contact_form = ContactForm(request.POST)
@@ -62,6 +63,7 @@ class ProductListByCategory(ListView):
     def get_context_data(self, **kwargs):
         return super(ProductListByCategory, self).get_context_data(
             category=self.category, **kwargs)
+
 
 def product_view(request, category_slug, product_slug):
     product = get_object_or_404(Product.available, slug=product_slug)
