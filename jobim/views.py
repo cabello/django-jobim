@@ -17,14 +17,6 @@ BID_ERROR = 'Ocorreram problemas com o preenchimento da oferta, \
              corrija os erros abaixo.'
 
 
-class Index(RedirectView):
-    permanent = False
-
-    def get_redirect_url(self, **kwargs):
-        self.url = reverse('jobim_about')
-        return super(Index, self).get_redirect_url(**kwargs)
-
-
 class About(TemplateView):
     template_name = 'jobim/about.html'
 
@@ -43,33 +35,41 @@ class Contact(FormView):
             'contact_form': kwargs['form'],
             'contact_email': contact_email}
 
-    def form_valid(self, form):
-        form.save()
-        return super(Contact, self).form_valid(form)
-
     def get_success_url(self):
         self.success_url = reverse('jobim_contact_success')
         return super(Contact, self).get_success_url()
+
+    def form_valid(self, form):
+        form.save()
+        return super(Contact, self).form_valid(form)
 
 
 class ContactSuccess(TemplateView):
     template_name = 'jobim/contact_success.html'
 
 
+class Index(RedirectView):
+    permanent = False
+
+    def get_redirect_url(self, **kwargs):
+        self.url = reverse('jobim_about')
+        return super(Index, self).get_redirect_url(**kwargs)
+
+
 class ProductListByCategory(ListView):
-    template_name_suffix = '_list_by_category'
-    context_object_name = 'products'
     category = None
+    context_object_name = 'products'
+    template_name_suffix = '_list_by_category'
+
+    def get_context_data(self, **kwargs):
+        return super(ProductListByCategory, self).get_context_data(
+            category=self.category, **kwargs)
 
     def get_queryset(self):
         category_slug = self.kwargs.get('category_slug')
         self.category = get_object_or_404(Category, slug=category_slug)
         self.queryset = Product.available.filter(category=self.category)
         return super(ProductListByCategory, self).get_queryset()
-
-    def get_context_data(self, **kwargs):
-        return super(ProductListByCategory, self).get_context_data(
-            category=self.category, **kwargs)
 
 
 def product_view(request, category_slug, product_slug):
