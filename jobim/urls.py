@@ -5,7 +5,7 @@ import views
 urlpatterns = patterns('',
     url(r'^$', views.Index.as_view(), name='jobim_index'),
 
-    url(r'^about$', 'jobim.views.about', name='jobim_about'),
+    url(r'^about$', views.About.as_view(), name='jobim_about'),
 
     url(r'^contact$', 'jobim.views.contact', name='jobim_contact'),
 

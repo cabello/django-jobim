@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.template import RequestContext, Context
 from django.template.loader import get_template
-from django.views.generic import ListView, RedirectView
+from django.views.generic import ListView, RedirectView, TemplateView
 from django.views.generic.simple import direct_to_template
 
 from jobim.forms import BidForm, ContactForm
@@ -24,13 +24,13 @@ class Index(RedirectView):
         self.url = reverse('jobim_about')
         return super(Index, self).get_redirect_url(**kwargs)
 
-def about(request):
-    about_content = get_template('jobim/about.txt').render(Context())
-    return render_to_response(
-        'jobim/about.html',
-        {'about_content': about_content},
-        context_instance=RequestContext(request))
 
+class About(TemplateView):
+    template_name = 'jobim/about.html'
+
+    def get_context_data(self, **kwargs):
+        about_content = get_template('jobim/about.txt').render(Context())
+        return {'about_content': about_content}
 
 def contact(request):
     if request.method == 'POST':
