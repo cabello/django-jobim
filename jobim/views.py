@@ -59,7 +59,7 @@ class Index(RedirectView):
 
 class ProductDetail(DetailView):
     model = Product
-    queryset = Product.available
+    queryset = Product.available.all()
 
     def get_context_data(self, **kwargs):
         product = kwargs.get('object', None)
@@ -70,9 +70,6 @@ class ProductDetail(DetailView):
     def get_object(self, queryset=None):
         self.kwargs['slug'] = self.kwargs.get('product_slug', None)
         return super(ProductDetail, self).get_object(queryset)
-
-    def get_queryset(self):
-        return self.queryset
 
 
 class ProductListByCategory(ListView):
