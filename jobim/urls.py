@@ -26,5 +26,5 @@ urlpatterns = patterns('',
 
     url(
         r'^(?P<category_slug>[-\w]+)/(?P<product_slug>[-\w]+)/bid$',
-        'jobim.views.bid',
+        views.ToBid.as_view(),
         name='product_bid'), )

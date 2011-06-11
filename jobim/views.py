@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.template import RequestContext, Context
 from django.template.loader import get_template
@@ -88,22 +89,50 @@ class ProductListByCategory(ListView):
         return super(ProductListByCategory, self).get_queryset()
 
 
-def bid(request, category_slug, product_slug):
-    if request.method == 'POST':
-        product = get_object_or_404(Product.available, slug=product_slug)
+class ToBid(FormView):
+    form_class = BidForm
+    product = None
+    template_name = 'jobim/product_detail.html'
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_context_data(self, **kwargs):
+        product = self.get_product()
+        photos = product.photo_set.all()
+        kwargs['product'] = product
+        kwargs['photos'] = photos
+        kwargs['bid_form'] = kwargs.get('form')
+        return super(ToBid, self).get_context_data(**kwargs)
+
+    def get_form_kwargs(self):
+        product = self.get_product()
         bid = Bid(product=product)
-        bid_form = BidForm(request.POST, instance=bid)
-        if bid_form.is_valid():
-            bid_form.save(product)
-            messages.success(request, BID_SUCCESS)
-            return redirect(
-                'jobim:product_detail', category_slug, product_slug)
-        else:
-            photos = product.photo_set.all()
-            messages.warning(request, BID_ERROR)
-            return render_to_response(
-                'jobim/product_detail.html',
-                {'product': product, 'photos': photos, 'bid_form': bid_form},
-                context_instance=RequestContext(request))
-    else:
-        return redirect('jobim:product_detail', category_slug, product_slug)
+        kwargs = super(ToBid, self).get_form_kwargs()
+        kwargs.update({'instance': bid})
+        return kwargs
+
+    def get_product(self):
+        if self.product is None:
+            product_slug = self.kwargs.get('product_slug')
+            self.product = get_object_or_404(
+                Product.available, slug=product_slug)
+
+        return self.product
+
+    def get_success_url(self):
+        category_slug = self.kwargs.get('category_slug')
+        product_slug = self.kwargs.get('product_slug')
+        self.success_url = reverse(
+            'jobim:product_detail',
+            args=[category_slug, product_slug])
+        return super(ToBid, self).get_success_url()
+
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request, BID_SUCCESS)
+        return super(ToBid, self).form_valid(form)
+
+    def form_invalid(self, form):
+        messages.warning(self.request, BID_ERROR)
+        return super(ToBid, self).form_invalid(form)
