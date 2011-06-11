@@ -2,12 +2,11 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render_to_response, redirect
-from django.template import RequestContext, Context
+from django.shortcuts import get_object_or_404
+from django.template import Context
 from django.template.loader import get_template
 from django.views.generic import (
     DetailView, FormView, ListView, RedirectView, TemplateView)
-from django.views.generic.simple import direct_to_template
 
 from jobim.forms import BidForm, ContactForm
 from jobim.models import Bid, Category, Product
