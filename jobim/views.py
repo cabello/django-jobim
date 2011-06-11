@@ -62,7 +62,7 @@ class ProductDetail(DetailView):
     queryset = Product.available.all()
 
     def get_context_data(self, **kwargs):
-        product = kwargs.get('object', None)
+        product = kwargs.get('object')
         kwargs['photos'] = product.photo_set.all()
         kwargs['bid_form'] = BidForm()
         return super(ProductDetail, self).get_context_data(**kwargs)
