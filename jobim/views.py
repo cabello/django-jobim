@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.template import Context
 from django.template.loader import get_template
+from django.utils.translation import ugettext as _
 from django.views.generic import (
     DetailView, FormView, ListView, RedirectView, TemplateView)
 
@@ -12,10 +13,10 @@ from jobim.forms import BidForm, ContactForm
 from jobim.models import Bid, Category, Product
 
 
-BID_SUCCESS = 'Recebemos sua oferta, se ela for interessante entraremos em \
-               contato. :D'
-BID_ERROR = 'Ocorreram problemas com o preenchimento da oferta, \
-             corrija os erros abaixo.'
+BID_SUCCESS = _(
+    'We received your bid, if it is interesting we will get into contact.')
+BID_ERROR = _(
+    'There were problems with the bid, please correct the errors below.')
 
 
 class About(TemplateView):

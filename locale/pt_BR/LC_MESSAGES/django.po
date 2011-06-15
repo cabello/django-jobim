@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-15 00:11-0300\n"
+"POT-Creation-Date: 2011-06-15 00:00-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,20 +16,20 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: views.py:17
-msgid "We received your bid, if it is interesting we will get into contact."
-msgstr "Recebemos sua oferta, se ela for interessante, entraremos em contato."
-
-#: views.py:19
-msgid "There were problems with the bid, please correct the errors below."
-msgstr ""
-"Ocorreram problemas com sua oferta, por favor, corrija os erros abaixo."
-
-#: templates/jobim/about.html:6
+#: templates/base.html:29
 msgid "About"
 msgstr "Sobre"
 
-#: templates/jobim/contact.html:5
+#: templates/base.html:30
 msgid "Contact"
 msgstr "Contato"
+
+#: templates/base.html:51
+msgid ""
+"Proudly powered by <a href=\"https://github.com/cabello/django-jobim"
+"\">django-jobim</a>"
+msgstr ""
+"Orgulho de utilizar <a href=\"https://github.com/cabello/django-jobim"
+"\">django-jobim</a>"
