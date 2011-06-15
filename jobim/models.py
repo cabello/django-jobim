@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 
 class Category(models.Model):
@@ -8,7 +9,8 @@ class Category(models.Model):
     slug = models.CharField(max_length=50)
 
     class Meta:
-        verbose_name_plural = 'categories'
+        verbose_name = _('category')
+        verbose_name_plural = _('categories')
         ordering = ['name']
 
     def __unicode__(self):
@@ -40,6 +42,8 @@ class Product(models.Model):
     available = ProductsAvailableManager()
 
     class Meta:
+        verbose_name = _('product')
+        verbose_name_plural = _('products')
         ordering = ('-id',)
 
     def __unicode__(self):
@@ -64,6 +68,10 @@ class Photo(models.Model):
     product = models.ForeignKey(Product)
     image_file = models.ImageField(upload_to='photos', max_length=250)
 
+    class Meta:
+        verbose_name = _('photo')
+        verbose_name_plural = _('photos')
+
     def __unicode__(self):
         return u'%s #%s' % (self.product.name, self.pk)
 
@@ -73,6 +81,10 @@ class Bid(models.Model):
     amount = models.IntegerField()
     email = models.CharField(max_length=128)
     accepted = models.BooleanField()
+
+    class Meta:
+        verbose_name = _('bid')
+        verbose_name_plural = _('bids')
 
     def __unicode__(self):
         amount = str(self.amount)
@@ -91,6 +103,10 @@ class Contact(models.Model):
     subject = models.CharField(max_length=128, blank=True)
     message = models.TextField(blank=True)
     read = models.BooleanField()
+
+    class Meta:
+        verbose_name = _('contact')
+        verbose_name_plural = _('contacts')
 
     def __unicode__(self):
         return u'%s <%s> - %s' % (self.name, self.email, self.subject)
