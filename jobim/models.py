@@ -56,13 +56,13 @@ class Product(models.Model):
 
     def status(self):
         if self.sold:
-            return 'Sold'
+            return _('Sold')
         else:
             bidset = self.bid_set.filter(accepted=True).order_by('-amount')
             if bidset.count():
-                return 'Current bid: U$ %s' % bidset[0].amount
+                return _('Current bid: U$ %s') % bidset[0].amount
             else:
-                return 'Waiting bid'
+                return _('Waiting bid')
 
 
 class Photo(models.Model):
@@ -90,7 +90,10 @@ class Bid(models.Model):
 
     def __unicode__(self):
         amount = str(self.amount)
-        return u'%s R$%s %s' % (self.product.name, amount, self.email)
+        return _('%(product)s U$%(amount)s %(email)s') % {
+            'product': self.product.name,
+            'amount': amount,
+            'email': self.email, }
 
     @models.permalink
     def get_absolute_url(self):
