@@ -69,7 +69,7 @@ class ProductDetail(DetailView):
         return super(ProductDetail, self).get_context_data(**kwargs)
 
     def get_object(self, queryset=None):
-        self.kwargs['slug'] = self.kwargs.get('product_slug', None)
+        self.kwargs['slug'] = self.kwargs.get('product_slug')
         return super(ProductDetail, self).get_object(queryset)
 
 
