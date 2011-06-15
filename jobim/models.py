@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(_('name'), max_length=50)
     slug = models.CharField(max_length=50)
 
     class Meta:
@@ -28,15 +28,16 @@ class ProductsAvailableManager(models.Manager):
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=250)
+    name = models.CharField(_('name'), max_length=250)
     slug = models.CharField(max_length=250)
-    description = models.TextField()
-    category = models.ForeignKey(Category)
+    description = models.TextField(_('description'))
+    category = models.ForeignKey(Category, verbose_name=_('category'))
     cover = models.ImageField(
+        _('cover'),
         upload_to='thumbnails',
         max_length=250,
         blank=True)
-    sold = models.BooleanField()
+    sold = models.BooleanField(_('sold'))
 
     objects = models.Manager()
     available = ProductsAvailableManager()
@@ -65,8 +66,9 @@ class Product(models.Model):
 
 
 class Photo(models.Model):
-    product = models.ForeignKey(Product)
-    image_file = models.ImageField(upload_to='photos', max_length=250)
+    product = models.ForeignKey(Product, verbose_name=_('product'))
+    image_file = models.ImageField(
+        _('image file'), upload_to='photos', max_length=250)
 
     class Meta:
         verbose_name = _('photo')
@@ -77,10 +79,10 @@ class Photo(models.Model):
 
 
 class Bid(models.Model):
-    product = models.ForeignKey(Product)
-    amount = models.IntegerField()
-    email = models.CharField(max_length=128)
-    accepted = models.BooleanField()
+    product = models.ForeignKey(Product, verbose_name=_('product'))
+    amount = models.IntegerField(_('amount'))
+    email = models.CharField(_('email'), max_length=128)
+    accepted = models.BooleanField(_('accepted'))
 
     class Meta:
         verbose_name = _('bid')
@@ -97,12 +99,13 @@ class Bid(models.Model):
 
 
 class Contact(models.Model):
-    name = models.CharField(max_length=64, blank=True)
-    email = models.CharField(max_length=128)
-    phone_number = models.CharField(max_length=32, blank=True)
-    subject = models.CharField(max_length=128, blank=True)
-    message = models.TextField(blank=True)
-    read = models.BooleanField()
+    name = models.CharField(_('name'), max_length=64, blank=True)
+    email = models.CharField(_('email'), max_length=128)
+    phone_number = models.CharField(
+        _('phone number'), max_length=32, blank=True)
+    subject = models.CharField(_('subject'), max_length=128, blank=True)
+    message = models.TextField(_('message'), blank=True)
+    read = models.BooleanField(_('read'),)
 
     class Meta:
         verbose_name = _('contact')

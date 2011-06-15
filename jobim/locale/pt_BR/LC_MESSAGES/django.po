@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-15 00:30-0300\n"
+"POT-Creation-Date: 2011-06-15 00:41-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: models.py:12
+#: models.py:8 models.py:31 models.py:102
+msgid "name"
+msgstr "nome"
+
+#: models.py:12 models.py:34
 msgid "category"
 msgstr "categoria"
 
@@ -25,35 +29,79 @@ msgstr "categoria"
 msgid "categories"
 msgstr "categorias"
 
-#: models.py:45
+#: models.py:33
+msgid "description"
+msgstr "descrição"
+
+#: models.py:36
+msgid "cover"
+msgstr "capa"
+
+#: models.py:40
+msgid "sold"
+msgstr "vendido"
+
+#: models.py:46 models.py:69 models.py:82
 msgid "product"
 msgstr "produto"
 
-#: models.py:46
+#: models.py:47
 msgid "products"
 msgstr "produtos"
 
-#: models.py:72
+#: models.py:71
+msgid "image file"
+msgstr "arquivo de imagem"
+
+#: models.py:74
 msgid "photo"
 msgstr "foto"
 
-#: models.py:73
+#: models.py:75
 msgid "photos"
 msgstr "fotos"
 
-#: models.py:86
+#: models.py:83
+msgid "amount"
+msgstr "valor"
+
+#: models.py:84 models.py:103
+msgid "email"
+msgstr "email"
+
+#: models.py:85
+msgid "accepted"
+msgstr "aceita"
+
+#: models.py:88
 msgid "bid"
 msgstr "oferta"
 
-#: models.py:87
+#: models.py:89
 msgid "bids"
 msgstr "ofertas"
 
+#: models.py:105
+msgid "phone number"
+msgstr "telefone"
+
+#: models.py:106
+msgid "subject"
+msgstr "assunto"
+
+#: models.py:107
+msgid "message"
+msgstr "mensagem"
+
 #: models.py:108
+msgid "read"
+msgstr "lido"
+
+#: models.py:111
 msgid "contact"
 msgstr "contato"
 
-#: models.py:109
+#: models.py:112
 msgid "contacts"
 msgstr "contatos"
 
