@@ -313,7 +313,7 @@ article > hr {
     width: 190px;
 }
 
-#bidding > .simple_form > fieldset .errorlist {
+.errorlist {
     background-color: #FBE3E4;
     border: 2px solid #FBC2C4;
     color: #8A1F11;
@@ -351,6 +351,34 @@ article > hr {
     border-color: #C6D880;
     color: #264409;
 }
+
+#contact {
+    width: 90%;
+}
+
+#contact th {
+    padding: 8px;
+    text-align: right;
+    vertical-align: middle;
+}
+
+#contact td {
+    padding: 8px;
+}
+
+#contact td input, #contact td textarea {
+    width: 99%;
+}
+
+#contact td#send {
+    text-align: right;
+}
+
+#contact td#send input {
+    width: auto;
+}
+
+
 
 .ir { display: block; text-indent: -999em; overflow: hidden; background-repeat: no-repeat; text-align: left; direction: ltr; }
 .hidden { display: none; visibility: hidden; }
