@@ -11,6 +11,7 @@ Requirements
 - Django 1.3
 - Markdown
 - PIL (Python Imaging Library)
+- [django-stdimage][1]
 
 Note: Mac OS X doesn't have libjpeg installed by default and your PIL won't
 recognize JPEG images if you don't install the libjpeg library.
@@ -44,3 +45,5 @@ License
 =======
 
 The django-jobim project follows the BSD license, equal to Django.
+
+[1]: http://code.google.com/p/django-stdimage/
