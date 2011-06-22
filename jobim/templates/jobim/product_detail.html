@@ -25,14 +25,20 @@
             </a>
             {% endif %}
         </p>
-        <h3>Maior oferta: <em>{{ product.status }}</em> <a href="{% url jobim:about %}"> Como funciona?  </a></h3>
+        <h3>
+            Situação: <em>{{ product.status }}</em>
+            <div><a href="{% url jobim:about %}">Como funciona?</a></div>
+        </h3>
         <form accept-charset="UTF-8" action="{% url jobim:product_bid product.category.slug product.slug %}" class="simple_form item" method="post">
         <fieldset>
-            {% if bid_form.amount.errors %}{{ bid_form.amount.errors}}{% endif %}<br />
-            <label class="string optional" for="item_bid_amount"> Oferta: R$</label>{{ bid_form.amount }}
-            <br>
-            {% if bid_form.email.errors %}{{ bid_form.email.errors}}{% endif %}<br />
-            <label class="email optional" for="item_bid_email"> Email:</label>{{ bid_form.email }}<br />
+            <div>
+                {% if bid_form.amount.errors %}{{ bid_form.amount.errors}}{% endif %}
+                <label class="string optional" for="item_bid_amount"> Oferta:</label><span class="currency">R$</span>{{ bid_form.amount }}
+            </div>
+            <div>
+                {% if bid_form.email.errors %}{{ bid_form.email.errors}}{% endif %}
+                <label class="email optional" for="item_bid_email"> Email:</label>{{ bid_form.email }}
+            </div>
             <button type="submit">Confirmar a oferta</button>
         </fieldset>
         </form>

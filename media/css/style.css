@@ -228,6 +228,10 @@ article {
     width: 720px;
 }
 
+article > hr {
+    margin-right: 32px;
+}
+
 #categories_menu {
     font-size: 1.6em;
     margin-left: 0;
@@ -256,7 +260,97 @@ article {
     text-decoration: underline;
 }
 
+#bidding > #cover {
+    float: right;
+    margin-right: 32px;
+    width: 200px;
+}
 
+#bidding > h3 {
+    width: 450px;
+}
+
+#bidding > h3 > div > a {
+    font-size: 14px;
+}
+
+#bidding > .simple_form {
+    width: 60%;
+}
+
+#bidding > .simple_form > fieldset {
+    width: 320px;
+    background: #FCF8F7;
+    padding: 18px;
+}
+
+#bidding > .simple_form > fieldset > div {
+    margin-bottom: 18px;
+}
+
+#bidding > .simple_form > fieldset .currency {
+    font-size: 36px;
+    margin-right: 4px;
+    vertical-align: middle;
+}
+
+#bidding > .simple_form > fieldset label {
+    margin-right: 12px;
+}
+
+#bidding > .simple_form > fieldset button {
+    float: right;
+    margin-right: 12px;
+}
+
+#bidding > .simple_form > fieldset #id_email {
+    font-size: 16px;
+    width: 250px;
+}
+
+#bidding > .simple_form > fieldset #id_amount {
+    font-size: 40px;
+    width: 190px;
+}
+
+#bidding > .simple_form > fieldset .errorlist {
+    background-color: #FBE3E4;
+    border: 2px solid #FBC2C4;
+    color: #8A1F11;
+    list-style: none;
+    margin: 8px 0 2px 0;
+    padding: 4px 4px 0 4px;
+}
+
+.messages {
+    list-style: none;
+    margin-left: 0;
+    margin-right: 32px;
+}
+
+.error, .warning, .success {
+    border: 2px solid #DDDDDD;
+    margin-bottom: 1em;
+    padding: 0.8em;
+}
+
+.error {
+    background: none repeat scroll 0 0 #FBE3E4;
+    border-color: #FBC2C4;
+    color: #8A1F11;
+}
+
+.warning {
+    background: none repeat scroll 0 0 #FFF6BF;
+    border-color: #FFD324;
+    color: #514721;
+}
+
+.success {
+    background: none repeat scroll 0 0 #E6EFC2;
+    border-color: #C6D880;
+    color: #264409;
+}
 
 .ir { display: block; text-indent: -999em; overflow: hidden; background-repeat: no-repeat; text-align: left; direction: ltr; }
 .hidden { display: none; visibility: hidden; }
