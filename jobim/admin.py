@@ -7,6 +7,8 @@ from jobim.models import (
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
 
+    prepopulated_fields = {'slug': ('name',)}
+
 
 class PhotoInline(admin.TabularInline):
     model = Photo
