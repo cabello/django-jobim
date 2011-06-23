@@ -8,7 +8,7 @@ from stdimage import StdImageField
 
 class Category(models.Model):
     name = models.CharField(_('name'), max_length=50)
-    slug = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50)
 
     class Meta:
         verbose_name = _('category')
@@ -32,7 +32,7 @@ class ProductsAvailableManager(models.Manager):
 class Product(models.Model):
     store = models.ForeignKey('Store', verbose_name=_('store'))
     name = models.CharField(_('name'), max_length=250)
-    slug = models.CharField(max_length=250)
+    slug = models.SlugField(max_length=250)
     description = models.TextField(_('description'))
     category = models.ForeignKey(Category, verbose_name=_('category'))
     cover = StdImageField(
