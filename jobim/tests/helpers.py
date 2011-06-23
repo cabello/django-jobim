@@ -9,6 +9,7 @@ def add_test_store():
 
     return store
 
+
 def add_test_category():
     from jobim.models import Category
 
@@ -16,6 +17,7 @@ def add_test_category():
     category.save()
 
     return category
+
 
 def add_test_product(store=None):
     from jobim.models import Product, Category

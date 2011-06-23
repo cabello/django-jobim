@@ -19,15 +19,8 @@ BID_ERROR = _(
     'There were problems with the bid, please correct the errors below.')
 
 
-class About(TemplateView):
+class StoreMixin(object):
     store = None
-    template_name = 'jobim/about.html'
-
-    def get_context_data(self, **kwargs):
-        store = self.get_store()
-        context = Context({'store_url': store.url})
-        about_content = get_template('jobim/about.txt').render(context)
-        return {'about_content': about_content, 'store_url': store.url}
 
     def get_store(self):
         if self.store is None:
@@ -37,9 +30,18 @@ class About(TemplateView):
         return self.store
 
 
-class ContactView(FormView):
+class About(TemplateView, StoreMixin):
+    template_name = 'jobim/about.html'
+
+    def get_context_data(self, **kwargs):
+        store = self.get_store()
+        context = Context({'store_url': store.url})
+        about_content = get_template('jobim/about.txt').render(context)
+        return {'about_content': about_content, 'store_url': store.url}
+
+
+class ContactView(FormView, StoreMixin):
     form_class = ContactForm
-    store = None
     template_name = 'jobim/contact.html'
 
     def get_context_data(self, **kwargs):
@@ -55,13 +57,6 @@ class ContactView(FormView):
         kwargs = super(ContactView, self).get_form_kwargs()
         kwargs.update({'instance': contact})
         return kwargs
-
-    def get_store(self):
-        if self.store is None:
-            store_url = self.kwargs.get('store_url')
-            self.store = get_object_or_404(Store, url=store_url)
-
-        return self.store
 
     def get_success_url(self):
         store = self.get_store()
@@ -82,9 +77,8 @@ class ContactSuccess(TemplateView):
         return {'store_url': self.kwargs.get('store_url')}
 
 
-class Index(RedirectView):
+class Index(RedirectView, StoreMixin):
     permanent = False
-    store = None
 
     def get_redirect_url(self, **kwargs):
         store = self.get_store()
@@ -93,17 +87,9 @@ class Index(RedirectView):
         self.url = reverse('jobim:about', kwargs=store_dict)
         return super(Index, self).get_redirect_url(**kwargs)
 
-    def get_store(self):
-        if self.store is None:
-            store_url = self.kwargs.get('store_url')
-            self.store = get_object_or_404(Store, url=store_url)
 
-        return self.store
-
-
-class ProductDetail(DetailView):
+class ProductDetail(DetailView, StoreMixin):
     model = Product
-    store = None
     queryset = Product.available.all()
 
     def get_context_data(self, **kwargs):
@@ -117,19 +103,11 @@ class ProductDetail(DetailView):
         self.kwargs['slug'] = self.kwargs.get('product_slug')
         return super(ProductDetail, self).get_object(queryset)
 
-    def get_store(self):
-        if self.store is None:
-            store_url = self.kwargs.get('store_url')
-            self.store = get_object_or_404(Store, url=store_url)
 
-        return self.store
-
-
-class ProductListByCategory(ListView):
+class ProductListByCategory(ListView, StoreMixin):
     category = None
     context_object_name = 'products'
     template_name_suffix = '_list_by_category'
-    store = None
 
     def get_context_data(self, **kwargs):
         store = self.get_store()
@@ -150,18 +128,10 @@ class ProductListByCategory(ListView):
         self.queryset = qs
         return super(ProductListByCategory, self).get_queryset()
 
-    def get_store(self):
-        if self.store is None:
-            store_url = self.kwargs.get('store_url')
-            self.store = get_object_or_404(Store, url=store_url)
 
-        return self.store
-
-
-class ToBid(FormView):
+class ToBid(FormView, StoreMixin):
     form_class = BidForm
     product = None
-    store = None
     template_name = 'jobim/product_detail.html'
 
     def get(self, request, *args, **kwargs):
@@ -190,13 +160,6 @@ class ToBid(FormView):
                 Product.available, slug=product_slug)
 
         return self.product
-
-    def get_store(self):
-        if self.store is None:
-            store_url = self.kwargs.get('store_url')
-            self.store = get_object_or_404(Store, url=store_url)
-
-        return self.store
 
     def get_success_url(self):
         category_slug = self.kwargs.get('category_slug')
