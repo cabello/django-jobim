@@ -20,6 +20,16 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     exclude = ('store', )
 
+    def add_view(self, request, form_url='', extra_context=None):
+        self.readonly_fields = ()
+        return super(ProductAdmin, self).add_view(
+            request, form_url, extra_context)
+
+    def change_view(self, request, object_id, extra_context=None):
+        self.readonly_fields = ('store', )
+        return super(ProductAdmin, self).change_view(
+            request, object_id, extra_context)
+
     def queryset(self, request):
         qs = super(ProductAdmin, self).queryset(request)
         if request.user.is_superuser:
