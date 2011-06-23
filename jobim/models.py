@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from stdimage import StdImageField
@@ -134,3 +135,15 @@ class Store(models.Model):
 
     def __unicode__(self):
         return u'%s - %s' % (self.url, self.name)
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, verbose_name=_('user'))
+    store = models.ForeignKey(Store, verbose_name=_('store'))
+
+    class Meta:
+        verbose_name = _('user profile')
+        verbose_name_plural = _('user profiles')
+
+    def __unicode__(self):
+        return u'%s (%s)' % (self.user.username, self.store.url)

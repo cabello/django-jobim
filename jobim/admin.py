@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from jobim.models import Category, Product, Photo, Bid, Contact, Store
+from jobim.models import (
+    Category, Product, Photo, Bid, Contact, Store, UserProfile)
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -38,9 +39,20 @@ class ContactAdmin(admin.ModelAdmin):
 class StoreAdmin(admin.ModelAdmin):
     list_display = ('url', 'name', 'slogan')
 
+    def queryset(self, request):
+        qs = super(StoreAdmin, self).queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(userprofile__user=request.user)
+
+
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'store')
+
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Bid, BidAdmin)
 admin.site.register(Contact, ContactAdmin)
 admin.site.register(Store, StoreAdmin)
+admin.site.register(UserProfile, UserProfileAdmin)

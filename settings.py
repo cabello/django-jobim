@@ -105,3 +105,5 @@ CONTACT_EMAIL = 'manoelcowboy@mail.com'
 # Change the email backend to smtp when in production and
 # set the needed settings acording to Django documentation
 EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+
+AUTH_PROFILE_MODULE = 'jobim.UserProfile'
