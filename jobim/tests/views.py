@@ -1,16 +1,24 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from jobim.tests.helpers import add_test_product, add_test_store
+from jobim.tests.helpers import (
+    add_test_category, add_test_product, add_test_store)
 
 
 class JobimViewsTest(TestCase):
     def test_index(self):
-        response = self.client.get(reverse('jobim:index'))
-        self.assertRedirects(response, reverse('jobim:about'))
+        store = add_test_store()
+        store_dict = {'store_url': store.url}
+
+        response = self.client.get(reverse('jobim:index', kwargs=store_dict))
+        self.assertRedirects(
+            response, reverse('jobim:about', kwargs=store_dict))
 
     def test_about(self):
-        response = self.client.get(reverse('jobim:about'))
+        store = add_test_store()
+        store_dict = {'store_url': store.url}
+
+        response = self.client.get(reverse('jobim:about', kwargs=store_dict))
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'jobim/about.txt')
         self.assertTemplateUsed(response, 'jobim/about.html')
@@ -77,12 +85,15 @@ class JobimViewsTest(TestCase):
         self.assertTemplateUsed(response, 'jobim/contact_success.html')
 
     def test_products_by_category(self):
+        store = add_test_store()
         cars_url = reverse('jobim:category_view', kwargs={
+            'store_url': store.url,
             'category_slug': 'cars'})
         response = self.client.get(cars_url)
         self.assertEqual(404, response.status_code)
 
         books_url = reverse('jobim:category_view', kwargs={
+            'store_url': store.url,
             'category_slug': 'books'})
         response = self.client.get(books_url)
         self.assertEqual(200, response.status_code)
@@ -90,7 +101,7 @@ class JobimViewsTest(TestCase):
             response, 'jobim/product_list_by_category.html')
         self.assertEqual(0, len(response.context['products']))
 
-        product = add_test_product()
+        product = add_test_product(store)
         response = self.client.get(books_url)
         self.assertEqual(200, response.status_code)
         self.assertEqual(1, len(response.context['products']))
@@ -104,16 +115,18 @@ class JobimViewsTest(TestCase):
         self.assertFalse(product in response.context['products'])
 
     def test_product_detail(self):
+        store = add_test_store()
         product_detail_url = reverse(
             'jobim:product_detail',
             kwargs={
+                'store_url': store.url,
                 'category_slug': 'books',
                 'product_slug': 'pragmatic-programmer'})
 
         response = self.client.get(product_detail_url)
         self.assertEqual(404, response.status_code)
 
-        product = add_test_product()
+        product = add_test_product(store)
         response = self.client.get(product_detail_url)
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'jobim/product_detail.html')
@@ -127,12 +140,14 @@ class JobimViewsTest(TestCase):
         from jobim.models import Bid
         from jobim.views import BID_SUCCESS, BID_ERROR
 
+        store = add_test_store()
         url_args = {
+            'store_url': store.url,
             'category_slug': 'books',
             'product_slug': 'pragmatic-programmer'}
         product_detail_url = reverse('jobim:product_detail', kwargs=url_args)
         bid_url = reverse('jobim:product_bid', kwargs=url_args)
-        product = add_test_product()
+        product = add_test_product(store)
 
         response = self.client.post(
             bid_url,

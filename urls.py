@@ -8,7 +8,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
 
-    url(r'^', include('jobim.urls', namespace='jobim')), )
+    url(r'', include('jobim.urls', namespace='jobim')), )
 
 if settings.DEBUG:
     urlpatterns += patterns('',

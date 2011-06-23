@@ -26,8 +26,8 @@
             <h1 id="title">Manoel is selling everything. Enjoy!</h1>
             <nav>
                 <ul>
-                    <li><a href="{% url jobim:about %}">{% trans "About" %}</a></li>
-                    <li><a href="{% url jobim:contact store_url='store_url' %}">{% trans "Contact" %}</a></li>
+                    <li><a href="{% url jobim:about store_url=store_url %}">{% trans "About" %}</a></li>
+                    <li><a href="{% url jobim:contact store_url=store_url %}">{% trans "Contact" %}</a></li>
                 </ul>
             </nav>
         </header>
@@ -35,7 +35,7 @@
     {% load jobim_tags %}
     <div id="main" class="wrapper">
         <aside>
-            {% categories_list %}
+            {% categories_list store_url %}
         </aside>
         <article>
             {% block article-content %}

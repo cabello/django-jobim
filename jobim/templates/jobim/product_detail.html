@@ -27,9 +27,9 @@
         </p>
         <h3>
             Situação: <em>{{ product.status }}</em>
-            <div><a href="{% url jobim:about %}">Como funciona?</a></div>
+            <div><a href="{% url jobim:about store_url=store_url %}">Como funciona?</a></div>
         </h3>
-        <form accept-charset="UTF-8" action="{% url jobim:product_bid product.category.slug product.slug %}" class="simple_form item" method="post">
+        <form accept-charset="UTF-8" action="{% url jobim:product_bid store_url product.category.slug product.slug %}" class="simple_form item" method="post">
         <fieldset>
             <div>
                 {% if bid_form.amount.errors %}{{ bid_form.amount.errors}}{% endif %}

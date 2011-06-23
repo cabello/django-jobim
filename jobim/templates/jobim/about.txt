@@ -22,7 +22,7 @@ Se você precisar de maiores informações sobre algum item, basta entrar em [co
 
 O frete é por conta de quem compra. Então, para ter uma idea de custo do frete, leve em conta que estamos localizados em Cidade Velha, SP, mais precisamente no Bairro Velho, no CEP 00000-000.
 
-[1]: {% url jobim:contact store_url='store_url' %}
+[1]: {% url jobim:contact store_url=store_url %}
 [2]: http://www.twitter.com/manoel_cowboy
 [3]: http://www.viniciusteles.com.br
 [4]: http://www.gohorse.com

@@ -9,10 +9,19 @@ def add_test_store():
 
     return store
 
-def add_test_product():
+def add_test_category():
+    from jobim.models import Category
+
+    category = Category(name='Books', slug='books')
+    category.save()
+
+    return category
+
+def add_test_product(store=None):
     from jobim.models import Product, Category
 
-    store = add_test_store()
+    if store is None:
+        store = add_test_store()
 
     category = Category.objects.get(slug='books')
     product = Product(

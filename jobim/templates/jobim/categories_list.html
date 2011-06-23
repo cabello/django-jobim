@@ -1,5 +1,5 @@
 <ul id="categories_menu">
 {% for category in categories %}
-    <li><a href="{% url jobim:category_view category.slug %}">{{ category.name }}</a></li>
+    <li><a href="{% url jobim:category_view store_url=store_url category_slug=category.slug %}">{{ category.name }}</a></li>
 {% endfor %}
 </ul>
