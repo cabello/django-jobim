@@ -126,10 +126,23 @@ class Contact(models.Model):
         return u'%s <%s> - %s' % (self.name, self.email, self.subject)
 
 
+class StoreOnlineManager(models.Manager):
+    def get_query_set(self):
+        queryset = super(StoreOnlineManager, self).get_query_set()
+        return queryset.filter(status='ON')
+
+
 class Store(models.Model):
+    STATUS_CHOICES = (('ON', _('Online')), ('OFF', _('Offline')))
+
     name = models.CharField(_('name'), max_length=32)
     slogan = models.CharField(_('slogan'), max_length=128)
     url = models.SlugField(max_length=16)
+    status = models.CharField(
+        _('status'), max_length=3, choices=STATUS_CHOICES, default='ON')
+
+    objects = models.Manager()
+    online = StoreOnlineManager()
 
     class Meta:
         verbose_name = _('store')

@@ -25,7 +25,7 @@ class StoreMixin(object):
     def get_store(self):
         if self.store is None:
             store_url = self.kwargs.get('store_url')
-            self.store = get_object_or_404(Store, url=store_url)
+            self.store = get_object_or_404(Store.online, url=store_url)
 
         return self.store
 
