@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from jobim.models import Category, Product, Photo, Bid, Contact
+from jobim.models import Category, Product, Photo, Bid, Contact, Store
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -34,7 +34,13 @@ class ContactAdmin(admin.ModelAdmin):
     list_display = ('read', 'name', 'email', 'phone_number', 'subject')
     list_filter = ('read',)
 
+
+class StoreAdmin(admin.ModelAdmin):
+    list_display = ('url', 'name', 'slogan')
+
+
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Bid, BidAdmin)
 admin.site.register(Contact, ContactAdmin)
+admin.site.register(Store, StoreAdmin)

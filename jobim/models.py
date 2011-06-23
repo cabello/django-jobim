@@ -4,6 +4,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from stdimage import StdImageField
 
+
 class Category(models.Model):
     name = models.CharField(_('name'), max_length=50)
     slug = models.CharField(max_length=50)
@@ -37,7 +38,7 @@ class Product(models.Model):
         upload_to='thumbnails',
         max_length=250,
         blank=True,
-        size=(200,150))
+        size=(200, 150))
     sold = models.BooleanField(_('sold'))
 
     objects = models.Manager()
@@ -72,7 +73,7 @@ class Photo(models.Model):
         _('image file'),
         upload_to='photos',
         max_length=250,
-        size=(700,525))
+        size=(700, 525))
 
     class Meta:
         verbose_name = _('photo')
@@ -120,3 +121,16 @@ class Contact(models.Model):
 
     def __unicode__(self):
         return u'%s <%s> - %s' % (self.name, self.email, self.subject)
+
+
+class Store(models.Model):
+    name = models.CharField(_('name'), max_length=32)
+    slogan = models.CharField(_('slogan'), max_length=128)
+    url = models.SlugField(max_length=16)
+
+    class Meta:
+        verbose_name = _('store')
+        verbose_name_plural = _('stores')
+
+    def __unicode__(self):
+        return u'%s - %s' % (self.url, self.name)
