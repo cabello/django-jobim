@@ -14,11 +14,17 @@ class PhotoInline(admin.TabularInline):
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('store', 'name', 'slug', 'category', 'sold')
-    list_filter = ('category', 'sold', 'store')
+    list_filter = ('category', 'sold')
 
     inlines = [PhotoInline]
     prepopulated_fields = {'slug': ('name',)}
     exclude = ('store', )
+
+    def queryset(self, request):
+        qs = super(ProductAdmin, self).queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(store__userprofile__user=request.user)
 
     def save_model(self, request, obj, form, change):
         obj.store = Store.objects.get(userprofile__user=request.user)
@@ -34,6 +40,12 @@ class BidAdmin(admin.ModelAdmin):
     def accept_bid(self, request, queryset):
         queryset.update(accepted=True)
     accept_bid.short_description = 'Accept selected bids'
+
+    def queryset(self, request):
+        qs = super(BidAdmin, self).queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(product__store__userprofile__user=request.user)
 
 
 class ContactAdmin(admin.ModelAdmin):
