@@ -109,6 +109,7 @@ class Bid(models.Model):
 
 
 class Contact(models.Model):
+    store = models.ForeignKey('Store', verbose_name=_('store'))
     name = models.CharField(_('name'), max_length=64, blank=True)
     email = models.CharField(_('email'), max_length=128)
     phone_number = models.CharField(

@@ -61,8 +61,15 @@ class BidAdmin(admin.ModelAdmin):
 
 
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ('read', 'name', 'email', 'phone_number', 'subject')
+    list_display = (
+        'store', 'read', 'name', 'email', 'phone_number', 'subject')
     list_filter = ('read',)
+
+    def queryset(self, request):
+        qs = super(ContactAdmin, self).queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(store__userprofile__user=request.user)
 
 
 class StoreAdmin(admin.ModelAdmin):

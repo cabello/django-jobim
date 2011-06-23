@@ -10,7 +10,7 @@ from django.views.generic import (
     DetailView, FormView, ListView, RedirectView, TemplateView)
 
 from jobim.forms import BidForm, ContactForm
-from jobim.models import Bid, Category, Product
+from jobim.models import Bid, Category, Contact, Product, Store
 
 
 BID_SUCCESS = _(
@@ -27,27 +27,49 @@ class About(TemplateView):
         return {'about_content': about_content}
 
 
-class Contact(FormView):
+class ContactView(FormView):
     form_class = ContactForm
+    store = None
     template_name = 'jobim/contact.html'
 
     def get_context_data(self, **kwargs):
         contact_email = settings.CONTACT_EMAIL
         return {
             'contact_form': kwargs['form'],
-            'contact_email': contact_email}
+            'contact_email': contact_email,
+            'store_url': self.kwargs.get('store_url')}
+
+    def get_form_kwargs(self):
+        store = self.get_store()
+        contact = Contact(store=store)
+        kwargs = super(ContactView, self).get_form_kwargs()
+        kwargs.update({'instance': contact})
+        return kwargs
+
+    def get_store(self):
+        if self.store is None:
+            store_url = self.kwargs.get('store_url')
+            self.store = get_object_or_404(Store, url=store_url)
+
+        return self.store
 
     def get_success_url(self):
-        self.success_url = reverse('jobim:contact_success')
-        return super(Contact, self).get_success_url()
+        store = self.get_store()
+        self.success_url = reverse(
+            'jobim:contact_success',
+            kwargs={'store_url': store.url})
+        return super(ContactView, self).get_success_url()
 
     def form_valid(self, form):
         form.save()
-        return super(Contact, self).form_valid(form)
+        return super(ContactView, self).form_valid(form)
 
 
 class ContactSuccess(TemplateView):
     template_name = 'jobim/contact_success.html'
+
+    def get_context_data(self, **kwargs):
+        return {'store_url': self.kwargs.get('store_url')}
 
 
 class Index(RedirectView):

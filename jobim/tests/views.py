@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from jobim.tests.helpers import add_test_product
+from jobim.tests.helpers import add_test_product, add_test_store
 
 
 class JobimViewsTest(TestCase):
@@ -21,11 +21,17 @@ class JobimViewsTest(TestCase):
 
         from jobim.models import Contact
 
-        response = self.client.get(reverse('jobim:contact'))
+        store = add_test_store()
+        store_dict = {'store_url': store.url}
+        contact_url = reverse('jobim:contact', kwargs=store_dict)
+        contact_success_url = reverse(
+            'jobim:contact_success', kwargs=store_dict)
+
+        response = self.client.get(contact_url)
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'jobim/contact.html')
 
-        response = self.client.post(reverse('jobim:contact'))
+        response = self.client.post(contact_url)
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'jobim/contact.html')
         self.assertFalse(response.context['contact_form'].is_valid())
@@ -37,9 +43,9 @@ class JobimViewsTest(TestCase):
 
         self.assertEqual(0, Contact.objects.count())
         response = self.client.post(
-            reverse('jobim:contact'),
+            contact_url,
             {'email': 'john@buyer.com'})
-        self.assertRedirects(response, reverse('jobim:contact_success'))
+        self.assertRedirects(response, contact_success_url)
         self.assertEqual(1, Contact.objects.count())
 
         mail.outbox = []
@@ -50,9 +56,9 @@ class JobimViewsTest(TestCase):
             'subject': 'How much for the box?',
             'message': 'I saw prrety box in your store...'}
         response = self.client.post(
-            reverse('jobim:contact'),
+            contact_url,
             contact_form)
-        self.assertRedirects(response, reverse('jobim:contact_success'))
+        self.assertRedirects(response, contact_success_url)
         self.assertEqual(1, len(mail.outbox))
         message = mail.outbox[0]
         self.assertEqual(settings.CONTACT_EMAIL, message.to[0])
@@ -61,7 +67,12 @@ class JobimViewsTest(TestCase):
         self.assertTemplateUsed(response, 'jobim/contact_message.txt')
 
     def test_contact_success(self):
-        response = self.client.get(reverse('jobim:contact_success'))
+        store = add_test_store()
+        store_dict = {'store_url': store.url}
+        contact_success_url = reverse(
+            'jobim:contact_success', kwargs=store_dict)
+
+        response = self.client.get(contact_success_url)
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'jobim/contact_success.html')
 

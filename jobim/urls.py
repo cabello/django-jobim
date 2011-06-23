@@ -7,10 +7,12 @@ urlpatterns = patterns('',
 
     url(r'^about$', views.About.as_view(), name='about'),
 
-    url(r'^contact$', views.Contact.as_view(), name='contact'),
+    url(r'^(?P<store_url>[-\w]+)/contact$',
+        views.ContactView.as_view(),
+        name='contact'),
 
     url(
-        r'^contact/success$',
+        r'^(?P<store_url>[-\w]+)/contact/success$',
         views.ContactSuccess.as_view(),
         name='contact_success'),
 

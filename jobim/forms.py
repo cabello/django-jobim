@@ -19,7 +19,7 @@ class ContactForm(forms.ModelForm):
 
     class Meta:
         model = Contact
-        exclude = ('read',)
+        exclude = ('read', 'store')
 
 
 class BidForm(forms.ModelForm):
