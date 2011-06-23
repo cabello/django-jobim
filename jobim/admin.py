@@ -19,10 +19,6 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 
-class PhotoAdmin(admin.ModelAdmin):
-    list_display = ('product', 'pk')
-
-
 class BidAdmin(admin.ModelAdmin):
     list_display = ('product', 'amount', 'email', 'accepted')
     list_filter = ('product', 'accepted')
@@ -40,6 +36,5 @@ class ContactAdmin(admin.ModelAdmin):
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
-admin.site.register(Photo, PhotoAdmin)
 admin.site.register(Bid, BidAdmin)
 admin.site.register(Contact, ContactAdmin)
