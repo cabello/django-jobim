@@ -30,6 +30,7 @@ class ProductsAvailableManager(models.Manager):
 
 
 class Product(models.Model):
+    store = models.ForeignKey('Store', verbose_name=_('store'))
     name = models.CharField(_('name'), max_length=250)
     slug = models.CharField(max_length=250)
     description = models.TextField(_('description'))
@@ -134,7 +135,7 @@ class Store(models.Model):
         verbose_name_plural = _('stores')
 
     def __unicode__(self):
-        return u'%s - %s' % (self.url, self.name)
+        return u'%s' % self.url
 
 
 class UserProfile(models.Model):

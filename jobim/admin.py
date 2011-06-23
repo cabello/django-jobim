@@ -13,11 +13,16 @@ class PhotoInline(admin.TabularInline):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug', 'category', 'sold')
-    list_filter = ('category', 'sold')
+    list_display = ('store', 'name', 'slug', 'category', 'sold')
+    list_filter = ('category', 'sold', 'store')
 
     inlines = [PhotoInline]
     prepopulated_fields = {'slug': ('name',)}
+    exclude = ('store', )
+
+    def save_model(self, request, obj, form, change):
+        obj.store = Store.objects.get(userprofile__user=request.user)
+        return super(ProductAdmin, self).save_model(request, obj, form, change)
 
 
 class BidAdmin(admin.ModelAdmin):
