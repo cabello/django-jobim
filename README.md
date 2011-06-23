@@ -44,6 +44,7 @@ to add new products and to visit the site.
 License
 =======
 
-The django-jobim project follows the BSD license, equal to Django.
+The django-jobim project follows the [GNU Affero General Public License][2].
 
 [1]: http://code.google.com/p/django-stdimage/
+[2]: http://www.gnu.org/licenses/agpl-3.0.html
