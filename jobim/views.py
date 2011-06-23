@@ -22,6 +22,11 @@ BID_ERROR = _(
 class StoreMixin(object):
     store = None
 
+    def get_context_data(self, **kwargs):
+        context = super(StoreMixin, self).get_context_data(**kwargs)
+        context.update({'store_url': self.kwargs.get('store_url')})
+        return context
+
     def get_store(self):
         if self.store is None:
             store_url = self.kwargs.get('store_url')
@@ -30,26 +35,31 @@ class StoreMixin(object):
         return self.store
 
 
-class About(TemplateView, StoreMixin):
+class About(StoreMixin, TemplateView):
     template_name = 'jobim/about.html'
 
     def get_context_data(self, **kwargs):
         store = self.get_store()
-        context = Context({'store_url': store.url})
-        about_content = get_template('jobim/about.txt').render(context)
-        return {'about_content': about_content, 'store_url': store.url}
+        about_context = Context({'store_url': store.url})
+        about_content = get_template('jobim/about.txt').render(about_context)
+
+        context = super(About, self).get_context_data(**kwargs)
+        context.update({'about_content': about_content})
+        return context
 
 
-class ContactView(FormView, StoreMixin):
+class ContactView(StoreMixin, FormView):
     form_class = ContactForm
     template_name = 'jobim/contact.html'
 
     def get_context_data(self, **kwargs):
         contact_email = settings.CONTACT_EMAIL
-        return {
+
+        context = super(ContactView, self).get_context_data(**kwargs)
+        context.update({
             'contact_form': kwargs['form'],
-            'contact_email': contact_email,
-            'store_url': self.kwargs.get('store_url')}
+            'contact_email': contact_email})
+        return context
 
     def get_form_kwargs(self):
         store = self.get_store()
@@ -70,66 +80,59 @@ class ContactView(FormView, StoreMixin):
         return super(ContactView, self).form_valid(form)
 
 
-class ContactSuccess(TemplateView):
+class ContactSuccess(StoreMixin, TemplateView):
     template_name = 'jobim/contact_success.html'
 
-    def get_context_data(self, **kwargs):
-        return {'store_url': self.kwargs.get('store_url')}
 
-
-class Index(RedirectView, StoreMixin):
+class Index(StoreMixin, RedirectView):
     permanent = False
 
     def get_redirect_url(self, **kwargs):
         store = self.get_store()
-        store_dict = {'store_url': store.url}
-
-        self.url = reverse('jobim:about', kwargs=store_dict)
+        self.url = reverse('jobim:about', kwargs={'store_url': store.url})
         return super(Index, self).get_redirect_url(**kwargs)
 
 
-class ProductDetail(DetailView, StoreMixin):
+class ProductDetail(StoreMixin, DetailView):
     model = Product
     queryset = Product.available.all()
 
     def get_context_data(self, **kwargs):
         product = kwargs.get('object')
-        kwargs['photos'] = product.photo_set.all()
-        kwargs['bid_form'] = BidForm()
-        kwargs['store_url'] = self.get_store().url
-        return super(ProductDetail, self).get_context_data(**kwargs)
+        context = super(ProductDetail, self).get_context_data(**kwargs)
+        context.update({
+            'photos': product.photo_set.all(),
+            'bid_form': BidForm()})
+        return context
 
     def get_object(self, queryset=None):
         self.kwargs['slug'] = self.kwargs.get('product_slug')
         return super(ProductDetail, self).get_object(queryset)
 
 
-class ProductListByCategory(ListView, StoreMixin):
+class ProductListByCategory(StoreMixin, ListView):
     category = None
     context_object_name = 'products'
     template_name_suffix = '_list_by_category'
 
     def get_context_data(self, **kwargs):
-        store = self.get_store()
         return super(ProductListByCategory, self).get_context_data(
-            store_url=store.url,
             category=self.category,
             **kwargs)
 
     def get_queryset(self):
-        store_url = self.kwargs.get('store_url')
-        self.store = get_object_or_404(Store, url=store_url)
+        store = self.get_store()
 
         category_slug = self.kwargs.get('category_slug')
         self.category = get_object_or_404(Category, slug=category_slug)
 
-        qs = Product.available.filter(store=self.store)
+        qs = Product.available.filter(store=store)
         qs = qs.filter(category=self.category)
         self.queryset = qs
         return super(ProductListByCategory, self).get_queryset()
 
 
-class ToBid(FormView, StoreMixin):
+class ToBid(StoreMixin, FormView):
     form_class = BidForm
     product = None
     template_name = 'jobim/product_detail.html'
@@ -140,11 +143,12 @@ class ToBid(FormView, StoreMixin):
     def get_context_data(self, **kwargs):
         product = self.get_product()
         photos = product.photo_set.all()
-        kwargs['product'] = product
-        kwargs['photos'] = photos
-        kwargs['bid_form'] = kwargs.get('form')
-        kwargs['store_url'] = self.get_store().url
-        return super(ToBid, self).get_context_data(**kwargs)
+        context = super(ToBid, self).get_context_data(**kwargs)
+        context.update({
+            'product': product,
+            'photos': photos,
+            'bid_form': kwargs.get('form')})
+        return context
 
     def get_form_kwargs(self):
         product = self.get_product()
