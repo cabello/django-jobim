@@ -62,8 +62,15 @@ class BidAdmin(admin.ModelAdmin):
 
 class ContactAdmin(admin.ModelAdmin):
     list_display = (
-        'store', 'read', 'name', 'email', 'phone_number', 'subject')
+        'store',
+        'read',
+        'datetime',
+        'email',
+        'name',
+        'subject',
+        'phone_number')
     list_filter = ('read',)
+    readonly_fields = ('datetime',)
 
     def queryset(self, request):
         qs = super(ContactAdmin, self).queryset(request)

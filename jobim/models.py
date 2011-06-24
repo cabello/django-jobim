@@ -117,6 +117,7 @@ class Contact(models.Model):
     subject = models.CharField(_('subject'), max_length=128, blank=True)
     message = models.TextField(_('message'), blank=True)
     read = models.BooleanField(_('read'),)
+    datetime = models.DateTimeField(_('datetime'), auto_now_add=True)
 
     class Meta:
         verbose_name = _('contact')
