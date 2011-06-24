@@ -44,8 +44,9 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 class BidAdmin(admin.ModelAdmin):
-    list_display = ('product', 'amount', 'email', 'accepted')
+    list_display = ('accepted', 'datetime', 'product', 'amount', 'email')
     list_filter = ('product', 'accepted')
+    readonly_fields = ('datetime', )
 
     actions = ['accept_bid']
 

@@ -90,6 +90,7 @@ class Bid(models.Model):
     amount = models.IntegerField(_('amount'))
     email = models.CharField(_('email'), max_length=128)
     accepted = models.BooleanField(_('accepted'))
+    datetime = models.DateTimeField(_('datetime'), auto_now_add=True)
 
     class Meta:
         verbose_name = _('bid')

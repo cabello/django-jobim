@@ -25,4 +25,4 @@ class ContactForm(forms.ModelForm):
 class BidForm(forms.ModelForm):
     class Meta:
         model = Bid
-        exclude = ('product', 'accepted')
+        exclude = ('product', 'accepted', 'datetime')
