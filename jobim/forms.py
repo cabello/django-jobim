@@ -15,7 +15,7 @@ class ContactForm(forms.ModelForm):
             get_template('jobim/contact_subject.txt').render(mail_context),
             get_template('jobim/contact_message.txt').render(mail_context),
             self.cleaned_data['email'],
-            [settings.CONTACT_EMAIL])
+            [self.instance.store.email])
 
     class Meta:
         model = Contact

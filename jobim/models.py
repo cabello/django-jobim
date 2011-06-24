@@ -140,6 +140,7 @@ class Store(models.Model):
     name = models.CharField(_('name'), max_length=32)
     slogan = models.CharField(_('slogan'), max_length=128)
     url = models.SlugField(max_length=16)
+    email = models.CharField(_('email'), max_length=128)
     status = models.CharField(
         _('status'), max_length=3, choices=STATUS_CHOICES, default='ON')
 

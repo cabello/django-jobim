@@ -24,7 +24,6 @@ class JobimViewsTest(TestCase):
         self.assertTemplateUsed(response, 'jobim/about.html')
 
     def test_contact(self):
-        from django.conf import settings
         from django.core import mail
 
         from jobim.models import Contact
@@ -69,7 +68,7 @@ class JobimViewsTest(TestCase):
         self.assertRedirects(response, contact_success_url)
         self.assertEqual(1, len(mail.outbox))
         message = mail.outbox[0]
-        self.assertEqual(settings.CONTACT_EMAIL, message.to[0])
+        self.assertEqual(store.email, message.to[0])
         self.assertEqual('john@buyer.com', message.from_email)
         self.assertTemplateUsed(response, 'jobim/contact_subject.txt')
         self.assertTemplateUsed(response, 'jobim/contact_message.txt')

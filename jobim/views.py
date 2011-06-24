@@ -53,7 +53,7 @@ class ContactView(StoreMixin, FormView):
     template_name = 'jobim/contact.html'
 
     def get_context_data(self, **kwargs):
-        contact_email = settings.CONTACT_EMAIL
+        contact_email = self.get_store().email
 
         context = super(ContactView, self).get_context_data(**kwargs)
         context.update({

@@ -81,7 +81,7 @@ class ContactAdmin(admin.ModelAdmin):
 
 
 class StoreAdmin(admin.ModelAdmin):
-    list_display = ('url', 'name', 'slogan')
+    list_display = ('url', 'email', 'name', 'slogan')
 
     def queryset(self, request):
         qs = super(StoreAdmin, self).queryset(request)

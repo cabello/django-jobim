@@ -4,7 +4,8 @@ def add_test_store():
     store = Store(
         name='Manoel Cowboy',
         slogan='Manoel is selling everything! Enjoy.',
-        url='manoel')
+        url='manoel',
+        email='manoelcowboy@mail.com')
     store.save()
 
     return store
