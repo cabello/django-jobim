@@ -38,12 +38,6 @@ class StoreMixin(object):
 class About(StoreMixin, TemplateView):
     template_name = 'jobim/about.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(About, self).get_context_data(**kwargs)
-        store = self.get_store()
-        context.update({'about_content': store.about_content})
-        return context
-
 
 class ContactView(StoreMixin, FormView):
     form_class = ContactForm
