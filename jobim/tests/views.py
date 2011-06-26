@@ -13,10 +13,8 @@ class JobimViewsTest(TestCase):
         self.url_dict = {'kwargs': {'store_url': self.store.url}}
 
     def test_index(self):
-        response = self.client.get(
-            reverse('jobim:index', **self.url_dict))
-        self.assertRedirects(
-            response, reverse('jobim:about', **self.url_dict))
+        response = self.client.get(reverse('jobim:index', **self.url_dict))
+        self.assertRedirects(response, reverse('jobim:about', **self.url_dict))
 
     def test_about(self):
         response = self.client.get(
@@ -31,8 +29,7 @@ class JobimViewsTest(TestCase):
         from jobim.models import Contact
 
         contact_url = reverse('jobim:contact', **self.url_dict)
-        contact_success_url = reverse(
-            'jobim:contact_success', **self.url_dict)
+        contact_success_url = reverse('jobim:contact_success', **self.url_dict)
 
         response = self.client.get(contact_url)
         self.assertEqual(200, response.status_code)
