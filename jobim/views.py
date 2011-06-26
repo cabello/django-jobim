@@ -39,12 +39,9 @@ class About(StoreMixin, TemplateView):
     template_name = 'jobim/about.html'
 
     def get_context_data(self, **kwargs):
-        store = self.get_store()
-        about_context = Context({'store_url': store.url})
-        about_content = get_template('jobim/about.txt').render(about_context)
-
         context = super(About, self).get_context_data(**kwargs)
-        context.update({'about_content': about_content})
+        store = self.get_store()
+        context.update({'about_content': store.about_content})
         return context
 
 

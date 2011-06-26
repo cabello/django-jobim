@@ -20,8 +20,8 @@ class JobimViewsTest(TestCase):
 
         response = self.client.get(reverse('jobim:about', kwargs=store_dict))
         self.assertEqual(200, response.status_code)
-        self.assertTemplateUsed(response, 'jobim/about.txt')
         self.assertTemplateUsed(response, 'jobim/about.html')
+        self.assertContains(response, store.about_content)
 
     def test_contact(self):
         from django.core import mail

@@ -143,6 +143,7 @@ class Store(models.Model):
     email = models.CharField(_('email'), max_length=128)
     status = models.CharField(
         _('status'), max_length=3, choices=STATUS_CHOICES, default='ON')
+    about_content = models.TextField(_('about content'))
 
     objects = models.Manager()
     online = StoreOnlineManager()
