@@ -10,17 +10,17 @@ class JobimViewsTest(TestCase):
 
     def setUp(self):
         self.store = add_test_store()
-        self.url_dict = {'store_url': self.store.url}
+        self.url_dict = {'kwargs': {'store_url': self.store.url}}
 
     def test_index(self):
         response = self.client.get(
-            reverse('jobim:index', kwargs=self.url_dict))
+            reverse('jobim:index', **self.url_dict))
         self.assertRedirects(
-            response, reverse('jobim:about', kwargs=self.url_dict))
+            response, reverse('jobim:about', **self.url_dict))
 
     def test_about(self):
         response = self.client.get(
-            reverse('jobim:about', kwargs=self.url_dict))
+            reverse('jobim:about', **self.url_dict))
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'jobim/about.html')
         self.assertContains(response, self.store.about_content)
@@ -30,9 +30,9 @@ class JobimViewsTest(TestCase):
 
         from jobim.models import Contact
 
-        contact_url = reverse('jobim:contact', kwargs=self.url_dict)
+        contact_url = reverse('jobim:contact', **self.url_dict)
         contact_success_url = reverse(
-            'jobim:contact_success', kwargs=self.url_dict)
+            'jobim:contact_success', **self.url_dict)
 
         response = self.client.get(contact_url)
         self.assertEqual(200, response.status_code)
@@ -75,7 +75,7 @@ class JobimViewsTest(TestCase):
 
     def test_contact_success(self):
         contact_success_url = reverse(
-            'jobim:contact_success', kwargs=self.url_dict)
+            'jobim:contact_success', **self.url_dict)
 
         response = self.client.get(contact_success_url)
         self.assertEqual(200, response.status_code)
