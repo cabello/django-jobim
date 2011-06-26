@@ -6,6 +6,8 @@ from jobim.tests.helpers import (
 
 
 class JobimViewsTest(TestCase):
+    fixtures = ['sites', 'categories']
+
     def test_index(self):
         store = add_test_store()
         store_dict = {'store_url': store.url}

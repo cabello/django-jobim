@@ -4,6 +4,8 @@ from jobim.tests.helpers import add_test_product
 
 
 class JobimAdminTest(TestCase):
+    fixtures = ['sites', 'categories']
+
     def test_accept_bid(self):
         from jobim.admin import BidAdmin
         from jobim.models import Bid
