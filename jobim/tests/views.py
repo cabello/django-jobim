@@ -8,30 +8,30 @@ from jobim.tests.helpers import (
 class JobimViewsTest(TestCase):
     fixtures = ['sites', 'categories']
 
+    def setUp(self):
+        self.store = add_test_store()
+
     def test_index(self):
-        store = add_test_store()
-        store_dict = {'store_url': store.url}
+        store_dict = {'store_url': self.store.url}
 
         response = self.client.get(reverse('jobim:index', kwargs=store_dict))
         self.assertRedirects(
             response, reverse('jobim:about', kwargs=store_dict))
 
     def test_about(self):
-        store = add_test_store()
-        store_dict = {'store_url': store.url}
+        store_dict = {'store_url': self.store.url}
 
         response = self.client.get(reverse('jobim:about', kwargs=store_dict))
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'jobim/about.html')
-        self.assertContains(response, store.about_content)
+        self.assertContains(response, self.store.about_content)
 
     def test_contact(self):
         from django.core import mail
 
         from jobim.models import Contact
 
-        store = add_test_store()
-        store_dict = {'store_url': store.url}
+        store_dict = {'store_url': self.store.url}
         contact_url = reverse('jobim:contact', kwargs=store_dict)
         contact_success_url = reverse(
             'jobim:contact_success', kwargs=store_dict)
@@ -70,14 +70,13 @@ class JobimViewsTest(TestCase):
         self.assertRedirects(response, contact_success_url)
         self.assertEqual(1, len(mail.outbox))
         message = mail.outbox[0]
-        self.assertEqual(store.email, message.to[0])
+        self.assertEqual(self.store.email, message.to[0])
         self.assertEqual('john@buyer.com', message.from_email)
         self.assertTemplateUsed(response, 'jobim/contact_subject.txt')
         self.assertTemplateUsed(response, 'jobim/contact_message.txt')
 
     def test_contact_success(self):
-        store = add_test_store()
-        store_dict = {'store_url': store.url}
+        store_dict = {'store_url': self.store.url}
         contact_success_url = reverse(
             'jobim:contact_success', kwargs=store_dict)
 
@@ -86,15 +85,14 @@ class JobimViewsTest(TestCase):
         self.assertTemplateUsed(response, 'jobim/contact_success.html')
 
     def test_products_by_category(self):
-        store = add_test_store()
         cars_url = reverse('jobim:category_view', kwargs={
-            'store_url': store.url,
+            'store_url': self.store.url,
             'category_slug': 'cars'})
         response = self.client.get(cars_url)
         self.assertEqual(404, response.status_code)
 
         books_url = reverse('jobim:category_view', kwargs={
-            'store_url': store.url,
+            'store_url': self.store.url,
             'category_slug': 'books'})
         response = self.client.get(books_url)
         self.assertEqual(200, response.status_code)
@@ -102,7 +100,7 @@ class JobimViewsTest(TestCase):
             response, 'jobim/product_list_by_category.html')
         self.assertEqual(0, len(response.context['products']))
 
-        product = add_test_product(store)
+        product = add_test_product(self.store)
         response = self.client.get(books_url)
         self.assertEqual(200, response.status_code)
         self.assertEqual(1, len(response.context['products']))
@@ -116,18 +114,17 @@ class JobimViewsTest(TestCase):
         self.assertFalse(product in response.context['products'])
 
     def test_product_detail(self):
-        store = add_test_store()
         product_detail_url = reverse(
             'jobim:product_detail',
             kwargs={
-                'store_url': store.url,
+                'store_url': self.store.url,
                 'category_slug': 'books',
                 'product_slug': 'pragmatic-programmer'})
 
         response = self.client.get(product_detail_url)
         self.assertEqual(404, response.status_code)
 
-        product = add_test_product(store)
+        product = add_test_product(self.store)
         response = self.client.get(product_detail_url)
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'jobim/product_detail.html')
@@ -141,14 +138,13 @@ class JobimViewsTest(TestCase):
         from jobim.models import Bid
         from jobim.views import BID_SUCCESS, BID_ERROR
 
-        store = add_test_store()
         url_args = {
-            'store_url': store.url,
+            'store_url': self.store.url,
             'category_slug': 'books',
             'product_slug': 'pragmatic-programmer'}
         product_detail_url = reverse('jobim:product_detail', kwargs=url_args)
         bid_url = reverse('jobim:product_bid', kwargs=url_args)
-        product = add_test_product(store)
+        product = add_test_product(self.store)
 
         response = self.client.post(
             bid_url,
