@@ -10,18 +10,17 @@ class JobimViewsTest(TestCase):
 
     def setUp(self):
         self.store = add_test_store()
+        self.url_dict = {'store_url': self.store.url}
 
     def test_index(self):
-        store_dict = {'store_url': self.store.url}
-
-        response = self.client.get(reverse('jobim:index', kwargs=store_dict))
+        response = self.client.get(
+            reverse('jobim:index', kwargs=self.url_dict))
         self.assertRedirects(
-            response, reverse('jobim:about', kwargs=store_dict))
+            response, reverse('jobim:about', kwargs=self.url_dict))
 
     def test_about(self):
-        store_dict = {'store_url': self.store.url}
-
-        response = self.client.get(reverse('jobim:about', kwargs=store_dict))
+        response = self.client.get(
+            reverse('jobim:about', kwargs=self.url_dict))
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'jobim/about.html')
         self.assertContains(response, self.store.about_content)
@@ -31,10 +30,9 @@ class JobimViewsTest(TestCase):
 
         from jobim.models import Contact
 
-        store_dict = {'store_url': self.store.url}
-        contact_url = reverse('jobim:contact', kwargs=store_dict)
+        contact_url = reverse('jobim:contact', kwargs=self.url_dict)
         contact_success_url = reverse(
-            'jobim:contact_success', kwargs=store_dict)
+            'jobim:contact_success', kwargs=self.url_dict)
 
         response = self.client.get(contact_url)
         self.assertEqual(200, response.status_code)
@@ -76,9 +74,8 @@ class JobimViewsTest(TestCase):
         self.assertTemplateUsed(response, 'jobim/contact_message.txt')
 
     def test_contact_success(self):
-        store_dict = {'store_url': self.store.url}
         contact_success_url = reverse(
-            'jobim:contact_success', kwargs=store_dict)
+            'jobim:contact_success', kwargs=self.url_dict)
 
         response = self.client.get(contact_success_url)
         self.assertEqual(200, response.status_code)
