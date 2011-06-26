@@ -26,10 +26,22 @@ class Category(models.Model):
 class ProductsAvailableManager(models.Manager):
     def get_query_set(self):
         queryset = super(ProductsAvailableManager, self).get_query_set()
-        return queryset.filter(sold=False)
+        return queryset.filter(status='AVLB')
+
+
+class ProductsSoldManager(models.Manager):
+    def get_query_set(self):
+        queryset = super(ProductsSoldManager, self).get_query_set()
+        return queryset.filter(status='SOLD')
 
 
 class Product(models.Model):
+    STATUS_CHOICES = (
+        ('AVLB', _('Available')),
+        ('SOLD', _('Sold')),
+        ('RSRV', _('Reserved')),
+        ('DRFT', _('Draft')))
+
     store = models.ForeignKey('Store', verbose_name=_('store'))
     name = models.CharField(_('name'), max_length=250)
     slug = models.SlugField(max_length=250)
@@ -41,10 +53,12 @@ class Product(models.Model):
         max_length=250,
         blank=True,
         size=(200, 150))
-    sold = models.BooleanField(_('sold'))
+    status = models.CharField(
+        _('status'), max_length=4, choices=STATUS_CHOICES, default='AVLB')
 
     objects = models.Manager()
     available = ProductsAvailableManager()
+    sold = ProductsSoldManager()
 
     class Meta:
         verbose_name = _('product')
@@ -58,8 +72,8 @@ class Product(models.Model):
     def get_absolute_url(self):
         return ('jobim:product_detail', [self.category.slug, self.slug])
 
-    def status(self):
-        if self.sold:
+    def bid_status(self):
+        if self.status == 'SOLD':
             return _('Sold')
         else:
             bidset = self.bid_set.filter(accepted=True).order_by('-amount')

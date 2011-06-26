@@ -102,7 +102,7 @@ class JobimViewsTest(TestCase):
         self.assertEqual(1, len(response.context['products']))
         self.assertTrue(product in response.context['products'])
 
-        product.sold = True
+        product.status = 'SOLD'
         product.save()
         response = self.client.get(books_url)
         self.assertEqual(200, response.status_code)
@@ -122,7 +122,7 @@ class JobimViewsTest(TestCase):
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'jobim/product_detail.html')
 
-        product.sold = True
+        product.status = 'SOLD'
         product.save()
         response = self.client.get(product_detail_url)
         self.assertEqual(404, response.status_code)
@@ -153,7 +153,7 @@ class JobimViewsTest(TestCase):
         response = self.client.get(bid_url)
         self.assertRedirects(response, product_detail_url)
 
-        product.sold = True
+        product.status = 'SOLD'
         product.save()
         response = self.client.post(
             bid_url,

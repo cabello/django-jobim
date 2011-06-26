@@ -11,7 +11,7 @@
             <a href="{% url jobim:product_detail store.url category.slug product.slug %}">
                 <div class="name">{{ product }}</div>
                 <div><img class="cover" src="{% if product.cover %}{{ product.cover.url }}{% endif %}" /></div>
-                <div class="status">{{ product.status }}</div>
+                <div class="status">{{ product.bid_status }}</div>
             </a>
             </li>
         {% endfor %}

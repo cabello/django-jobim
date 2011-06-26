@@ -1,14 +1,14 @@
 [
   {
-    "pk": 1, 
-    "model": "jobim.product", 
+    "pk": 1,
+    "model": "jobim.product",
     "fields": {
-      "category": 5, 
-      "description": "A cool coffee maker.", 
-      "sold": false, 
-      "cover": "", 
-      "slug": "coffee-maker", 
-      "store": 1, 
+      "category": 5,
+      "description": "A cool coffee maker.",
+      "status": "AVLB",
+      "cover": "",
+      "slug": "coffee-maker",
+      "store": 1,
       "name": "Coffee Maker"
     }
   }

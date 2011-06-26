@@ -26,7 +26,7 @@
             {% endif %}
         </p>
         <h3>
-            Situação: <em>{{ product.status }}</em>
+            Situação: <em>{{ product.bid_status }}</em>
             <div><a href="{% url jobim:about store_url=store.url %}">Como funciona?</a></div>
         </h3>
         <form accept-charset="UTF-8" action="{% url jobim:product_bid store.url product.category.slug product.slug %}" class="simple_form item" method="post">

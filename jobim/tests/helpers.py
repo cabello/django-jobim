@@ -34,7 +34,7 @@ def add_test_product(store=None):
         slug='pragmatic-programmer',
         description='From Journeyman to master',
         category=category,
-        sold=False)
+        status='AVLB')
     product.save()
 
     return product
