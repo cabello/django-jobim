@@ -1,0 +1,35 @@
+[
+  {
+    "pk": 1, 
+    "model": "jobim.bid", 
+    "fields": {
+      "datetime": "2011-06-26 00:31:57", 
+      "product": 1, 
+      "accepted": true, 
+      "amount": 20, 
+      "email": "andy@mail.com"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "jobim.bid", 
+    "fields": {
+      "datetime": "2011-06-26 00:32:16", 
+      "product": 1, 
+      "accepted": true, 
+      "amount": 27, 
+      "email": "june@mail.com"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "jobim.bid", 
+    "fields": {
+      "datetime": "2011-06-26 00:32:35", 
+      "product": 1, 
+      "accepted": false, 
+      "amount": 450, 
+      "email": "spambot@1337.com"
+    }
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "pk": 1, 
+    "model": "jobim.userprofile", 
+    "fields": {
+      "user": 1, 
+      "store": 1
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "jobim.userprofile", 
+    "fields": {
+      "user": 2, 
+      "store": 2
+    }
+  }
+]

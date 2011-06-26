@@ -1,0 +1,26 @@
+[
+  {
+    "pk": 1, 
+    "model": "jobim.store", 
+    "fields": {
+      "status": "ON", 
+      "slogan": "Manoel is selling everything. Enjoy!", 
+      "name": "Manoel Cowboy", 
+      "url": "manoel", 
+      "about_content": "Sobre este site\r\n===============\r\n\r\nEsse site funciona como uma esp\u00e9cie de **leil\u00e3o**. Ele serve para sabermos quanto as pessoas est\u00e3o dispostas a pagar pelos produtos que est\u00e3o expostos.\r\n\r\nSe voc\u00ea tiver interesse em algo, fa\u00e7a uma oferta! Se gostarmos de sua oferta, entraremos em contato para fechar neg\u00f3cio.\r\n\r\nQuando voc\u00ea faz uma oferta, **voc\u00ea n\u00e3o tem nenhuma obriga\u00e7\u00e3o de efetivar a compra**. Assim como n\u00f3s n\u00e3o temos obriga\u00e7\u00e3o de vender o que est\u00e1 exposto se as ofertas ficarem abaixo do m\u00ednimo que desejamos obter com a venda de cada produto.\r\n\r\nQuem sou?\r\n---------\r\n\r\nSou o [Manoel Cowboy][4], CEO da *GoHorse Software House*.\r\n\r\nN\u00f3s vamos nos mudar para Cidade Nova no dia **DD/MM/AAAA**. Mas, vamos carregar pouca mudan\u00e7a conosco.\r\n\r\nTalvez tenhamos algo que possa ser \u00fatil para voc\u00ea. Por isso criamos este site inspirado/copiado/clonado do [Vin\u00edcius Teles][3].\r\n\r\nPara saber rapidamente sobre as atualiza\u00e7\u00f5es que ocorrem aqui, siga-me no Twitter: [@manoel_cowboy][2].\r\n\r\nSe voc\u00ea precisar de maiores informa\u00e7\u00f5es sobre algum item, basta entrar em [contato][1]. Terei satisfa\u00e7\u00e3o em responder.\r\n\r\nO frete \u00e9 por conta de quem compra. Ent\u00e3o, para ter uma idea de custo do frete, leve em conta que estamos localizados em Cidade Velha, SP, mais precisamente no Bairro Velho, no CEP 00000-000.\r\n\r\n[1]: http://localhost:8000/manoel/contact\r\n[2]: http://www.twitter.com/manoel_cowboy\r\n[3]: http://www.viniciusteles.com.br\r\n[4]: http://www.gohorse.com", 
+      "email": "manoelcowboy@mail.com"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "jobim.store", 
+    "fields": {
+      "status": "ON", 
+      "slogan": "Jo\u00e3o is selling everything. Enjoy!", 
+      "name": "Jo\u00e3o Silva", 
+      "url": "joao", 
+      "about_content": "Hi, I am Jo\u00e3o Silva from Brazil! :D", 
+      "email": "joaosilva@mail.com"
+    }
+  }
+]

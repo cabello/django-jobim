@@ -1,0 +1,66 @@
+[
+  {
+    "pk": 1,
+    "model": "auth.group",
+    "fields": {
+      "name": "Store Owner",
+      "permissions": [
+        [
+          "change_bid",
+          "jobim",
+          "bid"
+        ],
+        [
+          "delete_bid",
+          "jobim",
+          "bid"
+        ],
+        [
+          "change_contact",
+          "jobim",
+          "contact"
+        ],
+        [
+          "delete_contact",
+          "jobim",
+          "contact"
+        ],
+        [
+          "add_photo",
+          "jobim",
+          "photo"
+        ],
+        [
+          "change_photo",
+          "jobim",
+          "photo"
+        ],
+        [
+          "delete_photo",
+          "jobim",
+          "photo"
+        ],
+        [
+          "add_product",
+          "jobim",
+          "product"
+        ],
+        [
+          "change_product",
+          "jobim",
+          "product"
+        ],
+        [
+          "delete_product",
+          "jobim",
+          "product"
+        ],
+        [
+          "change_store",
+          "jobim",
+          "store"
+        ]
+      ]
+    }
+  }
+]
