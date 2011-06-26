@@ -24,7 +24,7 @@ class StoreMixin(object):
 
     def get_context_data(self, **kwargs):
         context = super(StoreMixin, self).get_context_data(**kwargs)
-        context.update({'store_url': self.kwargs.get('store_url')})
+        context.update({'store': self.get_store()})
         return context
 
     def get_store(self):

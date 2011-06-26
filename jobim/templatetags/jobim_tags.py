@@ -7,6 +7,6 @@ register = template.Library()
 
 
 @register.inclusion_tag('jobim/categories_list.html')
-def categories_list(store_url=None):
+def categories_list(store=None):
     categories = Category.objects.all()
-    return {'categories': categories, 'store_url': store_url}
+    return {'categories': categories, 'store': store}
