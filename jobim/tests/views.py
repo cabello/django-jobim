@@ -1,30 +1,26 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from jobim.tests.helpers import (
-    add_test_category, add_test_product, add_test_store)
+from jobim.tests.helpers import add_test_product
 
 
 class JobimViewsTest(TestCase):
-    fixtures = ['sites', 'categories']
+    fixtures = ['sites', 'stores']
 
     def add_url_kwargs(self, **kwargs):
         self.url_kwargs['kwargs'].update(kwargs)
 
     def setUp(self):
-        self.store = add_test_store()
-        self.url_kwargs = {'kwargs': {'store_url': self.store.url}}
+        from jobim.models import Store
 
-    def test_index(self):
-        response = self.client.get(reverse('jobim:index', **self.url_kwargs))
-        self.assertRedirects(
-            response, reverse('jobim:about', **self.url_kwargs))
+        self.store = Store.objects.get(pk=1)
+        self.url_kwargs = {'kwargs': {'store_url': self.store.url}}
 
     def test_about(self):
         response = self.client.get(reverse('jobim:about', **self.url_kwargs))
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'jobim/about.html')
-        self.assertContains(response, self.store.about_content)
+        self.assertContains(response, 'Ele serve para sabermos quanto as pess')
 
     def test_contact(self):
         from django.core import mail
@@ -82,42 +78,35 @@ class JobimViewsTest(TestCase):
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'jobim/contact_success.html')
 
-    def test_products_by_category(self):
-        self.add_url_kwargs(category_slug='cars')
-        cars_url = reverse('jobim:category_view', **self.url_kwargs)
-        response = self.client.get(cars_url)
-        self.assertEqual(404, response.status_code)
-
-        self.add_url_kwargs(category_slug='books')
-        books_url = reverse('jobim:category_view', **self.url_kwargs)
-        response = self.client.get(books_url)
+    def test_products_list(self):
+        products_url = reverse('jobim:product_list', **self.url_kwargs)
+        response = self.client.get(products_url)
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(
-            response, 'jobim/product_list_by_category.html')
+            response, 'jobim/product_list.html')
         self.assertEqual(0, len(response.context['products']))
 
-        product = add_test_product(self.store)
-        response = self.client.get(books_url)
+        product = add_test_product()
+        response = self.client.get(products_url)
         self.assertEqual(200, response.status_code)
         self.assertEqual(1, len(response.context['products']))
         self.assertTrue(product in response.context['products'])
 
         product.status = 'SOLD'
         product.save()
-        response = self.client.get(books_url)
+        response = self.client.get(products_url)
         self.assertEqual(200, response.status_code)
         self.assertEqual(0, len(response.context['products']))
         self.assertFalse(product in response.context['products'])
 
     def test_product_detail(self):
-        self.add_url_kwargs(
-            category_slug='books', product_slug='pragmatic-programmer')
+        self.add_url_kwargs(product_slug='pragmatic-programmer')
         product_detail_url = reverse('jobim:product_detail', **self.url_kwargs)
 
         response = self.client.get(product_detail_url)
         self.assertEqual(404, response.status_code)
 
-        product = add_test_product(self.store)
+        product = add_test_product()
         response = self.client.get(product_detail_url)
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'jobim/product_detail.html')
@@ -131,11 +120,10 @@ class JobimViewsTest(TestCase):
         from jobim.models import Bid
         from jobim.views import BID_SUCCESS, BID_ERROR
 
-        self.add_url_kwargs(
-            category_slug='books', product_slug='pragmatic-programmer')
+        self.add_url_kwargs(product_slug='pragmatic-programmer')
         product_detail_url = reverse('jobim:product_detail', **self.url_kwargs)
         bid_url = reverse('jobim:product_bid', **self.url_kwargs)
-        product = add_test_product(self.store)
+        product = add_test_product()
 
         response = self.client.post(
             bid_url,

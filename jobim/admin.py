@@ -1,13 +1,6 @@
 from django.contrib import admin
 
-from jobim.models import (
-    Category, Product, Photo, Bid, Contact, Store, UserProfile)
-
-
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug')
-
-    prepopulated_fields = {'slug': ('name',)}
+from jobim.models import Product, Photo, Bid, Contact, Store, UserProfile
 
 
 class PhotoInline(admin.TabularInline):
@@ -15,8 +8,8 @@ class PhotoInline(admin.TabularInline):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('store', 'name', 'slug', 'category', 'status')
-    list_filter = ('category', 'status')
+    list_display = ('store', 'name', 'slug', 'status')
+    list_filter = ('status',)
 
     inlines = [PhotoInline]
     prepopulated_fields = {'slug': ('name',)}
@@ -94,7 +87,6 @@ class UserProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'store')
 
 
-admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Bid, BidAdmin)
 admin.site.register(Contact, ContactAdmin)

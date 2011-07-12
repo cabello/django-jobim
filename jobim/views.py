@@ -10,7 +10,7 @@ from django.views.generic import (
     DetailView, FormView, ListView, RedirectView, TemplateView)
 
 from jobim.forms import BidForm, ContactForm
-from jobim.models import Bid, Category, Contact, Product, Store
+from jobim.models import Bid, Contact, Product, Store
 
 
 BID_SUCCESS = _(
@@ -75,15 +75,6 @@ class ContactSuccess(StoreMixin, TemplateView):
     template_name = 'jobim/contact_success.html'
 
 
-class Index(StoreMixin, RedirectView):
-    permanent = False
-
-    def get_redirect_url(self, **kwargs):
-        store = self.get_store()
-        self.url = reverse('jobim:about', kwargs={'store_url': store.url})
-        return super(Index, self).get_redirect_url(**kwargs)
-
-
 class ProductDetail(StoreMixin, DetailView):
     model = Product
     queryset = Product.available.all()
@@ -101,26 +92,14 @@ class ProductDetail(StoreMixin, DetailView):
         return super(ProductDetail, self).get_object(queryset)
 
 
-class ProductListByCategory(StoreMixin, ListView):
-    category = None
+class ProductList(StoreMixin, ListView):
     context_object_name = 'products'
-    template_name_suffix = '_list_by_category'
-
-    def get_context_data(self, **kwargs):
-        return super(ProductListByCategory, self).get_context_data(
-            category=self.category,
-            **kwargs)
 
     def get_queryset(self):
         store = self.get_store()
 
-        category_slug = self.kwargs.get('category_slug')
-        self.category = get_object_or_404(Category, slug=category_slug)
-
-        qs = Product.available.filter(store=store)
-        qs = qs.filter(category=self.category)
-        self.queryset = qs
-        return super(ProductListByCategory, self).get_queryset()
+        self.queryset = Product.available.filter(store=store)
+        return super(ProductList, self).get_queryset()
 
 
 class ToBid(StoreMixin, FormView):
@@ -157,13 +136,12 @@ class ToBid(StoreMixin, FormView):
         return self.product
 
     def get_success_url(self):
-        category_slug = self.kwargs.get('category_slug')
         product_slug = self.kwargs.get('product_slug')
         store_url = self.get_store().url
 
         self.success_url = reverse(
             'jobim:product_detail',
-            args=[store_url, category_slug, product_slug])
+            args=[store_url, product_slug])
         return super(ToBid, self).get_success_url()
 
     def form_valid(self, form):

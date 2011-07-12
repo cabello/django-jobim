@@ -4,7 +4,7 @@ from jobim.tests.helpers import add_test_product
 
 
 class JobimAdminTest(TestCase):
-    fixtures = ['sites', 'categories']
+    fixtures = ['sites', 'stores']
 
     def test_accept_bid(self):
         from jobim.admin import BidAdmin
@@ -14,6 +14,7 @@ class JobimAdminTest(TestCase):
         bid = Bid(product=product, amount=30)
         bid.save()
         self.assertFalse(bid.accepted)
+
         queryset = Bid.objects.all()
         bid_admin = BidAdmin(Bid, None)
         bid_admin.accept_bid(None, queryset)

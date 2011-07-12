@@ -6,23 +6,6 @@ from django.utils.translation import ugettext_lazy as _
 from stdimage import StdImageField
 
 
-class Category(models.Model):
-    name = models.CharField(_('name'), max_length=50)
-    slug = models.SlugField(max_length=50)
-
-    class Meta:
-        verbose_name = _('category')
-        verbose_name_plural = _('categories')
-        ordering = ['name']
-
-    def __unicode__(self):
-        return self.name
-
-    @models.permalink
-    def get_absolute_url(self):
-        return ('jobim:category_view', [self.slug])
-
-
 class ProductsAvailableManager(models.Manager):
     def get_query_set(self):
         queryset = super(ProductsAvailableManager, self).get_query_set()
@@ -46,7 +29,6 @@ class Product(models.Model):
     name = models.CharField(_('name'), max_length=250)
     slug = models.SlugField(max_length=250)
     description = models.TextField(_('description'))
-    category = models.ForeignKey(Category, verbose_name=_('category'))
     cover = StdImageField(
         _('cover'),
         upload_to='thumbnails',
@@ -70,7 +52,7 @@ class Product(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('jobim:product_detail', [self.category.slug, self.slug])
+        return ('jobim:product_detail', (self.store.url, self.slug,))
 
     def bid_status(self):
         if self.status == 'SOLD':
@@ -120,7 +102,7 @@ class Bid(models.Model):
     @models.permalink
     def get_absolute_url(self):
         product = self.product
-        return ('jobim:product_detail', [product.category.slug, product.slug])
+        return product.get_absolute_url()
 
 
 class Contact(models.Model):

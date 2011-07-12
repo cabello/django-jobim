@@ -4,7 +4,7 @@ from jobim.tests.helpers import add_test_product
 
 
 class JobimModelsTest(TestCase):
-    fixtures = ['sites', 'categories']
+    fixtures = ['sites', 'stores']
 
     def test_product_status(self):
         from jobim.models import Bid

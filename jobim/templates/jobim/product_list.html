@@ -1,14 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}{{ category }} - {{ block.super }}{% endblock %}
-
 {% block article-content %}
-    <h1>{{ category }}</h1>
+    <h1>Produtos</h1>
     {% if products %}
         <ul id="products">
         {% for product in products %}
             <li class="product">
-            <a href="{% url jobim:product_detail store.url category.slug product.slug %}">
+            <a href="{% url jobim:product_detail store.url product.slug %}">
                 <div class="name">{{ product }}</div>
                 <div><img class="cover" src="{% if product.cover %}{{ product.cover.url }}{% endif %}" /></div>
                 <div class="status">{{ product.bid_status }}</div>
@@ -17,7 +15,7 @@
         {% endfor %}
         </ul>
     {% else %}
-        <h2>Todos os {{ category|lower }} foram vendidos. :D<br />
+        <h2>Acabaram-se os produtos. :D<br />
         (Ou o preguiçoso não cadastrou os que faltam pra vender. =/)</h2>
     {% endif %}
 {% endblock %}

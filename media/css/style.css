@@ -232,34 +232,6 @@ article > hr {
     margin-right: 32px;
 }
 
-#categories_menu {
-    font-size: 1.6em;
-    margin-left: 0;
-}
-
-#categories_menu li {
-    list-style: none;
-    padding: 8px;
-}
-
-#categories_menu li a {
-    background-color: #D55620;
-    color: white;
-    display: block;
-    padding: 12px;
-    text-decoration: none;
-}
-
-#categories_menu li a:hover {
-    background-color: #C53610;
-    text-decoration: underline;
-}
-
-#categories_menu li .active {
-    background-color: #C53610;
-    text-decoration: underline;
-}
-
 #bidding > #cover {
     float: right;
     margin-right: 32px;
