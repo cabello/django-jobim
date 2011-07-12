@@ -26,6 +26,7 @@
             <h1 id="title">{{ store.slogan }}</h1>
             <nav>
                 <ul>
+                    <li><a href="{% url jobim:product_list store_url=store.url %}">{% trans "Products" %}</a></li>
                     <li><a href="{% url jobim:about store_url=store.url %}">{% trans "About" %}</a></li>
                     <li><a href="{% url jobim:contact store_url=store.url %}">{% trans "Contact" %}</a></li>
                 </ul>

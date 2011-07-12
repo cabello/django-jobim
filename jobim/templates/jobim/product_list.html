@@ -6,7 +6,7 @@
         <ul id="products">
         {% for product in products %}
             <li class="product">
-            <a href="{% url jobim:product_detail store.url product.slug %}">
+            <a href="{{ product.get_absolute_url }}">
                 <div class="name">{{ product }}</div>
                 <div><img class="cover" src="{% if product.cover %}{{ product.cover.url }}{% endif %}" /></div>
                 <div class="status">{{ product.bid_status }}</div>
