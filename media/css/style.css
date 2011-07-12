@@ -93,13 +93,10 @@ body{
 }
 
 #header-container{
-    background-color:#f16529;
+    background-color:#A2A2A2;
     height:130px;
-    border-bottom:20px solid #e44d26;
+    border-bottom:12px solid #626262;
     margin-bottom:50px;
-    -webkit-box-shadow:0 40px 40px -40px #AAA;
-       -moz-box-shadow:0 40px 40px -40px #AAA;
-            box-shadow:0 40px 40px -40px #AAA;
 }
 
 h1, h2, h3{
@@ -131,7 +128,7 @@ h3{
 
 nav{
     float: right;
-    margin-top: 90px;
+    margin-top: 89px;
 }
 
 nav ul, nav ul li{
@@ -139,7 +136,7 @@ nav ul, nav ul li{
 }
 
 nav a{
-    background-color: #e44d26;
+    background-color: #C3C3C3;
     color: white;
     font-size: 18px;
     padding: 20px;
@@ -172,14 +169,11 @@ aside{
 }
 
 #footer-container{
-    background-color:#f16529;
+    background-color:#A2A2A2;
     clear: both;
-    height:240px;
-    border-top:20px solid #e44d26;
+    height:120px;
+    border-top:12px solid #626262;
     margin-top:50px;
-    -webkit-box-shadow:0 -40px 40px -40px #AAA;
-       -moz-box-shadow:0 -40px 40px -40px #AAA;
-            box-shadow:0 -40px 40px -40px #AAA;
     text-align: right;
 }
 
@@ -194,23 +188,19 @@ aside{
 
 #products .product {
     display: inline-block;
-    padding-bottom: 36px;
-    padding-right: 36px;
+    height: 220px;
+    padding: 8px;
+    width: 220px;
 }
 
-#products .product div {
-    width: 200px;
-}
+#products .product div {}
 
 #products .product .name {
     font-size: 22px;
     text-align: center;
 }
 
-#products .product .cover {
-    border-radius: 4px;
-    box-shadow: 0 4px 6px #B1BFC4;
-}
+#products .product .cover {}
 
 #products .product .status {
     font-size: 18px;
@@ -225,7 +215,7 @@ aside{
 }
 
 article {
-    width: 720px;
+    width: 960px;
 }
 
 article > hr {

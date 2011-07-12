@@ -8,7 +8,7 @@ class PhotoInline(admin.TabularInline):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('store', 'name', 'slug', 'status')
+    list_display = ('name', 'slug', 'status')
     list_filter = ('status',)
 
     inlines = [PhotoInline]

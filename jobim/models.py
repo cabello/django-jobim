@@ -34,7 +34,7 @@ class Product(models.Model):
         upload_to='thumbnails',
         max_length=250,
         blank=True,
-        size=(200, 150))
+        size=(220, 220))
     status = models.CharField(
         _('status'), max_length=4, choices=STATUS_CHOICES, default='AVLB')
 

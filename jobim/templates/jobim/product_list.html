@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 
 {% block article-content %}
-    <h1>Produtos</h1>
     {% if products %}
         <ul id="products">
         {% for product in products %}
             <li class="product">
-            <a href="{{ product.get_absolute_url }}">
-                <div class="name">{{ product }}</div>
-                <div><img class="cover" src="{% if product.cover %}{{ product.cover.url }}{% endif %}" /></div>
-                <div class="status">{{ product.bid_status }}</div>
-            </a>
+                <a href="{{ product.get_absolute_url }}">
+                    {% if product.cover %}
+                    <div><img class="cover" src="{% if product.cover %}{{ product.cover.url }}{% endif %}" /></div>
+                    {% else %}
+                    <div class="name">{{ product }}</div>
+                    <div class="status">{{ product.bid_status }}</div>
+                    {% endif %}
+                </a>
             </li>
         {% endfor %}
         </ul>
