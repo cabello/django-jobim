@@ -1,20 +1,9 @@
 from django.core.urlresolvers import reverse
-from django.test import TestCase
 
-from jobim.tests.helpers import add_test_product
+from jobim.tests.helpers import add_test_product, ViewTestCase
 
 
-class ProductViewsTest(TestCase):
-    fixtures = ['sites', 'stores']
-
-    def add_url_kwargs(self, **kwargs):
-        self.url_kwargs['kwargs'].update(kwargs)
-
-    def setUp(self):
-        from jobim.models import Store
-
-        self.store = Store.objects.get(pk=1)
-        self.url_kwargs = {'kwargs': {'store_url': self.store.url}}
+class ProductViewsTest(ViewTestCase):
 
     def test_products_list(self):
         products_url = reverse('jobim:product_list', **self.url_kwargs)

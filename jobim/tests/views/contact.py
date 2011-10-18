@@ -1,14 +1,9 @@
 from django.core.urlresolvers import reverse
-from django.test import TestCase
 
-class ContactViewTest(TestCase):
-    fixtures = ['sites', 'stores']
+from jobim.tests.helpers import ViewTestCase
 
-    def setUp(self):
-        from jobim.models import Store
 
-        self.store = Store.objects.get(pk=1)
-        self.url_kwargs = {'kwargs': {'store_url': self.store.url}}
+class ContactViewTest(ViewTestCase):
 
     def test_contact(self):
         from django.core import mail

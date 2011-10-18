@@ -1,14 +1,9 @@
 from django.core.urlresolvers import reverse
-from django.test import TestCase
 
-class AboutViewTest(TestCase):
-    fixtures = ['sites', 'stores']
+from jobim.tests.helpers import ViewTestCase
 
-    def setUp(self):
-        from jobim.models import Store
 
-        self.store = Store.objects.get(pk=1)
-        self.url_kwargs = {'kwargs': {'store_url': self.store.url}}
+class AboutViewTest(ViewTestCase):
 
     def test_about(self):
         response = self.client.get(reverse('jobim:about', **self.url_kwargs))
