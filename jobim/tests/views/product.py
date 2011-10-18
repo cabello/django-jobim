@@ -5,7 +5,7 @@ from jobim.tests.helpers import add_product, ViewTestCase
 
 class ProductViewsTest(ViewTestCase):
 
-    def test_products_list(self):
+    def test_list_view(self):
         products_url = reverse('jobim:product_list', **self.url_kwargs)
         response = self.client.get(products_url)
         self.assertEqual(200, response.status_code)
@@ -26,7 +26,7 @@ class ProductViewsTest(ViewTestCase):
         self.assertEqual(0, len(response.context['products']))
         self.assertFalse(product in response.context['products'])
 
-    def test_product_detail(self):
+    def test_detail_view(self):
         self.add_url_kwargs(product_slug='pragmatic-programmer')
         product_detail_url = reverse('jobim:product_detail', **self.url_kwargs)
 
