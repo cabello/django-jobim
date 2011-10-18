@@ -13,6 +13,7 @@ class ContactViewTest(ViewTestCase):
         self.assertTemplateUsed(response, 'jobim/contact.html')
 
     def test_validates_form(self):
+        from jobim.forms import ContactForm
         contact_url = reverse('jobim:contact', **self.url_kwargs)
 
         response = self.client.post(contact_url)
@@ -24,6 +25,8 @@ class ContactViewTest(ViewTestCase):
             'contact_form',
             'email',
             'This field is required.')
+
+        self.assertEqual(type(response.context['form']), ContactForm)
 
     def test_sends_mail_when_valid_data(self):
         from django.core import mail
