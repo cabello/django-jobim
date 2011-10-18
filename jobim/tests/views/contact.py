@@ -5,18 +5,15 @@ from jobim.tests.helpers import ViewTestCase
 
 class ContactViewTest(ViewTestCase):
 
-    def test_contact(self):
-        from django.core import mail
-
-        from jobim.models import Contact
-
+    def test_uses_right_template(self):
         contact_url = reverse('jobim:contact', **self.url_kwargs)
-        contact_success_url = reverse(
-            'jobim:contact_success', **self.url_kwargs)
 
         response = self.client.get(contact_url)
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'jobim/contact.html')
+
+    def test_validates_form(self):
+        contact_url = reverse('jobim:contact', **self.url_kwargs)
 
         response = self.client.post(contact_url)
         self.assertEqual(200, response.status_code)
@@ -27,6 +24,15 @@ class ContactViewTest(ViewTestCase):
             'contact_form',
             'email',
             'This field is required.')
+
+    def test_sends_mail_when_valid_data(self):
+        from django.core import mail
+
+        from jobim.models import Contact
+
+        contact_url = reverse('jobim:contact', **self.url_kwargs)
+        contact_success_url = reverse(
+            'jobim:contact_success', **self.url_kwargs)
 
         self.assertEqual(0, Contact.objects.count())
         response = self.client.post(
@@ -53,7 +59,7 @@ class ContactViewTest(ViewTestCase):
         self.assertTemplateUsed(response, 'jobim/contact_subject.txt')
         self.assertTemplateUsed(response, 'jobim/contact_message.txt')
 
-    def test_contact_success(self):
+    def test_success_view_is_reachable(self):
         contact_success_url = reverse(
             'jobim:contact_success', **self.url_kwargs)
 
