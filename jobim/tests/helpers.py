@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 
-def add_test_product(store=None):
+def add_product(store=None):
     from jobim.models import Product, Store
 
     store = Store.objects.get(pk=1)

@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from jobim.tests.helpers import add_test_product
+from jobim.tests.helpers import add_product
 
 
 class JobimAdminTest(TestCase):
@@ -10,7 +10,7 @@ class JobimAdminTest(TestCase):
         from jobim.admin import BidAdmin
         from jobim.models import Bid
 
-        product = add_test_product()
+        product = add_product()
         bid = Bid(product=product, amount=30)
         bid.save()
         self.assertFalse(bid.accepted)

@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from jobim.tests.helpers import add_test_product, ViewTestCase
+from jobim.tests.helpers import add_product, ViewTestCase
 
 
 class BidViewTest(ViewTestCase):
@@ -13,7 +13,7 @@ class BidViewTest(ViewTestCase):
         self.add_url_kwargs(product_slug='pragmatic-programmer')
         product_detail_url = reverse('jobim:product_detail', **self.url_kwargs)
         bid_url = reverse('jobim:product_bid', **self.url_kwargs)
-        product = add_test_product()
+        product = add_product()
 
         response = self.client.post(
             bid_url,

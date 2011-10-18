@@ -1,6 +1,6 @@
 from django.core.urlresolvers import reverse
 
-from jobim.tests.helpers import add_test_product, ViewTestCase
+from jobim.tests.helpers import add_product, ViewTestCase
 
 
 class ProductViewsTest(ViewTestCase):
@@ -13,7 +13,7 @@ class ProductViewsTest(ViewTestCase):
             response, 'jobim/product_list.html')
         self.assertEqual(0, len(response.context['products']))
 
-        product = add_test_product()
+        product = add_product()
         response = self.client.get(products_url)
         self.assertEqual(200, response.status_code)
         self.assertEqual(1, len(response.context['products']))
@@ -33,7 +33,7 @@ class ProductViewsTest(ViewTestCase):
         response = self.client.get(product_detail_url)
         self.assertEqual(404, response.status_code)
 
-        product = add_test_product()
+        product = add_product()
         response = self.client.get(product_detail_url)
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'jobim/product_detail.html')

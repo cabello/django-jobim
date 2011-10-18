@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from jobim.tests.helpers import add_test_product
+from jobim.tests.helpers import add_product
 
 
 class JobimModelsTest(TestCase):
@@ -9,7 +9,7 @@ class JobimModelsTest(TestCase):
     def test_product_status(self):
         from jobim.models import Bid
 
-        product = add_test_product()
+        product = add_product()
         self.assertEquals('Waiting bid', product.bid_status())
 
         bid = Bid(
@@ -31,7 +31,7 @@ class JobimModelsTest(TestCase):
     def test_product_avaiable(self):
         from jobim.models import Product
 
-        product = add_test_product()
+        product = add_product()
         self.assertTrue(product in Product.available.all())
 
         product.status = 'SOLD'
@@ -42,7 +42,7 @@ class JobimModelsTest(TestCase):
     def test_product_sold(self):
         from jobim.models import Product
 
-        product = add_test_product()
+        product = add_product()
         self.assertFalse(product in Product.sold.all())
 
         product.status = 'SOLD'
