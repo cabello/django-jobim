@@ -2,11 +2,10 @@ from django.test import TestCase
 
 from jobim.tests.helpers import add_product
 
-
-class JobimModelsTest(TestCase):
+class ProductModelTest(TestCase):
     fixtures = ['sites', 'stores']
 
-    def test_product_status(self):
+    def test_status_workflow(self):
         from jobim.models import Bid
 
         product = add_product()
@@ -28,7 +27,7 @@ class JobimModelsTest(TestCase):
         product.save()
         self.assertEquals('Sold', product.bid_status())
 
-    def test_product_avaiable(self):
+    def test_available_manager(self):
         from jobim.models import Product
 
         product = add_product()
@@ -39,7 +38,7 @@ class JobimModelsTest(TestCase):
 
         self.assertFalse(product in Product.available.all())
 
-    def test_product_sold(self):
+    def test_sold_manager(self):
         from jobim.models import Product
 
         product = add_product()
