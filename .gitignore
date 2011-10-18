@@ -7,3 +7,5 @@ media/thumbnails
 *.sqlite
 *.db
 .coverage
+nose.xml
+
