@@ -10,7 +10,8 @@ class BidViewTest(ViewTestCase):
         super(BidViewTest, self).setUp()
 
         self.add_url_kwargs(product_slug='pragmatic-programmer')
-        self.product_detail_url = reverse('jobim:product_detail', **self.url_kwargs)
+        self.product_detail_url = reverse(
+            'jobim:product_detail', **self.url_kwargs)
         self.bid_url = reverse('jobim:product_bid', **self.url_kwargs)
         self.product = add_product()
 

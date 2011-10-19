@@ -2,6 +2,7 @@ from django.test import TestCase
 
 from jobim.tests.helpers import add_product
 
+
 class ProductModelTest(TestCase):
     fixtures = ['sites', 'stores']
 
