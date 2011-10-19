@@ -20,3 +20,7 @@ nosedjango:
 
 test: dependencies clean
 	@specloud --with-xunit --xunit-file=nose.xml --with-coverage --with-django --django-settings=settings --django-sqlite=use_sqlite --cover-erase --cover-package=jobim --verbosity=2 --where=jobim/tests
+
+pep8:
+	@pep8 -r .
+
