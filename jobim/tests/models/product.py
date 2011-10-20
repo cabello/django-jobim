@@ -34,18 +34,7 @@ class ProductModelTest(TestCase):
         product = add_product()
         self.assertTrue(product in Product.available.all())
 
-        product.status = 'SOLD'
+        product.status = 'DRFT'
         product.save()
 
         self.assertFalse(product in Product.available.all())
-
-    def test_has_a_sold_manager(self):
-        from jobim.models import Product
-
-        product = add_product()
-        self.assertFalse(product in Product.sold.all())
-
-        product.status = 'SOLD'
-        product.save()
-
-        self.assertTrue(product in Product.sold.all())

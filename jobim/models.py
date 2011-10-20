@@ -5,18 +5,15 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from stdimage import StdImageField
 
-
 class ProductsAvailableManager(models.Manager):
     def get_query_set(self):
         queryset = super(ProductsAvailableManager, self).get_query_set()
         return queryset.filter(status='AVLB')
 
-
-class ProductsSoldManager(models.Manager):
+class ProductsExceptDraftManager(models.Manager):
     def get_query_set(self):
-        queryset = super(ProductsSoldManager, self).get_query_set()
-        return queryset.filter(status='SOLD')
-
+        queryset = super(ProductsExceptDraftManager, self).get_query_set()
+        return queryset.exclude(status='DRFT')
 
 class Product(models.Model):
     STATUS_CHOICES = (
@@ -40,7 +37,7 @@ class Product(models.Model):
 
     objects = models.Manager()
     available = ProductsAvailableManager()
-    sold = ProductsSoldManager()
+    except_draft = ProductsExceptDraftManager()
 
     class Meta:
         verbose_name = _('product')

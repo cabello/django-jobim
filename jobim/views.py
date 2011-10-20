@@ -103,7 +103,7 @@ class ProductList(StoreMixin, ListView):
     def get_queryset(self):
         store = self.get_store()
 
-        self.queryset = Product.objects.filter(store=store)
+        self.queryset = Product.except_draft.filter(store=store)
         return super(ProductList, self).get_queryset()
 
 

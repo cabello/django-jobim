@@ -63,3 +63,10 @@ class ProductListViewTest(ViewTestCase):
 
         self.assertEqual(1, len(response.context['products']))
         self.assertTrue(product in response.context['products'])
+
+    def test_do_not_show_draft_products(self):
+        product = add_product('DRFT')
+        response = self.client.get(self.products_url)
+
+        self.assertEqual(0, len(response.context['products']))
+        self.assertFalse(product in response.context['products'])
