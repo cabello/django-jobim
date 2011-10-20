@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 
-def add_product(store=None):
+def add_product(status='AVLB'):
     from jobim.models import Product, Store
 
     store = Store.objects.get(pk=1)
@@ -11,7 +11,7 @@ def add_product(store=None):
         name='The Pragmatic Programmer',
         slug='pragmatic-programmer',
         description='From Journeyman to master',
-        status='AVLB')
+        status=status)
     product.save()
 
     return product
@@ -19,6 +19,9 @@ def add_product(store=None):
 
 class ViewTestCase(TestCase):
     fixtures = ['sites', 'stores']
+
+    def assertEmpty(self, countable):
+        return self.assertEqual(0, len(countable))
 
     def add_url_kwargs(self, **kwargs):
         self.url_kwargs['kwargs'].update(kwargs)
