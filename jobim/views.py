@@ -77,14 +77,19 @@ class ContactSuccess(StoreMixin, TemplateView):
 
 class ProductDetail(StoreMixin, DetailView):
     model = Product
-    queryset = Product.available.all()
+    queryset = Product.objects.all()
 
     def get_context_data(self, **kwargs):
         product = kwargs.get('object')
+
+        bid_form = BidForm()
+        if product.status == 'SOLD':
+            bid_form = None
+
         context = super(ProductDetail, self).get_context_data(**kwargs)
         context.update({
             'photos': product.photo_set.all(),
-            'bid_form': BidForm()})
+            'bid_form': bid_form})
         return context
 
     def get_object(self, queryset=None):

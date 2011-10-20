@@ -29,19 +29,21 @@
             Situação: <em>{{ product.bid_status }}</em>
             <div><a href="{% url jobim:about store_url=store.url %}">Como funciona?</a></div>
         </h3>
-        <form accept-charset="UTF-8" action="{% url jobim:product_bid store.url product.slug %}" class="simple_form item" method="post">
-        <fieldset>
-            <div>
-                {% if bid_form.amount.errors %}{{ bid_form.amount.errors}}{% endif %}
-                <label class="string optional" for="item_bid_amount"> Oferta:</label><span class="currency">R$</span>{{ bid_form.amount }}
-            </div>
-            <div>
-                {% if bid_form.email.errors %}{{ bid_form.email.errors}}{% endif %}
-                <label class="email optional" for="item_bid_email"> Email:</label>{{ bid_form.email }}
-            </div>
-            <button type="submit">Confirmar a oferta</button>
-        </fieldset>
-        </form>
+        {% if bid_form %}
+            <form accept-charset="UTF-8" action="{% url jobim:product_bid store.url product.slug %}" class="simple_form item" method="post">
+            <fieldset>
+                <div>
+                    {% if bid_form.amount.errors %}{{ bid_form.amount.errors}}{% endif %}
+                    <label class="string optional" for="item_bid_amount"> Oferta:</label><span class="currency">R$</span>{{ bid_form.amount }}
+                </div>
+                <div>
+                    {% if bid_form.email.errors %}{{ bid_form.email.errors}}{% endif %}
+                    <label class="email optional" for="item_bid_email"> Email:</label>{{ bid_form.email }}
+                </div>
+                <button type="submit">Confirmar a oferta</button>
+            </fieldset>
+            </form>
+        {% endif %}
     </div>
 
 <hr />

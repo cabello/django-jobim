@@ -5,22 +5,32 @@ from jobim.tests.helpers import add_product, ViewTestCase
 
 class ProductDetailViewTest(ViewTestCase):
 
-    def test_works(self):
-        self.add_url_kwargs(product_slug='pragmatic-programmer')
-        product_detail_url = reverse('jobim:product_detail', **self.url_kwargs)
+    def setUp(self):
+        super(ProductDetailViewTest, self).setUp()
 
-        response = self.client.get(product_detail_url)
+        self.add_url_kwargs(product_slug='pragmatic-programmer')
+        self.product_detail_url = reverse(
+            'jobim:product_detail', **self.url_kwargs)
+
+    def test_shows_not_found_page_for_non_existent_product(self):
+        response = self.client.get(self.product_detail_url)
         self.assertEqual(404, response.status_code)
 
+    def test_uses_right_template(self):
         product = add_product()
-        response = self.client.get(product_detail_url)
-        self.assertEqual(200, response.status_code)
+        response = self.client.get(self.product_detail_url)
         self.assertTemplateUsed(response, 'jobim/product_detail.html')
 
-        product.status = 'SOLD'
-        product.save()
-        response = self.client.get(product_detail_url)
-        self.assertEqual(404, response.status_code)
+    def test_show_product_details(self):
+        product = add_product()
+        response = self.client.get(self.product_detail_url)
+        self.assertEqual(200, response.status_code)
+
+    def test_show_details_of_sold_product_without_bid_form(self):
+        product = add_product(status='SOLD')
+        response = self.client.get(self.product_detail_url)
+        self.assertEqual(200, response.status_code)
+        self.assertFalse(response.context['bid_form'])
 
 
 class ProductListViewTest(ViewTestCase):
