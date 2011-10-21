@@ -2,6 +2,7 @@ from django.test import TestCase
 
 from jobim.models import Store
 
+
 class StoreModelTest(TestCase):
 
     def test_has_unicode(self):

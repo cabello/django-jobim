@@ -3,6 +3,7 @@ from django.test import TestCase
 from jobim.models import Photo
 from jobim.tests.helpers import add_product
 
+
 class PhotoModelTest(TestCase):
     fixtures = ['sites', 'stores']
 
@@ -12,4 +13,3 @@ class PhotoModelTest(TestCase):
         photo.save()
 
         self.assertEqual('The Pragmatic Programmer #1', str(photo))
-
