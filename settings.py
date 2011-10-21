@@ -98,8 +98,6 @@ INSTALLED_APPS = (
     'jobim',
 )
 
-TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
-
 # Change the email backend to smtp when in production and
 # set the needed settings acording to Django documentation
 EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
