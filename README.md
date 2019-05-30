@@ -2,8 +2,8 @@ django-jobim
 ============
 
 A virtual store that wants to make your life easier when you think about
-selling some personal stuff. You don't need intermediate people or to pay
-fees. It's informal, simple and focus on the main goal: sale.
+selling some of your personal stuff. You don't need intermediate people or to pay
+fees. It's informal, simple and focus on the main goal: make a deal.
 
 Running the project
 -------------------
