@@ -1,4 +1,4 @@
-Django==1.11.20
+Django==2.2.24
 Markdown==2.0.3
 PIL==1.1.7
 -e svn+http://django-stdimage.googlecode.com/svn/trunk/#egg=stdimage
